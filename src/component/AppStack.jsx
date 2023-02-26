@@ -1,0 +1,55 @@
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Account } from '../screens/Account';
+import { Activities } from '../screens/Activities';
+import { Chat } from '../screens/Chat';
+import { JobPosts } from '../screens/JobPosts';
+import { MyJob } from '../screens/MyJobs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {AspectRatio,Box,Button,HStack,Image,Text,VStack} from 'native-base';
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+
+export const AppStack = () => {
+  return (
+    <Stack.Navigator>
+      
+      <Stack.Screen
+        name="Tekk"
+       
+        component={TabStack}
+       
+        options={{
+          headerStyle: {
+            backgroundColor: 'orange',
+          },
+          headerTintColor: 'white',
+       
+        }}
+      />
+    
+    </Stack.Navigator>
+  );
+};
+
+export const TabStack = () => {
+  return (
+    <Tab.Navigator   screenOptions={{
+        headerTitleAlign: 'left',
+      }} >
+      
+      <Tab.Screen name="Job Posts" component={JobPosts} />
+      
+      <Tab.Screen name="Activities" component={Activities} />
+      
+      <Tab.Screen name="My Jobs" component={MyJob} />
+
+      <Tab.Screen name="Chat" component={Chat} />
+      
+      <Tab.Screen name="Account" component={Account} />
+    
+    </Tab.Navigator>
+  );
+};
