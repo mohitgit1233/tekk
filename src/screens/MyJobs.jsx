@@ -1,7 +1,10 @@
-import {AspectRatio,Box,Button,HStack,Image,Text,VStack} from 'native-base';
+import React, { useState, useEffect } from "react";
+import { Box, FlatList, Center, NativeBaseProvider, Text } from "native-base";
+
 export const MyJob = ({ navigation }) => {
-  return (
-    
-    <Text>My Jobs</Text>
-  );
-};
+    return(
+    <Text>HEllo</Text>
+
+)};
+
+
