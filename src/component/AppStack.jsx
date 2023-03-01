@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {AspectRatio,Box,Button,HStack,Image,Text,VStack} from 'native-base';
 import SearchFilter from '../../components/SearchFilter';
 import SearchInput from '../../components/SearchInput';
+import JobContainer from '../container/JobContainer';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -32,6 +33,7 @@ export const AppStack = () => {
         }}
       />
      <Stack.Screen name='Search' component={SearchInput}></Stack.Screen>
+     <Stack.Screen name='JobContainer' component={JobContainer}></Stack.Screen>
     </Stack.Navigator>
   );
 };
