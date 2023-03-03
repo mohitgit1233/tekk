@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Moment from 'moment';
-import DatePicker from 'react-native-datepicker';
+import { Calendar } from 'react-native-calendars';
 
 const SendOffer = ({ route }) => {
   const { jobId, refreshData, tech_id } = route.params;
   const [offerPrice, setOfferPrice] = useState('');
   const [offerHours, setOfferHours] = useState('');
-  const [preferStartDate, setPreferStartDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
   const navigation = useNavigation();
 
   const handleSendOffer = () => {
@@ -16,8 +16,8 @@ const SendOffer = ({ route }) => {
       jobID: jobId,
       offerPrice: parseInt(offerPrice),
       offerHours: parseInt(offerHours),
-      prefer_start_date: preferStartDate,
-      technicianId: tech_id,
+      prefer_start_date: selectedDate,
+      technician_who_offered: tech_id,
     };
 
     fetch('http://localhost:5001/api/v1/offers', {
@@ -30,6 +30,10 @@ const SendOffer = ({ route }) => {
         navigation.navigate('ViewOffer', { offer: data, refreshData: refreshData });
       })
       .catch((error) => console.error(error));
+  };
+
+  const onDayPress = (day) => {
+    setSelectedDate(day.dateString);
   };
 
   return (
@@ -52,27 +56,11 @@ const SendOffer = ({ route }) => {
           keyboardType="numeric"
         />
       </View>
-      <DatePicker
-        style={styles.datePicker}
-        date={preferStartDate}
-        mode="date"
-        placeholder="Preferred start date"
-        format="YYYY-MM-DD"
+      <Calendar
+        style={styles.calendar}
+        current={Moment().format('YYYY-MM-DD')}
         minDate={Moment().format('YYYY-MM-DD')}
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
-        customStyles={{
-          dateIcon: {
-            position: 'absolute',
-            left: 0,
-            top: 4,
-            marginLeft: 0,
-          },
-          dateInput: {
-            marginLeft: 36,
-          },
-        }}
-        onDateChange={setPreferStartDate}
+        onDayPress={onDayPress}
       />
       <View style={styles.buttonContainer}>
         <Button
@@ -104,8 +92,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     paddingHorizontal: 10,
   },
-  datePicker: {
-    width: 200,
+  calendar: {
     marginBottom: 20,
   },
   buttonContainer: {
