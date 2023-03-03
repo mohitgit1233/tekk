@@ -40,10 +40,6 @@ const ViewOffer = ({ route }) => {
       })
       .catch(error => console.error(error));
     };
-  
-    // rest of the code
-  
-  
 
   if (!offer) {
     return <Text>Loading...</Text>;
@@ -53,7 +49,8 @@ const ViewOffer = ({ route }) => {
     <View style={styles.container}>
       <Text style={styles.offerDetail}>{offer.offerPrice}</Text>
       <Text style={styles.offerDetail}>{offer.offerHours}</Text>
-      <Text style={styles.offerDetail}>{Moment(offer.prefer_start_date).format('d/MM/YYYY')}</Text>
+      <Text style={styles.offerDetail}>{offer. technician_who_offered}</Text>
+      <Text style={styles.offerDetail}>{Moment(offer.prefer_start_date).format('YYYY-MM-DD')}</Text>
       {offer.isAccepted === false && (
         <View style={styles.buttonContainer}>
           <Button title="Accept" onPress={handleAccept} />
