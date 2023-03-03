@@ -49,15 +49,15 @@ export const MyJob = ({ navigation }) => {
     // )
     for(let i = 0; i < Offers.length;i++){
       console.log('sss',Offers[i].offerStatus)
-      data2.push(Offers[i].jobID)
+      data2.push(Offers[i])
     }
 
     
   }
 
   console.log(data2)
-  
-  const filteredData = data2.filter((post) => post.offerStatus === jobStatus  && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  const filteredData = data2.filter((post) => post.offerStatus === jobStatus  && post.jobID.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   
   return (
@@ -80,12 +80,12 @@ export const MyJob = ({ navigation }) => {
         {filteredData.map((post) => {
           Moment.locale('en');
           return (
-            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', {id: post._id})}>
+            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', {id: post.jobID._id})}>
               <View style={styles.postContainer}>
-              <Image style={styles.postImage} source={{ uri: post.picture }} />
-                <Text style={styles.postTitle}>{post.title}</Text>
-                <Text style={styles.postDescription}>{post.description}</Text>
-                <Text style={styles.postDate}>{Moment(post.posted_date).format('D MMMM YYYY')}</Text>
+              <Image style={styles.postImage} source={{ uri: post.jobID.picture }} />
+                <Text style={styles.postTitle}>{post.jobID.title}</Text>
+                <Text style={styles.postDescription}>{post.jobID.description}</Text>
+                <Text style={styles.postDate}>{Moment(post.jobID.posted_date).format('D MMMM YYYY')}</Text>
               </View>
             </TouchableOpacity>
           );
