@@ -9,6 +9,7 @@ export const JobPosts = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const url = 'http://localhost:5001/api/v1/jobs';
 
+  
   useEffect(() => {
     fetch(url)
       .then((resp) => resp.json())

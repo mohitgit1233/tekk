@@ -17,6 +17,7 @@ export const MyJob = ({ navigation }) => {
         const response = await fetch(url);
         const json = await response.json();
         setData(json);
+      
       } catch (error) {
         console.error(error);
       }
@@ -65,6 +66,14 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
+  },
+  filterContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    display:'flex',
+    flexDirection:'row',
+    gap:20,
     padding: 10,
   },
   searchContainer: {
