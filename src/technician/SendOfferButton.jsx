@@ -56,6 +56,12 @@ const SendOffer = ({ route }) => {
           keyboardType="numeric"
         />
       </View>
+      <TextInput
+    style={styles.textInput}
+    placeholder="Select date"
+    value={selectedDate}
+    editable={false}
+  />
       <Calendar
         style={styles.calendar}
         current={Moment().format('YYYY-MM-DD')}
