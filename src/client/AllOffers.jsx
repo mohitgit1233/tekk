@@ -39,6 +39,9 @@ const AllOffers = () => {
                   <Text style={styles.postSubtitleText}>Estimated Hours:{post.offerHours}</Text>
                   <Text style={styles.postSubtitleText}>Estimated Price:{post.offerPrice}</Text>
                 </View>
+                <button>Accept</button>
+                <button>Decline</button>
+                <button>Chat</button>
             </View>
 
         );
