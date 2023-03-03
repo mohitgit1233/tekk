@@ -57,7 +57,7 @@ export const MyJob = ({ navigation }) => {
 
   console.log(data2)
 
-  const filteredData = data2.filter((post) => post.offerStatus === jobStatus  && post.jobID.title.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredData = Offers.filter((post) => post.offerStatus === jobStatus  && post.jobID.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   
   return (
