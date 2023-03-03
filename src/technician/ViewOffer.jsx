@@ -3,43 +3,47 @@ import { View, Text, StyleSheet, Button } from 'react-native';
 import Moment from 'moment';
 
 const ViewOffer = ({ route }) => {
-  const { offer } = route.params;
-  const [job, setJob] = useState(null);
-
-  useEffect(() => {
-    fetch(`http://localhost:5001/api/v1/offers/${offer._id}`)
+    const { offer } = route.params;
+    const [job, setJob] = useState(null);
+  
+    useEffect(() => {
+      fetch(`http://localhost:5001/api/v1/offers/${offer._id}`)
+        .then(response => response.json())
+        .then(data => setJob(data))
+        .catch(error => console.error(error));
+    }, [offer.jobID]);
+  
+    const handleAccept = () => {
+      fetch(`http://localhost:5001/api/v1/offers/${offer._id}/accept`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ offer_id: offer._id })
+      })
       .then(response => response.json())
-      .then(data => setJob(data))
+      .then(data => {
+        setJob(data);
+        route.params.refreshData(); // call refreshData function here
+      })
       .catch(error => console.error(error));
-  }, [offer.jobID]);
-
-  const handleAccept = () => {
-    fetch(`http://localhost:5001/api/v1/offers/${offer._id}/accept`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ offer_id: offer._id })
-    })
-    .then(response => response.json())
-    .then(data => {
-      setJob(data);
-      route.params.refreshData();
-    })
-    .catch(error => console.error(error));
-  };
-
-  const handleDecline = () => {
-    fetch(`http://localhost:5001/api/v1/offers/${offer._id}/decline`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ offer_id: offer._id })
-    })
-    .then(response => response.json())
-    .then(data => {
-      setJob(data);
-      route.params.refreshData();
-    })
-    .catch(error => console.error(error));
-  };
+    };
+  
+    const handleDecline = () => {
+      fetch(`http://localhost:5001/api/v1/offers/${offer._id}/decline`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ offer_id: offer._id })
+      })
+      .then(response => response.json())
+      .then(data => {
+        setJob(data);
+        route.params.refreshData(); // call refreshData function here
+      })
+      .catch(error => console.error(error));
+    };
+  
+    // rest of the code
+  
+  
 
   if (!offer) {
     return <Text>Loading...</Text>;
@@ -50,7 +54,7 @@ const ViewOffer = ({ route }) => {
       <Text style={styles.offerDetail}>{offer.offerPrice}</Text>
       <Text style={styles.offerDetail}>{offer.offerHours}</Text>
       <Text style={styles.offerDetail}>{Moment(offer.prefer_start_date).format('d/MM/YYYY')}</Text>
-      {offer.isAccepted === null && (
+      {offer.isAccepted === false && (
         <View style={styles.buttonContainer}>
           <Button title="Accept" onPress={handleAccept} />
           <Button title="Decline" onPress={handleDecline} />
@@ -82,7 +86,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     marginTop: 20,
-    backgroundColor:'green'
   },
   offerAccepted: {
     fontSize: 18,

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, TextInput, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const SendOfferButton = ({ jobId }) => {
+const SendOfferButton = ({ jobId, refreshData }) => {
   const [offerPrice, setOfferPrice] = useState('');
   const [offerHours, setOfferHours] = useState('');
   const [preferStartDate, setPreferStartDate] = useState('');
@@ -23,7 +23,7 @@ const SendOfferButton = ({ jobId }) => {
     })
     .then(response => response.json())
     .then(data => {
-      navigation.navigate('ViewOffer', { offer: data });
+      navigation.navigate('ViewOffer', { offer: data, refreshData: refreshData });
     })
     .catch(error => console.error(error));
   };
@@ -50,6 +50,7 @@ const SendOfferButton = ({ jobId }) => {
       <Button
         title="Send Quote"
         onPress={handleSendOffer}
+        jobId={jobId}
       />
     </View>
   );

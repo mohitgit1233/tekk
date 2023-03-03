@@ -31,7 +31,7 @@ const JobContainer = () => {
       <Text style={styles.postDescription}>{post.title}</Text>
       <Text style={styles.postDescription}>{post.description}</Text>
       <Text style={styles.postDescription}>{Moment(post.posted_date).format('d/MM/YYYY')}</Text>
-      <SendOfferButton jobId={post._id} handleSendOffer={handleSendOffer} />
+      <Button title="Send Offer" jobId={post._id} onPress={handleSendOffer} />
       <Button title="Go back" onPress={() => navigation.goBack()} />
     </View>
   );
