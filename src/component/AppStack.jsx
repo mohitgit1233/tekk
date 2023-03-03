@@ -10,6 +10,8 @@ import {AspectRatio,Box,Button,HStack,Image,Text,VStack} from 'native-base';
 import SearchFilter from '../../components/SearchFilter';
 import SearchInput from '../../components/SearchInput';
 import JobContainer from '../container/JobContainer';
+import ViewOffer from '../technician/ViewOffer';
+import SendOfferButton from '../technician/SendOfferButton';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,6 +36,8 @@ export const AppStack = () => {
       />
      <Stack.Screen name='Search' component={SearchInput}></Stack.Screen>
      <Stack.Screen name='JobContainer' component={JobContainer}></Stack.Screen>
+     <Stack.Screen name='SendOffer' component={SendOfferButton}></Stack.Screen>
+     <Stack.Screen name='ViewOffer' component={ViewOffer}></Stack.Screen>
     </Stack.Navigator>
   );
 };

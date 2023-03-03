@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet,Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Button } from 'react-native';
 import Moment from 'moment';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import SendOfferButton from '../technician/SendOfferButton';
 
 const JobContainer = () => {
   const [post, setPost] = useState(null);
   const { params } = useRoute();
   const { id } = params;
+  const navigation = useNavigation();
 
   useEffect(() => {
     fetch(`http://localhost:5001/api/v1/jobs/${id}`)
@@ -14,6 +16,10 @@ const JobContainer = () => {
       .then((json) => setPost(json))
       .catch((error) => console.error(error));
   }, [id]);
+
+  const handleSendOffer = () => {
+    navigation.navigate('SendOffer', { jobId: post._id });
+  };
 
   if (!post) {
     return <Text>Loading...</Text>;
@@ -25,6 +31,8 @@ const JobContainer = () => {
       <Text style={styles.postDescription}>{post.title}</Text>
       <Text style={styles.postDescription}>{post.description}</Text>
       <Text style={styles.postDescription}>{Moment(post.posted_date).format('d/MM/YYYY')}</Text>
+      <SendOfferButton jobId={post._id} handleSendOffer={handleSendOffer} />
+      <Button title="Go back" onPress={() => navigation.goBack()} />
     </View>
   );
 };
