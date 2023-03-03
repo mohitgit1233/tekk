@@ -14,8 +14,9 @@ const SendOffer = ({ route }) => {
       jobID: jobId,
       offerPrice: parseInt(offerPrice),
       offerHours: parseInt(offerHours),
+      technicianId:'63f17ce257353e03afc8f124',
       prefer_start_date: preferStartDate,
-      tehnicianId:tech_id
+      
     };
 
     fetch('http://localhost:5001/api/v1/offers', {

@@ -47,22 +47,7 @@ const ViewOffer = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.offerDetail}>{offer.offerPrice}</Text>
-      <Text style={styles.offerDetail}>{offer.offerHours}</Text>
-      <Text style={styles.offerDetail}>{offer. technician_who_offered}</Text>
-      <Text style={styles.offerDetail}>{Moment(offer.prefer_start_date).format('YYYY-MM-DD')}</Text>
-      {offer.isAccepted === false && (
-        <View style={styles.buttonContainer}>
-          <Button title="Accept" onPress={handleAccept} />
-          <Button title="Decline" onPress={handleDecline} />
-        </View>
-      )}
-      {offer.isAccepted === true && (
-        <Text style={styles.offerAccepted}>Offer accepted</Text>
-      )}
-      {offer.isAccepted === false && (
-        <Text style={styles.offerDeclined}>Offer declined</Text>
-      )}
+       <Text> nothing</Text>
     </View>
   );
 };
