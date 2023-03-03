@@ -6,10 +6,10 @@ import {AspectRatio,Box,Button,HStack,Image,Text,VStack} from 'native-base';
 import SearchFilter from '../../components/SearchFilter';
 import SearchInput from '../../components/SearchInput';
 import JobContainer from '../container/JobContainer';
-import MyPosts from '../client/myPosts';
+import MyPosts from '../client/MyPosts';
 import Offers from '../client/Offers';
-import AllChats from '../client/allChats';
-import ClientAccount from '../client/clientAccount';
+import AllChats from '../client/AllChats';
+import ClientAccount from '../client/ClientAccount';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

@@ -8,26 +8,27 @@ const tech_id = '63f17ce257353e03afc8f124'
 
 export const MyJob = ({ navigation }) => {
 
+  const data2 = [];
   const [data, setData] = useState([]);
   const [Offers,setOffers] = useState([]);
   const [jobStatus, setJobStatus] = useState('ongoing');
   const [searchTerm, setSearchTerm] = useState('');
-  const url = "http://localhost:5001/api/v1/jobs";
+  // const url = "http://localhost:5001/api/v1/jobs";
 
   const urlOffer = `http://localhost:5001/api/v1/technician/${tech_id}/offers`
 
   useEffect(() => {
-    const fetchData = async() =>{
-      try {
-        const response = await fetch(url);
-        const json = await response.json();
-        setData(json);
+    // const fetchData = async() =>{
+    //   try {
+    //     const response = await fetch(url);
+    //     const json = await response.json();
+    //     setData(json);
       
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchData()
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // }
+    // fetchData()
 
     const fetchOfferData = async() =>{
       try {
@@ -41,8 +42,20 @@ export const MyJob = ({ navigation }) => {
     }
     fetchOfferData()
   }, []);
-  console.log(Offers)
-  const filteredData = data.filter(post => post.status === jobStatus  && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  if(Offers.length > 0){
+    // Offers.map((jobID) =>{
+    // setData(...data,Offers.jobID)}
+    // )
+    for(let i = 0; i < Offers.length;i++){
+      console.log('sss',Offers)
+      data2.push(Offers[i].jobID)
+    }
+    console.log("rrr",data2)
+    
+  }
+
+  const filteredData = Offers.filter(post => post.status === jobStatus  && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <Box bg="white" height="100%">
