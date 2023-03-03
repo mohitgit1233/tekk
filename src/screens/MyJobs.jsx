@@ -48,15 +48,18 @@ export const MyJob = ({ navigation }) => {
     // setData(...data,Offers.jobID)}
     // )
     for(let i = 0; i < Offers.length;i++){
-      console.log('sss',Offers)
+      console.log('sss',Offers[i].offerStatus)
       data2.push(Offers[i].jobID)
     }
-    console.log("rrr",data2)
+
     
   }
 
-  const filteredData = Offers.filter(post => post.status === jobStatus  && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
+  console.log(data2)
+  
+  const filteredData = data2.filter((post) => post.offerStatus === jobStatus  && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
+  
   return (
     <Box bg="white" height="100%">
       <View style={styles.searchContainer}>
