@@ -23,7 +23,7 @@ export const JobPosts = () => {
   }, []);
 
   const filteredData = data.filter(
-    (post) => post.status === 'new job' && post.title.toLowerCase().includes(searchTerm.toLowerCase())
+    (post) => post.status === 'new job' || post.status === 'offered'  && post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
 

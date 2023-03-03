@@ -20,7 +20,7 @@ const MyPosts = () => {
       
   }, []);
     if (postStatus == 'all'){
-        filteredData = data
+        filteredData = data.filter(post => post.status !== 'offered' && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
     } else{
         filteredData = data.filter(post => post.status === postStatus && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
     }
