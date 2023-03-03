@@ -3,9 +3,11 @@ import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, Vi
 import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const MyPosts = () => {
     const [data, setData] = useState([]);
+    const navigation = useNavigation();
   const [searchTerm, setSearchTerm] = useState('');
   const [postStatus, setpostStatus] = useState('all')
   let filteredData = []
@@ -51,7 +53,7 @@ const MyPosts = () => {
         {filteredData.map((post) => {
           Moment.locale('en');
           return (
-            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', {id: post._id})}>
+            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}>
               <View style={styles.postContainer}>
               <Image style={styles.postImage} source={{ uri: post.picture }} />
                 <Text style={styles.postTitle}>{post.title}</Text>
