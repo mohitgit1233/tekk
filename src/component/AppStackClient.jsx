@@ -10,6 +10,7 @@ import MyPosts from '../client/MyPosts';
 import Offers from '../client/Offers';
 import AllChats from '../client/AllChats';
 import ClientAccount from '../client/ClientAccount';
+import AllOffers from '../client/AllOffers';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,6 +35,7 @@ export const AppStackClient = () => {
       />
      <Stack.Screen name='Search' component={SearchInput}></Stack.Screen>
      <Stack.Screen name='JobContainer' component={JobContainer}></Stack.Screen>
+     <Stack.Screen name='AllOffers' component={AllOffers}></Stack.Screen>
     </Stack.Navigator>
   );
 };

@@ -44,7 +44,7 @@ const Offers = () => {
         {filteredData.map((post) => {
           Moment.locale('en');
           return (
-            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', {id: post._id})}>
+            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}>
               <View style={styles.postContainer}>
               <Image style={styles.postImage} source={{ uri: post.picture }} />
                 <Text style={styles.postTitle}>{post.title}</Text>
