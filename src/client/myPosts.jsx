@@ -15,18 +15,22 @@ const MyPosts = () => {
   const url = 'http://localhost:5001/api/v1/employer/63f1b9adcf55c1d5b65f58ad/jobs';
 
   useEffect(() => {
-    fetch(url)
+    const see = async()=>{
+   await fetch(url)
       .then((resp) => resp.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error));
-      
-  }, []);
-    if (postStatus == 'all'){
-        filteredData = data.filter(post => post.status !== 'offered' && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
-    } else{
-        filteredData = data.filter(post => post.status === postStatus && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
     }
-
+    see()
+  }, []);
+  console.log(data.length)
+  if (data.length > 0){
+    if (postStatus == 'all'){
+        filteredData = data.filter(post => post.status !== 'offered' );
+    } else{
+        filteredData = data.filter(post => post && post.status === postStatus && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+}
   
   console.log(data)
 
