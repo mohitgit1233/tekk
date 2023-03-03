@@ -3,51 +3,51 @@ import { View, Text, StyleSheet, Button } from 'react-native';
 import Moment from 'moment';
 
 const ViewOffer = ({ route }) => {
-    const { offer } = route.params;
-    const [job, setJob] = useState(null);
+  //   const { offer } = route.params;
+  //   const [job, setJob] = useState(null);
   
-    useEffect(() => {
-      fetch(`http://localhost:5001/api/v1/offers/${offer._id}`)
-        .then(response => response.json())
-        .then(data => setJob(data))
-        .catch(error => console.error(error));
-    }, [offer.jobID]);
+  //   useEffect(() => {
+  //     fetch(`http://localhost:5001/api/v1/offers/${offer._id}`)
+  //       .then(response => response.json())
+  //       .then(data => setJob(data))
+  //       .catch(error => console.error(error));
+  //   }, [offer.jobID]);
   
-    const handleAccept = () => {
-      fetch(`http://localhost:5001/api/v1/offers/${offer._id}/accept`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ offer_id: offer._id })
-      })
-      .then(response => response.json())
-      .then(data => {
-        setJob(data);
-        route.params.refreshData(); // call refreshData function here
-      })
-      .catch(error => console.error(error));
-    };
+  //   const handleAccept = () => {
+  //     fetch(`http://localhost:5001/api/v1/offers/${offer._id}/accept`, {
+  //       method: 'PUT',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({ offer_id: offer._id })
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       setJob(data);
+  //       route.params.refreshData(); // call refreshData function here
+  //     })
+  //     .catch(error => console.error(error));
+  //   };
   
-    const handleDecline = () => {
-      fetch(`http://localhost:5001/api/v1/offers/${offer._id}/decline`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ offer_id: offer._id })
-      })
-      .then(response => response.json())
-      .then(data => {
-        setJob(data);
-        route.params.refreshData(); // call refreshData function here
-      })
-      .catch(error => console.error(error));
-    };
+  //   const handleDecline = () => {
+  //     fetch(`http://localhost:5001/api/v1/offers/${offer._id}/decline`, {
+  //       method: 'PUT',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({ offer_id: offer._id })
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       setJob(data);
+  //       route.params.refreshData(); // call refreshData function here
+  //     })
+  //     .catch(error => console.error(error));
+  //   };
 
-  if (!offer) {
-    return <Text>Loading...</Text>;
-  }
+  // if (!offer) {
+  //   return <Text>Loading...</Text>;
+  // }
 
   return (
     <View style={styles.container}>
-       <Text> nothing</Text>
+       <Text> offer Posted</Text>
     </View>
   );
 };

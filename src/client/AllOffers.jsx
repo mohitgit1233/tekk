@@ -7,8 +7,10 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 const AllOffers = () => {
 
+    const emp_id = '63f1b9adcf55c1d5b65f58ad'
     const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const[accept_id,SetAcceptID] = useState('')
   // const [postStatus, setpostStatus] = useState('all')
   const { params } = useRoute();
   const { id } = params;
@@ -25,8 +27,30 @@ const AllOffers = () => {
       
   }, []);
 
+
+
      const filteredData = data
     console.log(data)
+
+
+    const handleClick = (pid,teid) =>{
+        console.log(pid)
+            const offer = {
+                technician_id:teid,
+                employer_id:emp_id,
+                offer_id: pid,
+                jobID:id       
+            };
+        
+            fetch(`http://localhost:5001/api/v1/offers/${pid}/accept`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(offer)
+            })
+            .then(response => response.json())
+            .catch(error => console.error(error));
+          
+    }
   return (
     <>
     {filteredData.map((post) => {
@@ -39,7 +63,8 @@ const AllOffers = () => {
                   <Text style={styles.postSubtitleText}>Estimated Hours:{post.offerHours}</Text>
                   <Text style={styles.postSubtitleText}>Estimated Price:{post.offerPrice}</Text>
                 </View>
-                <button>Accept</button>
+                <button onClick={() => {handleClick(post._id,post.technician_who_offered._id)}} >Accept</button>
+                {/* <TouchableOpacity key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}></TouchableOpacity> */}
                 <button>Decline</button>
                 <button>Chat</button>
             </View>
