@@ -9,7 +9,8 @@ export const JobPosts = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [tech,setTech] = useState([])
   const url = 'http://localhost:5001/api/v1/jobs';
-  const url2 = 'http://localhost:5001/api/v1/technicians/63f17ce257353e03afc8f124'
+
+  const tech_id = '63f17ce257353e03afc8f124'// to be replaced 
  
   
   useEffect(() => {
@@ -19,16 +20,12 @@ export const JobPosts = () => {
       .catch((error) => console.error(error));
      
 
-      fetch(url2)
-      .then((resp) => resp.json())
-      .then((json) => setTech(json))
-      .catch((error) => console.error(error));
   }, []);
 
   const filteredData = data.filter(
     (post) => post.status === 'new job' && post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
-    console.log("technnnn",typeof(tech._id))
+
 
   const navigation = useNavigation();
 
@@ -46,7 +43,7 @@ export const JobPosts = () => {
       {filteredData.map((post) => {
         Moment.locale('en');
         return (
-          <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id,tech_id:tech._id })}>
+          <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id,tech_id:tech_id })}>
             <View style={styles.postContainer}>
               <View style={styles.postTitleContainer}>
                 <Image style={styles.postImage} source={{ uri: post.picture }} />

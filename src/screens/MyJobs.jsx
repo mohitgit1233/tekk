@@ -4,12 +4,17 @@ import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 
+const tech_id = '63f17ce257353e03afc8f124'
+
 export const MyJob = ({ navigation }) => {
 
   const [data, setData] = useState([]);
+  const [Offers,setOffers] = useState([]);
   const [jobStatus, setJobStatus] = useState('ongoing');
   const [searchTerm, setSearchTerm] = useState('');
   const url = "http://localhost:5001/api/v1/jobs";
+
+  const urlOffer = `http://localhost:5001/api/v1/technician/${tech_id}/offers`
 
   useEffect(() => {
     const fetchData = async() =>{
@@ -23,9 +28,21 @@ export const MyJob = ({ navigation }) => {
       }
     }
     fetchData()
-  }, []);
 
-  const filteredData = data.filter(post => post.status === jobStatus && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    const fetchOfferData = async() =>{
+      try {
+        const response = await fetch(urlOffer);
+        const json = await response.json();
+        setOffers(json);
+      
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchOfferData()
+  }, []);
+  console.log(Offers)
+  const filteredData = data.filter(post => post.status === jobStatus  && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <Box bg="white" height="100%">
