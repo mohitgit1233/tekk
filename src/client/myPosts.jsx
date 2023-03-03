@@ -1,9 +1,9 @@
 import React from 'react'
-
-const myPosts = () => {
+import { Text } from 'native-base'
+const MyPosts = () => {
   return (
-    <div>myPosts</div>
+    <Text>Account</Text>
   )
 }
 
-export default myPosts
+export default MyPosts

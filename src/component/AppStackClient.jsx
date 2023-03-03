@@ -6,10 +6,10 @@ import {AspectRatio,Box,Button,HStack,Image,Text,VStack} from 'native-base';
 import SearchFilter from '../../components/SearchFilter';
 import SearchInput from '../../components/SearchInput';
 import JobContainer from '../container/JobContainer';
-import myPosts from '../client/myPosts';
-import requests from '../client/requests';
-import allChats from '../client/allChats';
-import clientAccount from '../client/clientAccount';
+import MyPosts from '../client/MyPosts';
+import Offers from '../client/Offers';
+import AllChats from '../client/AllChats';
+import ClientAccount from '../client/ClientAccount';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -44,13 +44,13 @@ export const TabStack = () => {
         headerTitleAlign: 'left',
       }} >
       
-      <Tab.Screen name="Job Posts" component={myPosts} />
+      <Tab.Screen name="Job Posts" component={MyPosts} />
       
-      <Tab.Screen name="Requests" component={requests} />
+      <Tab.Screen name="Requests" component={Offers} />
       
-      <Tab.Screen name="Chats" component={allChats} />
+      <Tab.Screen name="Chats" component={AllChats} />
       
-      <Tab.Screen name="Account" component={clientAccount} />
+      <Tab.Screen name="Account" component={ClientAccount} />
     
     </Tab.Navigator>
   );

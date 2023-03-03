@@ -1,9 +1,9 @@
 import React from 'react'
-
-const clientAccount = () => {
+import { Text } from 'native-base'
+const ClientAccount = () => {
   return (
-    <div>clientAccount</div>
+    <Text>Account</Text>
   )
 }
 
-export default clientAccount
+export default ClientAccount

@@ -1,9 +1,9 @@
 import React from 'react'
-
+import { Text } from 'native-base'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <Text>Account</Text>
   )
 }
 

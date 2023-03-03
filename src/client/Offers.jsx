@@ -1,9 +1,10 @@
-import React from 'react'
 import { Text } from 'native-base'
-const AllChats = () => {
+import React from 'react'
+
+const Offers = () => {
   return (
     <Text>Account</Text>
   )
 }
 
-export default AllChats
+export default Offers

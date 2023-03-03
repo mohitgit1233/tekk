@@ -1,8 +1,8 @@
 import React from 'react'
-
+import { Text } from 'native-base'
 const clientProfile = () => {
   return (
-    <div>clientProfile</div>
+    <Text>Account</Text>
   )
 }
 
