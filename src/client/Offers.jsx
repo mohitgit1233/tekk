@@ -3,9 +3,11 @@ import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, Vi
 import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const Offers = () => {
     const [data, setData] = useState([]);
+    const navigation = useNavigation();
   const [searchTerm, setSearchTerm] = useState('');
   // const [postStatus, setpostStatus] = useState('all')
   
