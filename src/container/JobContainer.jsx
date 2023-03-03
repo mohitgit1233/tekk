@@ -7,8 +7,9 @@ const JobContainer = ({ job, refreshData }) => {
   const navigation = useNavigation();
   const [post, setPost] = useState(null);
   const { params } = useRoute();
-  const { id } = params;
+  const { id,tech_id } = params;
 
+  console.log('in container',tech_id)
   useEffect(() => {
     fetch(`http://localhost:5001/api/v1/jobs/${id}`)
       .then((resp) => resp.json())
@@ -17,7 +18,7 @@ const JobContainer = ({ job, refreshData }) => {
   }, [id]);
 
   const handleSendOffer = () => {
-    navigation.navigate('SendOffer', { jobId: post._id });
+    navigation.navigate('SendOffer', { jobId: post._id,tech_id:tech_id });
   };
 
   if (!post) {

@@ -3,18 +3,19 @@ import { Button, TextInput, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const SendOffer = ({ route }) => {
-  const { jobId, refreshData } = route.params;
+  const { jobId, refreshData,tech_id } = route.params;
   const [offerPrice, setOfferPrice] = useState('');
   const [offerHours, setOfferHours] = useState('');
   const [preferStartDate, setPreferStartDate] = useState('');
   const navigation = useNavigation();
-
+  console.log('in sending',tech_id)
   const handleSendOffer = () => {
     const offer = {
       jobID: jobId,
       offerPrice: parseInt(offerPrice),
       offerHours: parseInt(offerHours),
-      prefer_start_date: preferStartDate
+      prefer_start_date: preferStartDate,
+      technician_who_offered:tech_id
     };
 
     fetch('http://localhost:5001/api/v1/offers', {
