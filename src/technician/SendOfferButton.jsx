@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Button, TextInput, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const SendOfferButton = ({ jobId, refreshData }) => {
+const SendOffer = ({ route }) => {
+  const { jobId, refreshData } = route.params;
   const [offerPrice, setOfferPrice] = useState('');
   const [offerHours, setOfferHours] = useState('');
   const [preferStartDate, setPreferStartDate] = useState('');
@@ -56,4 +57,4 @@ const SendOfferButton = ({ jobId, refreshData }) => {
   );
 };
 
-export default SendOfferButton;
+export default SendOffer;
