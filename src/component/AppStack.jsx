@@ -12,6 +12,7 @@ import SearchInput from '../../components/SearchInput';
 import JobContainer from '../container/JobContainer';
 import ViewOffer from '../technician/ViewOffer';
 import SendOfferButton from '../technician/SendOfferButton';
+import { Profile } from '../reusable screens/Profile';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -38,6 +39,7 @@ export const AppStack = () => {
      <Stack.Screen name='JobContainer' component={JobContainer}></Stack.Screen>
      <Stack.Screen name='SendOffer' component={SendOfferButton}></Stack.Screen>
      <Stack.Screen name='ViewOffer' component={ViewOffer}></Stack.Screen>
+     <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
     </Stack.Navigator>
   );
 };
