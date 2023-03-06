@@ -52,88 +52,105 @@ const MyPosts = () => {
         
       </View>
       <ScrollView contentContainerStyle={styles.container}>
-        {
-        filteredData.length > 0 ? <>
-        {filteredData.map((post) => {
-          Moment.locale('en');
-          return (
-            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}>
-              <View style={styles.postContainer}>
+  {filteredData.length > 0 ? (
+    <>
+      {filteredData.map((post) => {
+        Moment.locale('en');
+        return (
+          <TouchableOpacity key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}>
+            <View style={styles.postContainer}>
               <Image style={styles.postImage} source={{ uri: post.picture }} />
-                <Text style={styles.postTitle}>{post.title}</Text>
-                <Text style={styles.postDescription}>{post.description}</Text>
-                <Text style={styles.postDate}>{Moment(post.posted_date).format('D MMMM YYYY')}</Text>
-                <Text style={styles.postDescription}>{post.status}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
-        </> :<>
-        <Text>nothing found</Text>
-        </>
-        }
-      </ScrollView>
+              <Text style={styles.postTitle}>{post.title}</Text>
+              <Text style={styles.postDescription}>{post.description}</Text>
+              <Text style={styles.postDate}>{Moment(post.posted_date).format('D MMMM YYYY')}</Text>
+              <Text style={styles.postDescription}>{post.status}</Text>
+            </View>
+          </TouchableOpacity>
+        );
+      })}
+    </>
+  ) : (
+    <>
+      <Text>nothing found</Text>
+    </>
+  )}
+</ScrollView>
+<TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('NewPost')}>
+    <AntDesign name="plus" size={24} color="white" />
+  </TouchableOpacity>
     </Box>
   )
 }
 
 const styles = StyleSheet.create({
-    container: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 10,
-    },filterContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        display:'flex',
-        flexDirection:'row',
-        gap:20,
-        padding: 10,
-      },
-    searchContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginVertical: 10,
-      paddingHorizontal: 10,
-      backgroundColor: '#FFFFFF',
-      borderRadius: 5,
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+  },
+  filterContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    display:'flex',
+    flexDirection:'row',
+    gap:20,
+    padding: 10,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+    paddingHorizontal: 10,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 5,
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+  },
+  postContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    searchIcon: {
-      marginRight: 10,
-    },
-    searchInput: {
-      flex: 1,
-      height: 40,
-    },
-    postContainer: {
-      backgroundColor: '#FFFFFF',
-      borderRadius: 10,
-      padding: 20,
-      marginBottom: 20,
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-    },
-    postTitle: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      marginBottom: 10,
-    },
-    postDescription: {
-      fontSize: 16,
-      marginBottom: 10,
-    },
-    postImage: {
-      width: 50,
-      height: 50,
-      marginRight: 10,
-      borderRadius: 25,
-    },
-  })
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  postTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  postDescription: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  postImage: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+    borderRadius: 25,
+  },
+  addButton: {
+    backgroundColor: 'blue',
+    borderRadius: 50,
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
+    right: 30, // Change the value to move the button further to the right
+  },
+});
 
-export default MyPosts
+export default MyPosts;

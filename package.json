@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^0.17.2",
     "@react-navigation/bottom-tabs": "^6.5.5",
     "@react-navigation/material-top-tabs": "^6.6.1",
@@ -19,7 +20,7 @@
     "expo": "~47.0.12",
     "expo-status-bar": "~1.4.2",
     "moment": "^2.29.4",
-    "native-base": "^3.4.25",
+    "native-base": "^3.4.26",
     "react": "18.1.0",
     "react-calendar": "^4.0.0",
     "react-dom": "18.1.0",
