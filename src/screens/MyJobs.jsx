@@ -84,7 +84,7 @@ export const MyJob = ({ navigation }) => {
         {filteredData.map((post) => {
           Moment.locale('en');
           return (
-            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
+            <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
               <View style={styles.postContainer}>
               <Image style={styles.postImage} source={{ uri: post.jobID.picture }} />
                 <Text style={styles.postTitle}>{post.jobID.title}</Text>
@@ -142,6 +142,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  postContainerP: {
+    width: '100%'
   },
   postTitle: {
     fontSize: 20,

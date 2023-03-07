@@ -58,7 +58,7 @@ const MyPosts = () => {
       {filteredData.map((post) => {
         Moment.locale('en');
         return (
-          <TouchableOpacity key={post._id} onPress={() => navigation.navigate('PostDetails', {id: post._id,status:post.status})}>
+          <TouchableOpacity style={ styles.postContainerP } key={post._id} onPress={() => navigation.navigate('PostDetails', {id: post._id,status:post.status})}>
             <View style={styles.postContainer}>
               <Image style={styles.postImage} source={{ uri: post.picture }} />
               <Text style={styles.postTitle}>{post.title}</Text>
@@ -125,6 +125,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  postContainerP: {
+    // backgroundColor: 'red',
+    // flex: 1,
+    width: '100%', // Set width to stretch to maximum width
   },
   postTitle: {
     fontSize: 20,
