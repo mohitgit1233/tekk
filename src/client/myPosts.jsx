@@ -75,7 +75,7 @@ const MyPosts = () => {
     </>
   )}
 </ScrollView>
-<TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('NewPost')}>
+<TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('CreatePost')}>
     <AntDesign name="plus" size={24} color="white" />
   </TouchableOpacity>
     </Box>

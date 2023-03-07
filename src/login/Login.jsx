@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, Text } from 'react-native';
-import { NativeBaseProvider } from 'native-base';
+import { Pressable, StyleSheet, Text } from 'react-native';
+import { Input, NativeBaseProvider } from 'native-base';
 import { AppStack } from '../component/AppStack';
 import { Chat } from '../screens/Chat';
 import { AppStackClient } from '../component/AppStackClient';
@@ -11,6 +11,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 // import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-ionicons';
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -20,7 +21,7 @@ const Stack = createNativeStackNavigator();
 
 export const Login = () => {
   const navigation = useNavigation();
-
+  const [show, setShow] = React.useState(false);
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
   const handleTextChange = (inputText) => {
@@ -52,18 +53,19 @@ export const Login = () => {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Text>Sign into your account</Text>
-      <TextInput
-        value={text}
-        style={styles.field}
-        onChangeText={handleTextChange}
-        placeholder="email"
-      />
-      <TextInput
-        value={text2}
-        onChangeText={handleTextChange2}
-        placeholder="password"
-        style={styles.field}
-      />
+      <Input w={{
+      base: "75%",
+      md: "25%"
+    }}style={styles.field} 
+    InputLeftElement={<Icon  size={5} ml="2" color="muted.400" />} placeholder="Name" />
+
+      <Input w={{
+      base: "75%",
+      md: "25%"
+    }} style={styles.field} 
+    type={show ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow(!show)}>
+            <Icon  size={5} mr="2" color="muted.400" />
+          </Pressable>} placeholder="Password" />
       <Button style={styles.botton}
         title="Login as Technician"
         onPress={handleSubmit}
@@ -86,13 +88,12 @@ const styles = StyleSheet.create({
   },
   field:{
     fontSize:'x-large',
-    border: '1px solid black',
-    margin:'1rem',
-    padding:'10px'
+    border: '1% solid black',
+    marginBottom:'2%'
     
   },
   botton:{
-    margin:'1rem',
-    padding:'10px'
+    margin:'10%',
+    padding:'10%'
   }
 });

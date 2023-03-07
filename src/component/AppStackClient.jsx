@@ -8,9 +8,10 @@ import SearchInput from '../../components/SearchInput';
 import JobContainer from '../container/JobContainer';
 import MyPosts from '../client/myPosts';
 import Offers from '../client/Offers';
-import AllChats from '../client/allChats';
-import ClientAccount from '../client/clientAccount';
+import AllChats from '../client/AllChats';
+import ClientAccount from '../client/ClientAccount';
 import AllOffers from '../client/AllOffers';
+import CreatePost from '../client/CreatePost';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -36,6 +37,7 @@ export const AppStackClient = () => {
      <Stack.Screen name='Search' component={SearchInput}></Stack.Screen>
      <Stack.Screen name='JobContainer' component={JobContainer}></Stack.Screen>
      <Stack.Screen name='AllOffers' component={AllOffers}></Stack.Screen>
+     <Stack.Screen name='CreatePost' component={CreatePost}></Stack.Screen>
     </Stack.Navigator>
   );
 };
