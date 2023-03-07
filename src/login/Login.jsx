@@ -26,6 +26,9 @@ export const Login = () => {
   const handleTextChange = (inputText) => {
     setText(inputText);
   };
+  const handleTextChange2 = (inputText) => {
+    setText2(inputText);
+  };
   const handleSubmit = () => {
     // Do something with the text value, e.g. send it to a server
     //technician
@@ -56,8 +59,8 @@ export const Login = () => {
         placeholder="email"
       />
       <TextInput
-        value={text}
-        onChangeText={handleTextChange}
+        value={text2}
+        onChangeText={handleTextChange2}
         placeholder="password"
         style={styles.field}
       />
