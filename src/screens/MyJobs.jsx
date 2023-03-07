@@ -57,8 +57,10 @@ export const MyJob = ({ navigation }) => {
 
   console.log(data2)
 
-  const filteredData = Offers.filter((post) => post.offerStatus === jobStatus  && post.jobID.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
+  const filteredData = Offers.filter((post) => post.offerStatus === jobStatus  );
+
+  console.log('ddddd',filteredData.length)
   
   return (
     <Box bg="white" height="100%">
@@ -77,6 +79,8 @@ export const MyJob = ({ navigation }) => {
         <Button variant={jobStatus === 'pending' ? 'solid' : 'outline'} onPress={() => setJobStatus('pending')} mb={2}>Pending</Button>
       </View>
       <ScrollView contentContainerStyle={styles.container}>
+       {filteredData.length > 0 ?  
+        <>
         {filteredData.map((post) => {
           Moment.locale('en');
           return (
@@ -87,9 +91,10 @@ export const MyJob = ({ navigation }) => {
                 <Text style={styles.postDescription}>{post.jobID.description}</Text>
                 <Text style={styles.postDate}>{Moment(post.jobID.posted_date).format('D MMMM YYYY')}</Text>
               </View>
+
             </TouchableOpacity>
           );
-        })}
+        })}</>: <Text>Nothing found</Text>}
       </ScrollView>
     </Box>
   );

@@ -56,13 +56,15 @@ export const TabStack = () => {
               name={
                  'ios-home'
               }
+              size={size}
+              color={color}
             />
           );
         }
         else if (route.name === 'Chats') {
           return (
             <Ionicons
-              name={'briefcase'}
+              name={'chatbox'}
               size={size}
               color={color}
             />
@@ -76,7 +78,15 @@ export const TabStack = () => {
               color={color}
             />
           );
-        }
+        }else if (route.name === 'Requests') {
+            return (
+              <Ionicons
+                name={'briefcase'}
+                size={size}
+                color={color}
+              />
+            );
+          }
       },
       tabBarInactiveTintColor: 'gray',
       tabBarActiveTintColor: 'tomato',

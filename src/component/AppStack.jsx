@@ -55,6 +55,8 @@ export const TabStack = () => {
               name={
                  'ios-home'
               }
+              size={size}
+              color={color}
             />
           );
         } else if (route.name === 'Activities') {
