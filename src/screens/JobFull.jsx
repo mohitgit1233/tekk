@@ -49,7 +49,7 @@ const JobFull = () => {
               <Text style={styles.postDescription}>{data[0] && data[0].offer_id.offerPrice}</Text>
               <Text>Job Description :</Text>
               <Text style={styles.postDescription}>{data[0] && data[0].job.description}</Text>
-              <Text>Hours spent-- mins :</Text>
+              <Text>Hours spent-- seconds :</Text>
               <Text style={styles.postDescription}>{data[0] && data[0].total_hours }</Text>
               <Text>Total income :</Text>
               <Text style={styles.postDescription}>{data[0] && data[0].total_income }</Text>
