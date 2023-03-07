@@ -1,12 +1,24 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { NativeBaseProvider } from 'native-base';
 import Footer from './components/Footer';
 import { AppStack } from './src/component/AppStack';
-import { Chat } from './src/screens/Chat';
 import { AppStackClient } from './src/component/AppStackClient';
+
+import { Chat } from './src/screens/Chat';
+import { Activities } from './src/screens/Activities';
+
+import { MyJobs } from './src/screens/MyJobs';
+
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { View, TextInput, Button } from 'react-native';
+import React, { useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
+// import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Login } from './src/login/Login'
+
+
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -14,44 +26,29 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+
+  const [text, setText] = useState('');
+  const [text2, setText2] = useState('');
+  const handleTextChange = (inputText) => {
+    setText(inputText);
+  };
+  const handleSubmit = () => {
+    // Do something with the text value, e.g. send it to a server
+    console.log(text);
+  };
   return (
     <NavigationContainer>
       <NativeBaseProvider>
-      <>
-   
-   <Tab.Navigator
-     initialRouteName="Posts"
 
-     screenOptions={{
+      <Stack.Navigator>
+        <Stack.Screen name="Other" component={Login} />
+        <Stack.Screen name="technicianHome" component={AppStack} />
+        <Stack.Screen name="clientHome" component={AppStackClient} />
+      </Stack.Navigator>
 
-       tabBarIndicatorStyle: { backgroundColor: '#2c3e50', height: 2 },
-
-       tabBarLabelStyle: {  fontSize: 13,textTransform: 'none' },
-     }}
-   >
-     
-     <Tab.Screen
-       name="Posts"
-       component={AppStack}
-       options={
-           { tabBarLabel: 'Technician' }
-       }
-     />
-     <Tab.Screen
-       name="TvScreen"
-       component={AppStackClient}
-       
-       options={{ tabBarLabel: 'Client' }}
-     />
-
-   </Tab.Navigator>
- </>
-      {/* <AppStack /> */}
-        {/* <Stack.Navigator>
-          <Stack.Screen name="Jobs Posts" component={jobFeed} />
-        </Stack.Navigator> */}
-        {/* <Footer /> */}
       </NativeBaseProvider>
+
     </NavigationContainer>
   );
 }
