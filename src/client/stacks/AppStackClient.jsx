@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {AspectRatio,Box,Button,HStack,Image,Text,VStack} from 'native-base';
 import SearchFilter from '../../../components/SearchFilter';
 import SearchInput from '../../../components/SearchInput';
-import JobContainer from '../../container/JobContainer';
+import JobContainer from '../../technician/container/JobContainer';
 import MyPosts from '../myPosts';
 import Offers from '../Offers';
 

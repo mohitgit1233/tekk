@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import Icon from 'react-native-ionicons';
 import SearchInput from '../../../components/SearchInput';
-import JobContainer from '../../container/JobContainer';
+import JobContainer from '../container/JobContainer';
 import ViewOffer from '../ViewOffer';
 import SendOfferButton from '../SendOfferButton';
 import { Profile } from '../../reusable screens/Profile';
