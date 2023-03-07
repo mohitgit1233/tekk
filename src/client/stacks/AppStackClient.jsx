@@ -3,18 +3,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {AspectRatio,Box,Button,HStack,Image,Text,VStack} from 'native-base';
-import SearchFilter from '../../components/SearchFilter';
-import SearchInput from '../../components/SearchInput';
-import JobContainer from '../container/JobContainer';
-import MyPosts from '../client/myPosts';
-import Offers from '../client/Offers';
+import SearchFilter from '../../../components/SearchFilter';
+import SearchInput from '../../../components/SearchInput';
+import JobContainer from '../../container/JobContainer';
+import MyPosts from '../myPosts';
+import Offers from '../Offers';
 
-import AllChats from '../client/allChats';
+import AllChats from '../allChats';
 
-import ClientAccount from '../client/clientAccount';
-import AllOffers from '../client/AllOffers';
-import CreatePost from '../client/CreatePost';
-import PostDetails from '../client/PostDetails';
+import ClientAccount from '../clientAccount';
+import AllOffers from '../AllOffers';
+import CreatePost from '../CreatePost';
+import PostDetails from '../PostDetails';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
