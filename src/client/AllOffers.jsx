@@ -57,7 +57,7 @@ const AllOffers = () => {
             useEffect
             })
             .catch(error => console.error(error));
-            navigation.goBack('MyPosts');
+            navigation.goBack();
     }
   return (
     <>
