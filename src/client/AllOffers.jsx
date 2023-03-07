@@ -61,10 +61,10 @@ const AllOffers = () => {
                   <Text style={styles.postSubtitleText}>Estimated Hours:{post.offerHours}</Text>
                   <Text style={styles.postSubtitleText}>Estimated Price:{post.offerPrice}</Text>
                 </View>
-                <button onClick={() => {handleClick(post._id,post.technician_who_offered._id)}} >Accept</button>
+                {/* <button onClick={() => {handleClick(post._id,post.technician_who_offered._id)}} >Accept</button>
                 {/* <TouchableOpacity key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}></TouchableOpacity> */}
-                <button>Decline</button>
-                <button>Chat</button>
+                {/* <button>Decline</button>
+                <button>Chat</button> */} 
             </View>
 
         );
