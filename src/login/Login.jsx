@@ -48,9 +48,10 @@ export const Login = () => {
 
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text>Tekk</Text>
+      <Text>Sign into your account</Text>
       <TextInput
         value={text}
+        style={styles.field}
         onChangeText={handleTextChange}
         placeholder="email"
       />
@@ -58,12 +59,13 @@ export const Login = () => {
         value={text}
         onChangeText={handleTextChange}
         placeholder="password"
+        style={styles.field}
       />
-      <Button
+      <Button style={styles.botton}
         title="Login as Technician"
         onPress={handleSubmit}
       />
-      <Button
+      <Button style={styles.botton}
         title="Login as Client"
         onPress={handleSubmit2}
       />
@@ -79,4 +81,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  field:{
+    fontSize:'x-large',
+    border: '1px solid black',
+    margin:'1rem',
+    padding:'10px'
+    
+  },
+  botton:{
+    margin:'1rem',
+    padding:'10px'
+  }
 });

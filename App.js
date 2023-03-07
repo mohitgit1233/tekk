@@ -42,7 +42,7 @@ export default function App() {
       <NativeBaseProvider>
 
       <Stack.Navigator>
-        <Stack.Screen name="Other" component={Login} />
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="technicianHome" component={AppStack} />
         <Stack.Screen name="clientHome" component={AppStackClient} />
       </Stack.Navigator>
