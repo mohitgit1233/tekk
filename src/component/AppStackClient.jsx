@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {AspectRatio,Box,Button,HStack,Image,Text,VStack} from 'native-base';
 import SearchFilter from '../../components/SearchFilter';
@@ -42,9 +42,41 @@ export const AppStackClient = () => {
 
 export const TabStack = () => {
   return (
-    <Tab.Navigator   screenOptions={{
-        headerTitleAlign: 'left',
-      }} >
+    <Tab.Navigator
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        if (route.name === 'Job Posts') {
+          return (
+            <Ionicons
+              name={
+                 'ios-home'
+              }
+            />
+          );
+        }
+        else if (route.name === 'Chats') {
+          return (
+            <Ionicons
+              name={'briefcase'}
+              size={size}
+              color={color}
+            />
+          );
+        }
+        else if (route.name === 'Account') {
+          return (
+            <Ionicons
+              name={'person'}
+              size={size}
+              color={color}
+            />
+          );
+        }
+      },
+      tabBarInactiveTintColor: 'gray',
+      tabBarActiveTintColor: 'tomato',
+    })}
+  >
       
       <Tab.Screen name="Job Posts" component={MyPosts} />
       
