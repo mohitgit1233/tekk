@@ -8,8 +8,10 @@ import SearchInput from '../../components/SearchInput';
 import JobContainer from '../container/JobContainer';
 import MyPosts from '../client/myPosts';
 import Offers from '../client/Offers';
-import AllChats from '../client/AllChats';
-import ClientAccount from '../client/ClientAccount';
+
+import AllChats from '../client/allChats';
+
+import ClientAccount from '../client/clientAccount';
 import AllOffers from '../client/AllOffers';
 import CreatePost from '../client/CreatePost';
 import PostDetails from '../client/PostDetails';

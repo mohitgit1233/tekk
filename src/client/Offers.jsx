@@ -4,7 +4,7 @@ import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-
+//Requests
 const Offers = () => {
     const [data, setData] = useState([]);
     const navigation = useNavigation();
@@ -46,7 +46,7 @@ const Offers = () => {
         {filteredData.map((post) => {
           Moment.locale('en');
           return (
-            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}>
+            <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}>
               <View style={styles.postContainer}>
               <Image style={styles.postImage} source={{ uri: post.picture }} />
                 <Text style={styles.postTitle}>{post.title}</Text>
@@ -107,6 +107,9 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
       elevation: 5,
+    },
+    postContainerP: {
+      width: '100%'
     },
     postTitle: {
       fontSize: 20,

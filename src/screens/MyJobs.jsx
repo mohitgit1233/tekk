@@ -84,15 +84,22 @@ export const MyJob = ({ navigation }) => {
         {filteredData.map((post) => {
           Moment.locale('en');
           return (
-            <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
-              <View style={styles.postContainer}>
-              <Image style={styles.postImage} source={{ uri: post.jobID.picture }} />
-                <Text style={styles.postTitle}>{post.jobID.title}</Text>
-                <Text style={styles.postDescription}>{post.jobID.description}</Text>
-                <Text style={styles.postDate}>{Moment(post.jobID.posted_date).format('D MMMM YYYY')}</Text>
-              </View>
-
-            </TouchableOpacity>
+            post.jobID === null ? (
+              <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
+                <View style={styles.postContainer}>
+                  <Text>job id null. check backend</Text>
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
+                <View style={styles.postContainer}>
+                  <Image style={styles.postImage} source={{ uri: post.jobID.picture }} />
+                  <Text style={styles.postTitle}>{post.jobID.title}</Text>
+                  <Text style={styles.postDescription}>{post.jobID.description}</Text>
+                  <Text style={styles.postDate}>{Moment(post.jobID.posted_date).format('D MMMM YYYY')}</Text>
+                </View>
+              </TouchableOpacity>
+            )
           );
         })}</>: <Text>Nothing found</Text>}
       </ScrollView>
