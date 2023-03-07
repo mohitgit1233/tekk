@@ -12,6 +12,7 @@ import AllChats from '../client/AllChats';
 import ClientAccount from '../client/ClientAccount';
 import AllOffers from '../client/AllOffers';
 import CreatePost from '../client/CreatePost';
+import PostDetails from '../client/PostDetails';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -38,6 +39,8 @@ export const AppStackClient = () => {
      <Stack.Screen name='JobContainer' component={JobContainer}></Stack.Screen>
      <Stack.Screen name='AllOffers' component={AllOffers}></Stack.Screen>
      <Stack.Screen name='CreatePost' component={CreatePost}></Stack.Screen>
+     <Stack.Screen name='MyPosts' component={MyPosts}></Stack.Screen>
+     <Stack.Screen name='PostDetails' component={PostDetails}></Stack.Screen>
     </Stack.Navigator>
   );
 };

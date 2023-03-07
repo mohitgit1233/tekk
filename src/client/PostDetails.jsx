@@ -3,82 +3,67 @@ import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, Vi
 import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-const MyPosts = () => {
+const PostDetails = () => {
     const [data, setData] = useState([]);
     const navigation = useNavigation();
-    const [status,SetStatus] = useState('')
+    
   const [searchTerm, setSearchTerm] = useState('');
   const [postStatus, setpostStatus] = useState('all')
+  const { params } = useRoute();
+  const { id,status } = params;
   let filteredData = []
- 
-  const url = 'http://localhost:5001/api/v1/employer/63f1b9adcf55c1d5b65f58ad/jobs';
+    
+  
+  const url = `http://localhost:5001/api/v1/jobs/${id}`;
 
   useEffect(() => {
     const see = async()=>{
-   await fetch(url)
+        await fetch(url)
       .then((resp) => resp.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error));
     }
     see()
   }, []);
-  console.log(data.length)
-  if (data.length > 0){
-    if (postStatus == 'all'){
-        filteredData = data.filter(post => post.status !== 'offered' );
-    } else{
-        filteredData = data.filter(post => post && post.status === postStatus && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
-    }
-}
+
+        filteredData = data
+        
   
-  console.log(data)
 
   return (
     <Box bg="white" height="100%">
       <View style={styles.searchContainer}>
-        <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search Jobs"
-          onChangeText={(text) => setSearchTerm(text)}
-          value={searchTerm}
-        />
+   
       </View>
-      <View style={styles.filterContainer}>
-      <Button variant={postStatus === 'all' ? 'solid' : 'outline'} onPress={() => setpostStatus('all')} mr={2} mb={2}>All posts</Button>
-        <Button variant={postStatus === 'ongoing' ? 'solid' : 'outline'} onPress={() => setpostStatus('ongoing')} mr={2} mb={2}>Ongoing</Button>
-        <Button variant={postStatus === 'upcoming' ? 'solid' : 'outline'} onPress={() => setpostStatus('upcoming')} mb={2}>Upcoming</Button>
-        
-      </View>
+
       <ScrollView contentContainerStyle={styles.container}>
-  {filteredData.length > 0 ? (
+  {data ? (
     <>
-      {filteredData.map((post) => {
-        Moment.locale('en');
-        return (
-          <TouchableOpacity key={post._id} onPress={() => navigation.navigate('PostDetails', {id: post._id,status:post.status})}>
+         
             <View style={styles.postContainer}>
-              <Image style={styles.postImage} source={{ uri: post.picture }} />
-              <Text style={styles.postTitle}>{post.title}</Text>
-              <Text style={styles.postDescription}>{post.description}</Text>
-              <Text style={styles.postDate}>{Moment(post.posted_date).format('D MMMM YYYY')}</Text>
-              <Text style={styles.postDescription}>{post.status}</Text>
-            </View>
-          </TouchableOpacity>
-        );
-      })}
+              <Image style={styles.postImage} source={{ uri: data.picture }} />
+              <Text style={styles.postTitle}>{data.title}</Text>
+              <Text style={styles.postDescription}>{data.description}</Text>
+              <Text style={styles.postDate}>{Moment(data.posted_date).format('D MMMM YYYY')}</Text>
+              <Text style={styles.postDescription}>{data.status}</Text>
+            </View>   
+
+          
+                {status == 'upcoming' ? <Button>Cancel Appointment</Button> : <></>}    
+                {status == 'new job' ? <Text>No offers yet</Text> : <></>} 
+                {status == 'ongoing' ? <Button>Complete Job</Button> : <></>} 
+         
+      
     </>
   ) : (
     <>
-      <Text>nothing found</Text>
+      <Text>nothing {filteredData.length} found</Text>
     </>
   )}
 </ScrollView>
-<TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('CreatePost')}>
-    <AntDesign name="plus" size={24} color="white" />
-  </TouchableOpacity>
+
     </Box>
   )
 }
@@ -154,4 +139,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyPosts;
+export default PostDetails;
