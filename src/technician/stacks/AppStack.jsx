@@ -14,6 +14,9 @@ import ViewOffer from '../ViewOffer';
 import SendOfferButton from '../SendOfferButton';
 import { Profile } from '../screens/Profile';
 import JobFull from '../screens/JobFull';
+import { Login } from '../../login/Login'
+// import { CommonActions } from '@react-navigation/native';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,6 +45,8 @@ export const AppStack = () => {
      <Stack.Screen name='ViewOffer' component={ViewOffer}></Stack.Screen>
      <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
      <Stack.Screen name='JobFull' component={JobFull}></Stack.Screen>
+     <Stack.Screen name='Logout' component={Login}></Stack.Screen>
+
     </Stack.Navigator>
   );
 };

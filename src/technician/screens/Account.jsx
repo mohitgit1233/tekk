@@ -1,6 +1,11 @@
 import { AspectRatio, Box, Button, HStack, Image, Text, VStack } from 'native-base';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
+// import { Reload } from 'react-native/Libraries/Reload/Reload';
+import { CommonActions } from '@react-navigation/native';
+
+
+
 
 export const Account = ({ navigation }) => {
 
@@ -18,6 +23,18 @@ export const Account = ({ navigation }) => {
 
   const handleLogoutPress = () => {
     // Handle logout logic here
+    // navigation.navigate('Logout');
+    // Reload.reload();
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'Logout' }],
+      })
+    );
+
+    
+    // navigation.navigate('Logout', { refreshTimeStamp: new 
+    //   Date().toISOString() })
   };
 
   return (
