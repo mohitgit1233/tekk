@@ -17,6 +17,8 @@ import CreatePost from '../CreatePost';
 import PostDetails from '../PostDetails';
 import TechnicianProfile  from '../TechnicianProfile';
 import { Login } from '../../login/Login'
+import NotificationPage from '../../reusable screens/NotificationPage';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -46,6 +48,8 @@ export const AppStackClient = () => {
      <Stack.Screen name='MyPosts' component={MyPosts}></Stack.Screen>
      <Stack.Screen name='PostDetails' component={PostDetails}></Stack.Screen>
      <Stack.Screen name='Profile' component={TechnicianProfile}></Stack.Screen>
+     <Stack.Screen name='Notifications' component={NotificationPage}></Stack.Screen>
+
      {/* <Stack.Screen name='Logout' component={Login}></Stack.Screen> */}
 
     </Stack.Navigator>

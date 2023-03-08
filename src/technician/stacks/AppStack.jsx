@@ -15,6 +15,7 @@ import SendOfferButton from '../SendOfferButton';
 import { Profile } from '../screens/Profile';
 import JobFull from '../screens/JobFull';
 import { Login } from '../../login/Login'
+import NotificationPage from '../../reusable screens/NotificationPage';
 // import { CommonActions } from '@react-navigation/native';
 
 
@@ -45,6 +46,8 @@ export const AppStack = () => {
      <Stack.Screen name='ViewOffer' component={ViewOffer}></Stack.Screen>
      <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
      <Stack.Screen name='JobFull' component={JobFull}></Stack.Screen>
+     <Stack.Screen name='Notifications' component={NotificationPage}></Stack.Screen>
+     
      {/* <Stack.Screen name='Logout' component={Login}></Stack.Screen> */}
 
     </Stack.Navigator>
