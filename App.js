@@ -6,10 +6,6 @@ import Footer from './components/Footer';
 import { AppStack } from './src/technician/stacks/AppStack';
 import { AppStackClient } from './src/client/stacks/AppStackClient';
 
-import { Chat } from './src/screens/Chat';
-import { Activities } from './src/screens/Activities';
-
-import { MyJobs } from './src/screens/MyJobs';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { View, TextInput, Button } from 'react-native';

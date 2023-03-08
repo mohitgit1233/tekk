@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { Input, NativeBaseProvider } from 'native-base';
 import { AppStack } from '../technician/stacks/AppStack';
-import { Chat } from '../screens/Chat';
+import { Chat } from '../technician/screens/Chat';
 import { AppStackClient } from '../client/stacks/AppStackClient';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { View, TextInput, Button } from 'react-native';

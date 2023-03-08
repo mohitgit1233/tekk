@@ -1,10 +1,10 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Account } from '../../screens/Account';
-import { Activities } from '../../screens/Activities';
-import { Chat } from '../../screens/Chat';
-import { JobPosts } from '../../screens/JobPosts';
-import { MyJob } from '../../screens/MyJobs';
+import { Account } from '../screens/Account';
+import { Activities } from '../screens/Activities';
+import { Chat } from '../screens/Chat';
+import { JobPosts } from '../screens/JobPosts';
+import { MyJob } from '../screens/MyJobs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import Icon from 'react-native-ionicons';
@@ -13,7 +13,7 @@ import JobContainer from '../container/JobContainer';
 import ViewOffer from '../ViewOffer';
 import SendOfferButton from '../SendOfferButton';
 import { Profile } from '../../reusable screens/Profile';
-import JobFull from '../../screens/JobFull';
+import JobFull from '../screens/JobFull';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
