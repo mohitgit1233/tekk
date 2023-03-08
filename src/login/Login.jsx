@@ -12,6 +12,7 @@ import { StatusBar } from 'expo-status-bar';
 // import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-ionicons';
+import { CommonActions } from '@react-navigation/native';
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -33,20 +34,29 @@ export const Login = () => {
   const handleSubmit = () => {
     // Do something with the text value, e.g. send it to a server
     //technician
-    navigation.navigate('technicianHome');
-    //client
-    // navigation.navigate('clientHome');
+    // navigation.navigate('technicianHome');
+
+
+      // Reset the navigation stack and navigate to the technician portal
+  navigation.dispatch(
+    CommonActions.reset({
+      index: 0,
+      routes: [{ name: 'technicianHome' }],
+    })
+  );
 
     console.log(text);
   };
   const handleSubmit2 = () => {
     // Do something with the text value, e.g. send it to a server
-    //technician
-    // navigation.navigate('technicianHome');
     //client
-    navigation.navigate('clientHome');
-
-    console.log(text);
+    // navigation.navigate('clientHome');
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'clientHome' }],
+      })
+    );
   };
   return (
 

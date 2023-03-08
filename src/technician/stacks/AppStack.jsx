@@ -45,7 +45,7 @@ export const AppStack = () => {
      <Stack.Screen name='ViewOffer' component={ViewOffer}></Stack.Screen>
      <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
      <Stack.Screen name='JobFull' component={JobFull}></Stack.Screen>
-     <Stack.Screen name='Logout' component={Login}></Stack.Screen>
+     {/* <Stack.Screen name='Logout' component={Login}></Stack.Screen> */}
 
     </Stack.Navigator>
   );

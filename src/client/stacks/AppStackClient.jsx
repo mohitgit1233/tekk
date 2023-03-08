@@ -46,7 +46,7 @@ export const AppStackClient = () => {
      <Stack.Screen name='MyPosts' component={MyPosts}></Stack.Screen>
      <Stack.Screen name='PostDetails' component={PostDetails}></Stack.Screen>
      <Stack.Screen name='Profile' component={TechnicianProfile}></Stack.Screen>
-     <Stack.Screen name='Logout' component={Login}></Stack.Screen>
+     {/* <Stack.Screen name='Logout' component={Login}></Stack.Screen> */}
 
     </Stack.Navigator>
   );

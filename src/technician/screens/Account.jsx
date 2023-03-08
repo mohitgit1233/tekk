@@ -28,7 +28,7 @@ export const Account = ({ navigation }) => {
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [{ name: 'Logout' }],
+        routes: [{ name: 'Login' }],
       })
     );
 
