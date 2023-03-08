@@ -12,7 +12,7 @@ import SearchInput from '../../../components/SearchInput';
 import JobContainer from '../container/JobContainer';
 import ViewOffer from '../ViewOffer';
 import SendOfferButton from '../SendOfferButton';
-import { Profile } from '../../reusable screens/Profile';
+import { Profile } from '../screens/Profile';
 import JobFull from '../screens/JobFull';
 
 const Stack = createNativeStackNavigator();

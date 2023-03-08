@@ -10,11 +10,12 @@ import MyPosts from '../myPosts';
 import Offers from '../Offers';
 
 import AllChats from '../allChats';
-
-import ClientAccount from '../clientAccount';
+//client account actually (pass a prop) (reusing technician screen)
+import { Account } from '../../technician/screens/Account'
 import AllOffers from '../AllOffers';
 import CreatePost from '../CreatePost';
 import PostDetails from '../PostDetails';
+import TechnicianProfile  from '../TechnicianProfile';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,6 +44,8 @@ export const AppStackClient = () => {
      <Stack.Screen name='CreatePost' component={CreatePost}></Stack.Screen>
      <Stack.Screen name='MyPosts' component={MyPosts}></Stack.Screen>
      <Stack.Screen name='PostDetails' component={PostDetails}></Stack.Screen>
+     <Stack.Screen name='Profile' component={TechnicianProfile}></Stack.Screen>
+
     </Stack.Navigator>
   );
 };
@@ -101,7 +104,7 @@ export const TabStack = () => {
       
       <Tab.Screen name="Chats" component={AllChats} />
       
-      <Tab.Screen name="Account" component={ClientAccount} />
+      <Tab.Screen name="Account" component={Account} />
     
     </Tab.Navigator>
   );
