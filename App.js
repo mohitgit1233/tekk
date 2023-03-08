@@ -16,9 +16,8 @@ import { View, TextInput, Button } from 'react-native';
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 // import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Login } from './src/login/Login'
-
-
+import { Login } from './src/login/Login';
+import { Registration } from './src/screens/Registration';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -26,8 +25,6 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-
-
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
   const handleTextChange = (inputText) => {
@@ -40,15 +37,29 @@ export default function App() {
   return (
     <NavigationContainer>
       <NativeBaseProvider>
-
-      <Stack.Navigator>
-        <Stack.Screen name="Other" component={Login} />
-        <Stack.Screen name="technicianHome" component={AppStack} />
-        <Stack.Screen name="clientHome" component={AppStackClient} />
-      </Stack.Navigator>
-
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Registration"
+            component={Registration}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="technicianHome"
+            component={AppStack}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="clientHome"
+            component={AppStackClient}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
       </NativeBaseProvider>
-
     </NavigationContainer>
   );
 }

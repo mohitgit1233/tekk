@@ -1,82 +1,70 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, Text } from 'react-native';
-import { NativeBaseProvider } from 'native-base';
-import { AppStack } from '../component/AppStack';
-import { Chat } from '../screens/Chat';
-import { AppStackClient } from '../component/AppStackClient';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { View, TextInput, Button } from 'react-native';
-import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-// import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useState } from "react";
+import { KeyboardAvoidingView, Box, Text, Heading, VStack, FormControl, Input, Link, Button, HStack, Center, NativeBaseProvider } from "native-base";
+import { auth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
-
-
-const Tab = createMaterialTopTabNavigator();
-
-// import jobFeed from './technician/JobPosts';
-const Stack = createNativeStackNavigator();
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const Login = () => {
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
   const navigation = useNavigation();
 
-  const [text, setText] = useState('');
-  const [text2, setText2] = useState('');
-  const handleTextChange = (inputText) => {
-    setText(inputText);
-  };
-  const handleSubmit = () => {
-    // Do something with the text value, e.g. send it to a server
-    //technician
-    navigation.navigate('technicianHome');
-    //client
-    // navigation.navigate('clientHome');
 
-    console.log(text);
-  };
-  const handleSubmit2 = () => {
-    // Do something with the text value, e.g. send it to a server
-    //technician
-    // navigation.navigate('technicianHome');
-    //client
-    navigation.navigate('clientHome');
+  const handleSignIn = async () => {
 
-    console.log(text);
-  };
+    await signInWithEmailAndPassword(auth,email,password).then(async (userCredentails) => {
+      const user = userCredentails.user;
+      console.log(user);
+      await AsyncStorage.setItem('@userData', JSON.stringify(user))
+      navigation.navigate("clientHome");
+    }).catch(error => alert(error.message))
+  }
+
   return (
-
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Text>Tekk</Text>
-      <TextInput
-        value={text}
-        onChangeText={handleTextChange}
-        placeholder="email"
-      />
-      <TextInput
-        value={text}
-        onChangeText={handleTextChange}
-        placeholder="password"
-      />
-      <Button
-        title="Login as Technician"
-        onPress={handleSubmit}
-      />
-      <Button
-        title="Login as Client"
-        onPress={handleSubmit2}
-      />
-    </View>
-
+      <Center flex={1}>
+        <Center w="100%">
+          <Heading size="lg" fontWeight="600" color="coolGray.800" _dark={{ color: "warmGray.50"}}>
+            Tekkkkk
+          </Heading>
+          <Box safeArea p="2" py="8" w="90%" maxW="290">
+            <VStack space={3} mt="5">
+              <FormControl>
+                <FormControl.Label>Email ID</FormControl.Label>
+                  <Input value={email} onChangeText={text => setEmail(text)} variant="underlined" placeholder="Enter you Email" />
+              </FormControl>
+              <FormControl>
+                <FormControl.Label>Password</FormControl.Label>
+                <Input variant="underlined" value={password} onChangeText={text => setPassword(text)} type="password" secureTextEntry placeholder="Enter you Password"  />
+                <Link _text={{
+                fontSize: "xs",
+                fontWeight: "500",
+                color: "indigo.500"
+              }} alignSelf="flex-end" mt="1">
+                  Forget Password?
+                </Link>
+              </FormControl>
+              <Button onPress={handleSignIn} mt="2" colorScheme="indigo">
+                Sign in
+              </Button>
+              <HStack mt="6" justifyContent="center">
+              <Text fontSize="sm" color="coolGray.600" _dark={{
+              color: "warmGray.200"
+            }}>
+                I'm a new user.{" "}
+              </Text>
+              <Link _text={{
+              color: "indigo.500",
+              fontWeight: "medium",
+              fontSize: "sm"
+            }} onPress={() => navigation.navigate('Registration')}>
+                Sign Up
+              </Link>
+            </HStack>
+            </VStack>
+          </Box>
+        </Center>
+      </Center>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
