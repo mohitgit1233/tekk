@@ -10,25 +10,25 @@ export const Chat = ({navigation}) => {
   const [sender, setSender] = useState("User");
 
   useEffect(() => {
-    connectApi();
+    // connectApi();
   }, []);
 
-  const connectApi = async () => {
-    try {
+  // const connectApi = async () => {
+  //   try {
 
-      const response0 = await fetch(connection_api,{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      const data0 = await response0.json();
-      console.log("init success");
+  //     const response0 = await fetch(connection_api,{
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       }
+  //     });
+  //     const data0 = await response0.json();
+  //     console.log("init success");
 
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
   const handleSend = async () => {
     setMessages(prevMessages => [...prevMessages, { id: Date.now(), message: message, sender: sender }]);
