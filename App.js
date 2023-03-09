@@ -9,11 +9,11 @@ import { AppStackClient } from './src/client/stacks/AppStackClient';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { View, TextInput, Button } from 'react-native';
-import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 // import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Login } from './src/login/Login'
-
+import Splash from './src/Splash';
+import React, { useState, useEffect } from 'react';
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -26,6 +26,9 @@ export default function App() {
 
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+
+
   const handleTextChange = (inputText) => {
     setText(inputText);
   };
@@ -33,8 +36,16 @@ export default function App() {
     // Do something with the text value, e.g. send it to a server
     console.log(text);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, []);
+  
   return (
-    <NavigationContainer>
+    <>
+    {isLoading ? <Splash /> :     <NavigationContainer>
       <NativeBaseProvider>
 
       <Stack.Navigator>
@@ -45,7 +56,12 @@ export default function App() {
 
       </NativeBaseProvider>
 
-    </NavigationContainer>
+    </NavigationContainer>}
+
+
+
+    </>
+
   );
 }
 
