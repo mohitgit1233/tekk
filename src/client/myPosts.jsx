@@ -9,6 +9,7 @@ import axios from 'axios';
 const MyPosts = () => {
     const [data, setData] = useState([]);
     const navigation = useNavigation();
+    const [status,SetStatus] = useState('')
   const [searchTerm, setSearchTerm] = useState('');
   const [postStatus, setpostStatus] = useState('all')
   let filteredData = []
@@ -61,7 +62,7 @@ const MyPosts = () => {
       {filteredData.map((post) => {
         Moment.locale('en');
         return (
-          <TouchableOpacity key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}>
+          <TouchableOpacity style={ styles.postContainerP } key={post._id} onPress={() => navigation.navigate('PostDetails', {id: post._id,status:post.status})}>
             <View style={styles.postContainer}>
               <Image style={styles.postImage} source={{ uri: post.picture }} />
               <Text style={styles.postTitle}>{post.title}</Text>
@@ -79,7 +80,7 @@ const MyPosts = () => {
     </>
   )}
 </ScrollView>
-<TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('NewPost')}>
+<TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('CreatePost')}>
     <AntDesign name="plus" size={24} color="white" />
   </TouchableOpacity>
     </Box>
@@ -128,6 +129,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  postContainerP: {
+    // backgroundColor: 'red',
+    // flex: 1,
+    width: '100%', // Set width to stretch to maximum width
   },
   postTitle: {
     fontSize: 20,

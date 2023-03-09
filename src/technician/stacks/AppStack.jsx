@@ -8,11 +8,16 @@ import { MyJob } from '../screens/MyJobs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import Icon from 'react-native-ionicons';
-import SearchInput from '../../components/SearchInput';
+import SearchInput from '../../../components/SearchInput';
 import JobContainer from '../container/JobContainer';
-import ViewOffer from '../technician/ViewOffer';
-import SendOfferButton from '../technician/SendOfferButton';
-import { Profile } from '../reusable screens/Profile';
+import ViewOffer from '../ViewOffer';
+import SendOfferButton from '../SendOfferButton';
+import { Profile } from '../screens/Profile';
+import JobFull from '../screens/JobFull';
+import { Login } from '../../login/Login'
+import NotificationPage from '../../reusable screens/NotificationPage';
+// import { CommonActions } from '@react-navigation/native';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,6 +45,11 @@ export const AppStack = () => {
      <Stack.Screen name='SendOffer' component={SendOfferButton}></Stack.Screen>
      <Stack.Screen name='ViewOffer' component={ViewOffer}></Stack.Screen>
      <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
+     <Stack.Screen name='JobFull' component={JobFull}></Stack.Screen>
+     <Stack.Screen name='Notifications' component={NotificationPage}></Stack.Screen>
+     
+     {/* <Stack.Screen name='Logout' component={Login}></Stack.Screen> */}
+
     </Stack.Navigator>
   );
 };
@@ -55,6 +65,8 @@ export const TabStack = () => {
               name={
                  'ios-home'
               }
+              size={size}
+              color={color}
             />
           );
         } else if (route.name === 'Activities') {

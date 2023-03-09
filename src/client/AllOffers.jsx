@@ -4,6 +4,7 @@ import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 const AllOffers = () => {
 
@@ -14,7 +15,7 @@ const AllOffers = () => {
   // const [postStatus, setpostStatus] = useState('all')
   const { params } = useRoute();
   const { id } = params;
-  
+    const navigation = useNavigation()
   console.log(id)
  
   const url = `http://localhost:5001/api/v1/job/${id}/offers`;
@@ -26,6 +27,13 @@ const AllOffers = () => {
       .catch((error) => console.error(error));
       
   }, []);
+
+//   const showToast = () => {
+//     Toast.show({
+//       type: 'success',
+//       text2: 'Post created successfully'
+//     });
+//   }
 
      const filteredData = data
     console.log(data)
@@ -45,9 +53,11 @@ const AllOffers = () => {
               body: JSON.stringify(offer)
             })
             .then((response) => {response.json()
-            console.log(response)})
+            console.log(response)
+            useEffect
+            })
             .catch(error => console.error(error));
-
+            navigation.goBack();
     }
   return (
     <>
@@ -60,12 +70,28 @@ const AllOffers = () => {
                   <Text style={styles.postTitle}>Name :{post.technician_who_offered.name}</Text>
                   <Text style={styles.postSubtitleText}>Estimated Hours:{post.offerHours}</Text>
                   <Text style={styles.postSubtitleText}>Estimated Price:{post.offerPrice}</Text>
+                  <Text style={styles.postSubtitleText}>Start date:{Moment(post.prefer_start_date).format('D MMMM YYYY')}</Text>
                 </View>
-                <button onClick={() => {handleClick(post._id,post.technician_who_offered._id)}} >Accept</button>
-                {/* <TouchableOpacity key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}></TouchableOpacity> */}
-                <button>Decline</button>
-                <button>Chat</button>
+
+            <View style={{display:'flex',flexDirection:'row', justifyContent:'center'}}>
+             <Button style={{margin:10}}
+                title="Accept"
+                onPress={() => {handleClick(post._id,post.technician_who_offered._id)}}
+                //   jobId={jobId}
+                >Accept</Button>
+                <Button style={{margin:10}}
+                title="Decline"
+                // onPress={() => {handleClick(post._id,post.technician_who_offered._id)}}
+                //   jobId={jobId}
+                >Decline</Button>
+                <Button style={{margin:10}}
+                title="Chat"
+                // onPress={() => {handleClick(post._id,post.technician_who_offered._id)}}
+                //   jobId={jobId}
+                >Chat</Button>
             </View>
+        
+        </View>
 
         );
       })}

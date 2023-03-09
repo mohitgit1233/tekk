@@ -30,7 +30,8 @@ const JobContainer = ({ job, refreshData }) => {
       <Image style={styles.postImage} source={{ uri: post.picture }} />
       <Text style={styles.postDescription}>{post.title}</Text>
       <Text style={styles.postDescription}>{post.description}</Text>
-      <Text style={styles.postDescription}>{Moment(post.posted_date).format('d/MM/YYYY')}</Text>
+      <Text style={styles.postDescription}>Posted: {Moment(post.posted_date).format('d/MM/YYYY')}</Text>
+      <Text style={styles.postDescription}>Prefered Start: {Moment(post.prefer_start_date).format('d/MM/YYYY')}</Text>
       <Button title="Send Offer" onPress={handleSendOffer} />
       <Button title="Go back" onPress={() => navigation.goBack()} />
     </View>

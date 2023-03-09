@@ -57,8 +57,10 @@ export const MyJob = ({ navigation }) => {
 
   console.log(data2)
 
-  const filteredData = Offers.filter((post) => post.offerStatus === jobStatus  && post.jobID.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
+  const filteredData = Offers.filter((post) => post.offerStatus === jobStatus  );
+
+  console.log('ddddd',filteredData.length)
   
   return (
     <Box bg="white" height="100%">
@@ -77,19 +79,29 @@ export const MyJob = ({ navigation }) => {
         <Button variant={jobStatus === 'pending' ? 'solid' : 'outline'} onPress={() => setJobStatus('pending')} mb={2}>Pending</Button>
       </View>
       <ScrollView contentContainerStyle={styles.container}>
+       {filteredData.length > 0 ?  
+        <>
         {filteredData.map((post) => {
           Moment.locale('en');
           return (
-            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', {id: post.jobID._id})}>
-              <View style={styles.postContainer}>
-              <Image style={styles.postImage} source={{ uri: post.jobID.picture }} />
-                <Text style={styles.postTitle}>{post.jobID.title}</Text>
-                <Text style={styles.postDescription}>{post.jobID.description}</Text>
-                <Text style={styles.postDate}>{Moment(post.jobID.posted_date).format('D MMMM YYYY')}</Text>
-              </View>
-            </TouchableOpacity>
+            post.jobID === null ? (
+              <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
+                <View style={styles.postContainer}>
+                  <Text>job id null. check backend</Text>
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
+                <View style={styles.postContainer}>
+                  <Image style={styles.postImage} source={{ uri: post.jobID.picture }} />
+                  <Text style={styles.postTitle}>{post.jobID.title}</Text>
+                  <Text style={styles.postDescription}>{post.jobID.description}</Text>
+                  <Text style={styles.postDate}>{Moment(post.jobID.posted_date).format('D MMMM YYYY')}</Text>
+                </View>
+              </TouchableOpacity>
+            )
           );
-        })}
+        })}</>: <Text>Nothing found</Text>}
       </ScrollView>
     </Box>
   );
@@ -137,6 +149,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  postContainerP: {
+    width: '100%'
   },
   postTitle: {
     fontSize: 20,
