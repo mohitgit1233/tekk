@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 import Moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign,MaterialCommunityIcons } from '@expo/vector-icons';
 import NotificationBell from '../../reusable screens/NotificationBell';
+import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
 
 export const JobPosts = () => {
   const [data, setData] = useState([]);
@@ -30,43 +31,44 @@ export const JobPosts = () => {
   const navigation = useNavigation();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    
+      <>
+      <Box bg="white" height="100%">
       <View style={styles.header}>
-        <View style={styles.searchContainer}>
-          <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search Jobs"
-            onChangeText={(text) => setSearchTerm(text)}
-            value={searchTerm}
-          />
-        </View>
+      <View style={styles.searchContainer}>
+        <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search Jobs"
+          onChangeText={(text) => setSearchTerm(text)}
+          value={searchTerm} />
       </View>
-      {filteredData.map((post) => {
-        Moment.locale('en');
-        return (
-          <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id,tech_id:tech_id })}>
-            <View style={styles.postContainer}>
-              <View style={styles.postTitleContainer}>
-                <Image style={styles.postImage} source={{ uri: post.picture }} />
-                <View style={styles.postTitle}>
-                  <Text style={styles.postTitleText}>{post.title}</Text>
-                  <Text style={styles.postSubtitleText}>{post.location}</Text>
+    </View><ScrollView contentContainerStyle={styles.container}>
+        {filteredData.map((post) => {
+          Moment.locale('en');
+          return (
+            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id, tech_id: tech_id })}>
+              <View style={styles.postContainer}>
+                <View style={styles.postTitleContainer}>
+                  <Image style={styles.postImage} source={{ uri: post.picture }} />
+                  <View style={styles.postTitle}>
+                    <Text style={styles.postTitleText}>{post.title}</Text>
+                    <Text style={styles.postSubtitleText}>{post.location}</Text>
+                  </View>
                 </View>
+                <Text style={styles.postDescription}>{post.description}</Text>
+                <Text style={styles.postDate}>{Moment(post.posted_date).format('MMMM Do, YYYY')}</Text>
               </View>
-              <Text style={styles.postDescription}>{post.description}</Text>
-              <Text style={styles.postDate}>{Moment(post.posted_date).format('MMMM Do, YYYY')}</Text>
-            </View>
-          </TouchableOpacity>
-        );
-      })}
-    </ScrollView>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+      </Box></>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#F5FCFF',
     padding: 10,
   },
