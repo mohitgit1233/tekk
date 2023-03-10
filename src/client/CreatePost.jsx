@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Button, TextInput, View,StyleSheet,Text } from 'react-native';
+import { Button, TextInput, View,StyleSheet,Text,TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
+import ImagePicker from 'react-native-image-picker';
+
 const CreatePost = () => {
     const id = '63f1b9adcf55c1d5b65f58ad'
 
@@ -25,7 +27,8 @@ const CreatePost = () => {
 
     const [chosenDate, setChosenDate] = useState(new Date());
     const [showPicker, setShowPicker] = useState(true);
-  
+    const [selectedImage, setSelectedImage] = useState(null);
+
     const onDateChange = (event, newDate) => {
     //   setShowPicker(false);
       if (newDate !== undefined) {
@@ -51,8 +54,22 @@ const CreatePost = () => {
       .then(response => response.json())
       .catch(error => console.error(error));
     };
+  
+    const handleImageUpload = () => {
+      ImagePicker.launchImageLibrary({}, (response) => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else {
+          const source = { uri: response.uri };
+          setSelectedImage(source);
+        }
+      });
+    };
+
   return (
-    <View>
+    <View style={styles.abc}>
     <TextInput
       placeholder="Title"
       value={postTitle}
@@ -103,8 +120,9 @@ const CreatePost = () => {
       onChangeText={setJobDescription}
       keyboardType="string"
     />
+
       <DropDownPicker
-      style={{margin:"auto",marginBottom:10}}
+      style={{margin:"auto",marginBottom:10,   justifyContent: 'center', alignItems: 'center'  }}
       open={open}
       value={requirement}
       items={items}
@@ -112,8 +130,12 @@ const CreatePost = () => {
       setValue={setRequirement}
       setItems={setItems}
     />
-    
 
+
+    {/* <View style={styles.container}>
+      {selectedImage && <Image source={selectedImage} style={styles.image} />}
+      <Button title="Select Image" onPress={handleImageUpload} />
+    </View> */}
     <Button
       title="Submit Post"
       onPress={handleSendOffer}
@@ -122,6 +144,7 @@ const CreatePost = () => {
   </View>
   )
 }
+
 const styles = StyleSheet.create({
 field:{
     fontSize:'x-large',
@@ -140,6 +163,16 @@ field:{
   },
   buton:{
     display:'none'
+  },
+
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+  },
+
+  abc: {
+    backgroundColor: "white"
   }
 
 })
