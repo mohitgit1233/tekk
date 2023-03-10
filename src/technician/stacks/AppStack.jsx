@@ -122,6 +122,9 @@ export const TabStack = () => {
       <Tab.Screen name="Chat" component={Chat} />
       
       <Tab.Screen name="Account" component={Account} />
+
+      <Tab.Screen name="subs" component={SubChat} />
+
     
     </Tab.Navigator>
   );
