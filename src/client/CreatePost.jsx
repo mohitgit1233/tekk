@@ -34,6 +34,7 @@ const CreatePost = () => {
     }
     const handleSendOffer = () => {
       const offer = {
+        client_id:id,
         title:postTitle,
         description:jobDescription,
         skills_required:requirement,
