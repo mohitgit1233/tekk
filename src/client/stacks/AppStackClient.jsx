@@ -21,6 +21,8 @@ import NotificationPage from '../../reusable screens/NotificationPage';
 import NotificationBell from '../../reusable screens/NotificationBell';
 
 import  { SubChatClient } from '../SubChatClient'
+import NotificationBell from '../../reusable screens/NotificationBell';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
