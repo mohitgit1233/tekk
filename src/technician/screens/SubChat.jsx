@@ -9,13 +9,13 @@ const message_api = 'http://192.168.5.131:3000/message';
 const socket_api = 'http://192.168.5.131:5001'
 
 export const SubChat = ({ navigation, route }) => {
-    // const { propValue, p2 } = route.params;
+    const { propValue, p2 } = route.params;
 
     const [tomessage, set_tomessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [sender, setSender] = useState("User");
 
-    const [tech_id, setTech_id] = useState("");
+    const [tech_id, setTech_id] = useState("63f17ce257353e03afc8f124");
 
     //   const [socket, setSocket] = useState(null);
     const socket = io.connect(socket_api);
@@ -115,13 +115,13 @@ export const SubChat = ({ navigation, route }) => {
             keyboardVerticalOffset={64} // adjust this value as needed
         >
             <View style={styles.container}>
-                <TextInput
+                {/* <TextInput
                     placeholder="Tsaddsadsdsa..."
                     value={tech_id}
                     onChangeText={(text) => setTech_id(text)}
-                />
-                {/* <Text style={{ textAlign: "center", padding: "3%" }}>Job Id: {propValue}</Text> */}
-                {/* <Text style={{ textAlign: "center", padding: "3%" }}>Employer: {p2}</Text> */}
+                /> */}
+                <Text style={{ textAlign: "center", padding: "3%" }}>Job Id: {propValue}</Text>
+                <Text style={{ textAlign: "center", padding: "3%" }}>Employer: {p2}</Text>
                 <Text style={{ textAlign: "center", padding: "3%" }}>Technician Currently logged in: {tech_id}</Text>
 
 
