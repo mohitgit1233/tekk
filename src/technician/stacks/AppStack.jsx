@@ -17,7 +17,7 @@ import JobFull from '../screens/JobFull';
 import { Login } from '../../login/Login'
 import NotificationPage from '../../reusable screens/NotificationPage';
 // import { CommonActions } from '@react-navigation/native';
-
+import { SubChat } from '../screens/SubChat'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -47,6 +47,8 @@ export const AppStack = () => {
      <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
      <Stack.Screen name='JobFull' component={JobFull}></Stack.Screen>
      <Stack.Screen name='Notifications' component={NotificationPage}></Stack.Screen>
+     <Stack.Screen name='SubChat' component={SubChat}  ></Stack.Screen>
+
      
      {/* <Stack.Screen name='Logout' component={Login}></Stack.Screen> */}
 
