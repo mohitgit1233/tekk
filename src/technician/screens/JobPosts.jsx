@@ -2,43 +2,59 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
 import Moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign,MaterialCommunityIcons } from '@expo/vector-icons';
 
 export const JobPosts = () => {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [tech,setTech] = useState([])
+  const [tech,setTech] = useState([]);
+  const [notificationCount, setNotificationCount] = useState(0);
+
   const url = 'http://localhost:5001/api/v1/jobs';
 
-  const tech_id = '63f17ce257353e03afc8f124'// to be replaced 
- 
-  
+  const tech_id = '63f17ce257353e03afc8f124'; // to be replaced 
+
+  const navigateToNotification = () => {
+    navigation.navigate('Notifications');
+  };
+
   useEffect(() => {
     fetch(url)
       .then((resp) => resp.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error));
-     
-
   }, []);
 
   const filteredData = data.filter(
-    (post) => post.status === 'new job' || post.status === 'offered'  && post.title.toLowerCase().includes(searchTerm.toLowerCase())
+    (post) =>
+      (post.status === 'new job' || post.status === 'offered') &&
+      post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
 
   const navigation = useNavigation();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.searchContainer}>
-        <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search Jobs"
-          onChangeText={(text) => setSearchTerm(text)}
-          value={searchTerm}
-        />
+      <View style={styles.header}>
+      <View style={styles.headerRight}>
+      <TouchableOpacity onPress={navigateToNotification}>
+    <MaterialCommunityIcons name="bell-outline" size={24} color="black" />
+    {notificationCount > 0 && (
+      <View style={styles.notificationCount}>
+        <Text style={styles.notificationCountText}>{notificationCount}</Text>
+      </View>
+    )}
+  </TouchableOpacity>
+</View>
+        <View style={styles.searchContainer}>
+          <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search Jobs"
+            onChangeText={(text) => setSearchTerm(text)}
+            value={searchTerm}
+          />
+        </View>
       </View>
       {filteredData.map((post) => {
         Moment.locale('en');
@@ -117,5 +133,24 @@ const styles = StyleSheet.create({
   postDate: {
     fontSize: 14,
     color: '#888888',
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginRight: 10,
+  },
+  notificationCount: {
+    backgroundColor: 'red',
+    borderRadius: 10,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    position: 'absolute',
+    top: -8,
+    right: -8,
+  },
+  notificationCountText: {
+    color: 'white',
+    fontSize: 10,
   },
 });

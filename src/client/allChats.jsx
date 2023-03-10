@@ -2,7 +2,7 @@ import React from 'react'
 import { Text } from 'native-base'
 const AllChats = () => {
   return (
-    <Text>Account</Text>
+    <Text>Chat for Client</Text>
   )
 }
 

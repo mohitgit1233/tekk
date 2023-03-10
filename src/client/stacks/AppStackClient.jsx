@@ -33,13 +33,7 @@ export const AppStackClient = ({navigation}) => {
        
         component={TabStack}
        
-        options={{
-          headerStyle: {
-            backgroundColor: 'orange',
-          },
-          headerTintColor: 'white',
-       
-        }}
+        options={{ headerShown: false }}
       />
      <Stack.Screen name='Search' component={SearchInput}></Stack.Screen>
      <Stack.Screen name='JobContainer' component={JobContainer}></Stack.Screen>

@@ -31,14 +31,8 @@ export const AppStack = () => {
         name="Tekk"
        
         component={TabStack}
+        options={{ headerShown: false }}
        
-        options={{
-          headerStyle: {
-            backgroundColor: 'orange',
-          },
-          headerTintColor: 'white',
-       
-        }}
       />
      <Stack.Screen name='Search' component={SearchInput}></Stack.Screen>
      <Stack.Screen name='JobContainer' component={JobContainer}></Stack.Screen>
