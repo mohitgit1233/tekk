@@ -28,7 +28,7 @@ const MyPosts = () => {
     }
     see()
   }, []);
-  console.log(data.length)
+  (data.length)
   if (data.length > 0){
     if (postStatus == 'all'){
         filteredData = data.filter(post => post.status !== 'offered' );
@@ -37,7 +37,6 @@ const MyPosts = () => {
     }
 }
   
-  console.log(data)
 
   return (
     <Box bg="white" height="100%">

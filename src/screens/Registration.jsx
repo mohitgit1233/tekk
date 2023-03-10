@@ -2,16 +2,14 @@ import { useState } from "react";
 import {  Box, Checkbox, Text, Heading, VStack, FormControl, Input, Link, Button, HStack, Center, NativeBaseProvider } from "native-base";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { useNavigation } from '@react-navigation/native';
 import {AsyncStorage} from 'react-native';
 
-export const Registration = () => {
+export const Registration = ({navigation}) => {
   const [email,setEmail] = useState('');
   const [name,setName] = useState('');
   const [phone,setPhone] = useState('');
   const [password,setPassword] = useState('');
   const [userType,setUserType] = useState([]);
-  const navigation = useNavigation();
 
 
   const handleSignUp = async () => {
@@ -21,7 +19,6 @@ export const Registration = () => {
         displayName: name,
       })
       await AsyncStorage.setItem('@userData', user)
-      navigation.navigate("clientHome");
     }).catch(error => alert(error.message))
   }
 
