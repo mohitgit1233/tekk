@@ -1,64 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView } from 'react-native';
 
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView,TouchableOpacity, ScrollView } from 'react-native';
+import { SubChat }  from './SubChat'
+import { useNavigation } from '@react-navigation/native';
 const connection_api = 'http://192.168.5.131:3000/connection';
 const message_api = 'http://192.168.5.131:3000/message';
 
 export const Chat = ({navigation}) => {
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
-  const [sender, setSender] = useState("User");
+  const [data1, setData1] = useState([]);
 
   useEffect(() => {
-    // connectApi();
+    const getJobs = async()=>{
+      await fetch("http://localhost:5001/api/v1/jobs")
+         .then((resp) => resp.json())
+         .then((json) => {
+          console.log(json);
+          setData1(json)
+        })
+         .catch((error) => console.error(error));
+       }
+       getJobs()
   }, []);
 
-  // const connectApi = async () => {
-  //   try {
-
-  //     const response0 = await fetch(connection_api,{
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       }
-  //     });
-  //     const data0 = await response0.json();
-  //     console.log("init success");
-
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-
-  const handleSend = async () => {
-    setMessages(prevMessages => [...prevMessages, { id: Date.now(), message: message, sender: sender }]);
-    try {
-      const response = await fetch(message_api, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ input: message }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      // Message sent successfully
-      console.log('Message sent successfully!');
-
-      // Clear the message input
-      setMessage('');
-      //set messages including chatgpt resp
-      const data1 = await response.json();
-      console.log(data1);
-      // setMessages([...messages, { id: Date.now(), message: data1.output, sender: "Chatgpt" }])
-      setMessages(prevMessages => [...prevMessages, { id: Date.now(), message: data1.output.trim(), sender: "Chatgpt" }]);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  const navigateToNotification = (kindof_prop1, p2) => {
+    console.log(kindof_prop1);
+    navigation.navigate('SubChat', { propValue: kindof_prop1, p2 });
+  };
 
   const renderItem = ({ item }) => {
     return (
@@ -70,34 +37,29 @@ export const Chat = ({navigation}) => {
   };
 
   return (
-    <KeyboardAvoidingView
-    style={{ flex: 1 }}
-    behavior="padding"
-    keyboardVerticalOffset={64} // adjust this value as needed
-  >
+<ScrollView> 
+
     <View style={styles.container}>
-      {/* <Text style={{ textAlign: "center", padding: "10%" }}>Ask Anything!</Text> */}
-      <FlatList
-        data={messages}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
-      />
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          value={message}
-          onChangeText={(text) => setMessage(text)}
-          placeholder="Type a message..."
-          multiline={true}
-          // onSubmitEditing={handleSend}
-        />
-        <Button
-          title="Send"
-          onPress={handleSend}
-        />
-      </View>
+      <Text style={styles.head}>Select Employer To Chat</Text>
+
+      {data1.map((post) => {
+        return (
+          <TouchableOpacity key={post._id} >
+            <View>
+
+              <Text style={styles.postDescription}  onPress={() => navigateToNotification(post._id, post.employer)}  >Job: {post._id} - Employer: {post.employer}</Text>
+
+
+            </View>
+          </TouchableOpacity>
+        );
+      })}
+
+
+      {/* <Button title="adil" onPress={() => navigateToNotification("adilsaju_emp")}  >Adil</Button> */}
     </View>
-    </KeyboardAvoidingView>
+</ScrollView> 
+
   );
 };
 
@@ -106,33 +68,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 10,
+    color: 'white'
   },
-  message: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    marginBottom: 5,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderTopWidth: 1,
-    borderColor: '#ccc',
-    paddingVertical: 10,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginRight: 10,
-  },
-  sender: {
-    // backgroundColor: "red"
-    color: "grey"
+  head: {
+    fontSize: 30
   }
-});
 
+});
