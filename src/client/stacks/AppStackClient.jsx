@@ -18,6 +18,7 @@ import PostDetails from '../PostDetails';
 import TechnicianProfile  from '../TechnicianProfile';
 import { Login } from '../../login/Login'
 import NotificationPage from '../../reusable screens/NotificationPage';
+import NotificationBell from '../../reusable screens/NotificationBell';
 
 
 const Stack = createNativeStackNavigator();
@@ -98,9 +99,13 @@ export const TabStack = () => {
     })}
   >
       
-      <Tab.Screen name="Job Posts" component={MyPosts} />
+      <Tab.Screen name="Job Posts" component={MyPosts} options={{
+          headerRight: () => <NotificationBell />, 
+        }} />
       
-      <Tab.Screen name="Requests" component={Offers} />
+      <Tab.Screen name="Requests" component={Offers} options={{
+          headerRight: () => <NotificationBell />, 
+        }} />
       
       <Tab.Screen name="Chats" component={AllChats} />
       

@@ -3,9 +3,12 @@ import { Button, TextInput, View,StyleSheet,Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
-const CreatePost = () => {
-    const id = '63f1b9adcf55c1d5b65f58ad'
+import { CommonActions } from '@react-navigation/native';
 
+const CreatePost = () => {
+
+    const [clientId,setClientId] = useState('63f1b9adcf55c1d5b65f58ad')
+    // const { refreshData} = route.params;
     const [postTitle, setPostTitle] = useState('');
     const [postAddress, setPostAddress] = useState('');
     const [postPhone, setPostPhone] = useState('');
@@ -22,7 +25,7 @@ const CreatePost = () => {
     {label: 'Electrician', value: 'electrician'},
     {label: 'Plumber', value: 'plumber'}
   ]);
-
+  const navigation = useNavigation();
     const [chosenDate, setChosenDate] = useState(new Date());
     const [showPicker, setShowPicker] = useState(true);
   
@@ -34,6 +37,7 @@ const CreatePost = () => {
     }
     const handleSendOffer = () => {
       const offer = {
+        client_id: clientId,
         title:postTitle,
         description:jobDescription,
         skills_required:requirement,
@@ -48,6 +52,9 @@ const CreatePost = () => {
         body: JSON.stringify(offer)
       })
       .then(response => response.json())
+      .then(data => {
+        navigation.navigate('MyPosts');
+      })
       .catch(error => console.error(error));
     };
   return (

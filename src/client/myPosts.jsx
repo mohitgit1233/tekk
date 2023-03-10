@@ -5,12 +5,16 @@ import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const MyPosts = () => {
+const MyPosts = ({ route }) => {
     const [data, setData] = useState([]);
     const navigation = useNavigation();
     const [status,SetStatus] = useState('')
   const [searchTerm, setSearchTerm] = useState('');
   const [postStatus, setpostStatus] = useState('all')
+  // const { refreshData } = route.params;
+  
+  // console.log('yolooo',refreshData)
+
   let filteredData = []
  
   const url = 'http://localhost:5001/api/v1/employer/63f1b9adcf55c1d5b65f58ad/jobs';

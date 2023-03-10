@@ -41,7 +41,10 @@ export const Login = () => {
   navigation.dispatch(
     CommonActions.reset({
       index: 0,
-      routes: [{ name: 'technicianHome' }],
+      routes: [{ name: 'technicianHome',params: {
+        refreshData: 'example value',
+       
+      }, }],
     })
   );
 

@@ -16,6 +16,7 @@ import { Profile } from '../screens/Profile';
 import JobFull from '../screens/JobFull';
 import { Login } from '../../login/Login'
 import NotificationPage from '../../reusable screens/NotificationPage';
+import NotificationBell from '../../reusable screens/NotificationBell';
 // import { CommonActions } from '@react-navigation/native';
 
 
@@ -105,11 +106,17 @@ export const TabStack = () => {
     })}
   >
       
-      <Tab.Screen name="Job Posts" component={JobPosts} />
+      <Tab.Screen name="Job Posts" component={JobPosts}  options={{
+          headerRight: () => <NotificationBell />, 
+        }} />
       
-      <Tab.Screen name="Activities" component={Activities} />
+      <Tab.Screen name="Activities" component={Activities} options={{
+          headerRight: () => <NotificationBell />, 
+        }} />
       
-      <Tab.Screen name="My Jobs" component={MyJob} />
+      <Tab.Screen name="My Jobs" component={MyJob} options={{
+          headerRight: () => <NotificationBell />, 
+        }} />
 
       <Tab.Screen name="Chat" component={Chat} />
       

@@ -3,20 +3,16 @@ import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image, TextInput 
 import Moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign,MaterialCommunityIcons } from '@expo/vector-icons';
+import NotificationBell from '../../reusable screens/NotificationBell';
 
 export const JobPosts = () => {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [tech,setTech] = useState([]);
-  const [notificationCount, setNotificationCount] = useState(0);
 
   const url = 'http://localhost:5001/api/v1/jobs';
 
   const tech_id = '63f17ce257353e03afc8f124'; // to be replaced 
-
-  const navigateToNotification = () => {
-    navigation.navigate('Notifications');
-  };
 
   useEffect(() => {
     fetch(url)
@@ -36,16 +32,6 @@ export const JobPosts = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
-      <View style={styles.headerRight}>
-      <TouchableOpacity onPress={navigateToNotification}>
-    <MaterialCommunityIcons name="bell-outline" size={24} color="black" />
-    {notificationCount > 0 && (
-      <View style={styles.notificationCount}>
-        <Text style={styles.notificationCountText}>{notificationCount}</Text>
-      </View>
-    )}
-  </TouchableOpacity>
-</View>
         <View style={styles.searchContainer}>
           <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
           <TextInput
@@ -80,30 +66,41 @@ export const JobPosts = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#F5FCFF',
     padding: 10,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
     paddingHorizontal: 10,
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
+    height: 40,
+    flex: 1,
+    marginRight: 10,
   },
   searchIcon: {
     marginRight: 10,
   },
   searchInput: {
     flex: 1,
-    height: 40,
+    fontSize: 16,
   },
   postContainer: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 5,
+    borderRadius: 10,
     padding: 10,
     marginBottom: 10,
     elevation: 2,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   postTitleContainer: {
     flexDirection: 'row',
@@ -111,10 +108,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   postImage: {
-    width: 50,
-    height: 50,
+    width: 150,
+    height: 100,
     marginRight: 10,
-    borderRadius: 25,
+    borderRadius: 10
   },
   postTitle: {
     flex: 1,
@@ -122,35 +119,39 @@ const styles = StyleSheet.create({
   postTitleText: {
     fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 5,
   },
   postSubtitleText: {
     fontSize: 16,
+    color: '#888888',
   },
   postDescription: {
     fontSize: 16,
     marginBottom: 10,
+    flex: 1
   },
   postDate: {
     fontSize: 14,
     color: '#888888',
-  },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    marginRight: 10,
+    alignSelf: 'flex-end'
   },
   notificationCount: {
-    backgroundColor: 'red',
+    backgroundColor: '#FF0000',
     borderRadius: 10,
-    paddingHorizontal: 5,
-    paddingVertical: 2,
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'absolute',
-    top: -8,
-    right: -8,
+    top: 0,
+    right: 0,
+    zIndex: 1,
   },
-  notificationCountText: {
-    color: 'white',
-    fontSize: 10,
+  notificationText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+  },
+  notificationBell: {
+    marginLeft: 10,
   },
 });
