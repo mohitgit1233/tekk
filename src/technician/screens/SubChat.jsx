@@ -77,6 +77,8 @@ export const SubChat = ({ navigation, route }) => {
         const messageData = {
             room: "321",
             sender: tech_id,
+            sender_type:"technician", //or employer
+            job: propValue,
             message: tomessage,
             id: Date.now()
         };
