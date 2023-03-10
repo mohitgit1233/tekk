@@ -1,21 +1,51 @@
 
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView } from 'react-native';
+import io from 'socket.io-client';
+
 
 const connection_api = 'http://192.168.5.131:3000/connection';
 const message_api = 'http://192.168.5.131:3000/message';
+const socket_api = 'http://192.168.5.131:5001'
 
 export const SubChat = ({navigation, route }) => {
-    const { propValue, p2 } = route.params;
+    // const { propValue, p2 } = route.params;
 
   const [tomessage, set_tomessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [sender, setSender] = useState("User");
 
-  const [tech_id,setTech_id] = useState("63f17ce257353e03afc8f124");  
+  const [tech_id,setTech_id] = useState("");  
+
+//   const [socket, setSocket] = useState(null);
+const socket = io.connect(socket_api);
+    
 
   useEffect(() => {
-    connectApi();
+    // connectApi();
+    joinRoom()
+
+    socket.on('connection', () => {
+        console.log('Connected to server!');
+        });
+
+    socket.on("receive_message", (data) => {
+        console.log(`Received message from server: `);
+        console.log(data);
+
+    // setMessages(messages => [...messages, data  ]);
+
+        console.log("msg list");
+        console.log(messages);
+
+        //populate (auto in react)
+        // update();
+        });
+
+    socket.on('disconnect', () => {
+        console.log('Disconnected from server.');
+        });
+
   }, []);
 
   const connectApi = async () => {
@@ -35,33 +65,35 @@ export const SubChat = ({navigation, route }) => {
     }
   }
 
+  function joinRoom() {
+    console.log("guy joining");
+    socket.emit("join_room", "321");
+}
+
+
+
   const handleSend = async () => {
-      set_tomessage('');
-
-    setMessages(prevMessages => [...prevMessages, { id: Date.now(), message: tomessage, sender: sender }]);
+    // set_tomessage('');
+    const messageData = {
+        room: "321",
+        sender: tech_id,
+        message: tomessage,
+        id: Date.now()
+      };
     try {
-      const response = await fetch(message_api, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ input: tomessage }),
-      });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      await socket.emit("send_message", messageData);
 
-      // Message sent successfully
-      console.log('Message sent successfully!');
+    setMessages(messages => [...messages, messageData  ]);
 
-      // Clear the message input
+    console.log("special");
+    console.log(messages);
+
+    //populate
+
       set_tomessage('');
-      //set messages including chatgpt resp
-      const data1 = await response.json();
-      console.log(data1);
-      // setMessages([...messages, { id: Date.now(), message: data1.output, sender: "Chatgpt" }])
-      setMessages(prevMessages => [...prevMessages, { id: Date.now(), message: data1.output.trim(), sender: "Chatgpt" }]);
+
+    //   setMessages(prevMessages => [...prevMessages, { id: Date.now(), message: data1.output.trim(), sender: "Chatgpt" }]);
     } catch (error) {
       console.error(error);
     }
@@ -83,9 +115,14 @@ export const SubChat = ({navigation, route }) => {
     keyboardVerticalOffset={64} // adjust this value as needed
   >
     <View style={styles.container}>
-      <Text style={{ textAlign: "center", padding: "10%" }}>Job Id: {propValue}</Text>
-      <Text style={{ textAlign: "center", padding: "10%" }}>Employer: {p2}</Text>
-      <Text style={{ textAlign: "center", padding: "10%" }}>Technician Currently logged in: {tech_id}</Text>
+    <TextInput
+          placeholder="Tsaddsadsdsa..." 
+          value={tech_id} 
+          onChangeText={(text) => setTech_id(text)}
+        />
+      {/* <Text style={{ textAlign: "center", padding: "3%" }}>Job Id: {propValue}</Text> */}
+      {/* <Text style={{ textAlign: "center", padding: "3%" }}>Employer: {p2}</Text> */}
+      <Text style={{ textAlign: "center", padding: "3%" }}>Technician Currently logged in: {tech_id}</Text>
 
 
       <FlatList
