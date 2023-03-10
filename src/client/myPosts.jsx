@@ -4,6 +4,7 @@ import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 const MyPosts = () => {
     const [data, setData] = useState([]);
@@ -13,18 +14,21 @@ const MyPosts = () => {
   const [postStatus, setpostStatus] = useState('all')
   let filteredData = []
  
-  const url = 'http://localhost:5001/api/v1/employer/63f1b9adcf55c1d5b65f58ad/jobs';
+  const url = 'http://10.0.0.99:5001/api/v1/employer/63f1b9adcf55c1d5b65f58ad/jobs';
 
   useEffect(() => {
     const see = async()=>{
-   await fetch(url)
+   await fetch(url,{      headers: {
+    // Enabling the next line will solve the error, but it shouldn't make a difference
+    'Content-Type': 'application/json',
+  }})
       .then((resp) => resp.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error));
     }
     see()
   }, []);
-  console.log(data.length)
+  (data.length)
   if (data.length > 0){
     if (postStatus == 'all'){
         filteredData = data.filter(post => post.status !== 'offered' );
@@ -33,7 +37,6 @@ const MyPosts = () => {
     }
 }
   
-  console.log(data)
 
   return (
     <Box bg="white" height="100%">

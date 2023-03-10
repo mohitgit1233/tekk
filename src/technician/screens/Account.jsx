@@ -3,12 +3,10 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 // import { Reload } from 'react-native/Libraries/Reload/Reload';
 import { CommonActions } from '@react-navigation/native';
-
-
-
+import { UserAuth } from '../../context/AuthContext';
 
 export const Account = ({ navigation }) => {
-
+  const { logout } = UserAuth();
   const handleProfilePress = () => {
     navigation.navigate('Profile');
   };
@@ -22,19 +20,17 @@ export const Account = ({ navigation }) => {
   };
 
   const handleLogoutPress = () => {
-    // Handle logout logic here
-    // navigation.navigate('Logout');
-    // Reload.reload();
+    logout().then(()=>{
+      navigation.replace("Login");
+    }).catch(error => alert(error.message));
+    
+    /*
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
         routes: [{ name: 'Login' }],
       })
-    );
-
-    
-    // navigation.navigate('Logout', { refreshTimeStamp: new 
-    //   Date().toISOString() })
+    );*/
   };
 
   return (

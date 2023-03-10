@@ -1,11 +1,50 @@
+import 'expo-dev-client';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, Text } from 'react-native';
 import { NativeBaseProvider } from 'native-base';
-import Footer from './components/Footer';
 import { AppStack } from './src/technician/stacks/AppStack';
 import { AppStackClient } from './src/client/stacks/AppStackClient';
+import React from 'react';
+import { Login } from './src/login/Login';
+import { Registration } from './src/screens/Registration';
+import { AuthContextProvider, UserAuth } from './src/context/AuthContext';
 
+<<<<<<< HEAD
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  const userAuth = UserAuth();
+  return (
+    <AuthContextProvider>
+      <NavigationContainer>
+        <NativeBaseProvider>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Registration"
+              component={Registration}
+              options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="technicianHome"
+              component={AppStack}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="clientHome"
+              component={AppStackClient}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NativeBaseProvider>
+      </NavigationContainer>
+    </AuthContextProvider>
+=======
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { View, TextInput, Button } from 'react-native';
@@ -62,14 +101,6 @@ export default function App() {
 
     </>
 
+>>>>>>> 432b79b2bfb5fcef2e7355d6d1f54aaaf017bf35
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

@@ -16,7 +16,6 @@ const AllOffers = () => {
   const { params } = useRoute();
   const { id } = params;
     const navigation = useNavigation()
-  console.log(id)
  
   const url = `http://localhost:5001/api/v1/job/${id}/offers`;
 

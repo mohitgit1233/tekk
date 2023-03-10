@@ -24,7 +24,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 
-export const AppStackClient = () => {
+export const AppStackClient = ({navigation}) => {
   return (
     <Stack.Navigator>
       
