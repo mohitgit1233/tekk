@@ -17,6 +17,7 @@ import JobFull from '../screens/JobFull';
 import { Login } from '../../login/Login'
 import NotificationPage from '../../reusable screens/NotificationPage';
 import NotificationBell from '../../reusable screens/NotificationBell';
+import ImagePickerExample from '../screens/imageupload';
 // import { CommonActions } from '@react-navigation/native';
 
 
@@ -42,6 +43,7 @@ export const AppStack = () => {
      <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
      <Stack.Screen name='JobFull' component={JobFull}></Stack.Screen>
      <Stack.Screen name='Notifications' component={NotificationPage}></Stack.Screen>
+     <Stack.Screen name='imageUpload' component={ImagePickerExample}></Stack.Screen>
      
      {/* <Stack.Screen name='Logout' component={Login}></Stack.Screen> */}
 
@@ -121,6 +123,8 @@ export const TabStack = () => {
       <Tab.Screen name="Chat" component={Chat} />
       
       <Tab.Screen name="Account" component={Account} />
+
+      
     
     </Tab.Navigator>
   );

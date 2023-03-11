@@ -61,6 +61,15 @@ export const Login = () => {
       })
     );
   };
+  const handleSubmit3 = () => {
+    // Do something with the text value, e.g. send it to a server
+    //client
+    navigation.navigate('imageUpload');
+    
+  };
+
+
+
   return (
 
     <View style={styles.container}>
@@ -86,6 +95,10 @@ export const Login = () => {
       <Button style={styles.botton}
         title="Login as Client"
         onPress={handleSubmit2}
+      />
+      <Button style={styles.botton}
+        title="Upload image bro"
+        onPress={handleSubmit3}
       />
     </View>
 
