@@ -8,14 +8,14 @@ const connection_api = 'http://192.168.5.131:3000/connection';
 const message_api = 'http://192.168.5.131:3000/message';
 const socket_api = 'http://192.168.0.46:5001'
 
-export const SubChat = ({ navigation, route }) => {
+export const SubChatClient = ({ navigation, route }) => {
     const { propValue, p2, roomid } = route.params;
 
     const [tomessage, set_tomessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [sender, setSender] = useState("User");
 
-    const [tech_id, setTech_id] = useState("63f17ce257353e03afc8f124");
+    const [tech_id, setTech_id] = useState("63f1b9adcf55c1d5b65f58ad");
 
     //   const [socket, setSocket] = useState(null);
     const socket = io.connect(socket_api);
@@ -28,10 +28,8 @@ export const SubChat = ({ navigation, route }) => {
           .then((resp) => resp.json())
           .then((json) => {
             
-
             // setData(json)
             setMessages(messages => [...messages, json  ]);
-        
             console.log("speciallllll===============================l");
             console.log(json);
         
@@ -39,7 +37,6 @@ export const SubChat = ({ navigation, route }) => {
           .catch((error) => console.error(error));
         }
         see()
-
 
 
 
@@ -98,7 +95,7 @@ export const SubChat = ({ navigation, route }) => {
         const messageData = {
             room: "321",
             sender: tech_id,
-            sender_type:"technician", //or employer
+            sender_type:"employer", //or employer
             job: propValue,
             message: tomessage,
             id: Date.now(),
@@ -145,8 +142,8 @@ export const SubChat = ({ navigation, route }) => {
                     onChangeText={(text) => setTech_id(text)}
                 /> */}
                 {/* <Text style={{ textAlign: "center", padding: "3%" }}>Job Id: {propValue}</Text> */}
-                <Text style={{ textAlign: "center", padding: "3%" }}>Employer: {p2}</Text>
-                <Text style={{ textAlign: "center", padding: "3%" }}>Technician Currently logged in: {tech_id}</Text>
+                <Text style={{ textAlign: "center", padding: "3%" }}>Technician: {p2}</Text>
+                <Text style={{ textAlign: "center", padding: "3%" }}>Employer Currently logged in: {tech_id}</Text>
                 <Text style={{ textAlign: "center", padding: "3%" }}>ROOM ID: {roomid}</Text>
 
 
@@ -156,11 +153,6 @@ export const SubChat = ({ navigation, route }) => {
                     renderItem={renderItem}
                     // keyExtractor={(item) => item.id.toString()}
                 />
-
-
-
-
-
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}

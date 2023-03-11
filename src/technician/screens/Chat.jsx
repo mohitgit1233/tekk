@@ -11,7 +11,8 @@ export const Chat = ({navigation}) => {
 
   useEffect(() => {
     const getJobs = async()=>{
-      await fetch("http://localhost:5001/api/v1/jobs")
+      // await fetch("http://localhost:5001/api/v1/jobs")
+      await fetch("http://localhost:5001/api/v1/rooms")
          .then((resp) => resp.json())
          .then((json) => {
           console.log(json);
@@ -22,9 +23,9 @@ export const Chat = ({navigation}) => {
        getJobs()
   }, []);
 
-  const navigateToNotification = (kindof_prop1, p2) => {
+  const navigateToNotification = (kindof_prop1, p2, roomid ) => {
     console.log(kindof_prop1);
-    navigation.navigate('SubChat', { propValue: kindof_prop1, p2 });
+    navigation.navigate('SubChat', { propValue: kindof_prop1, p2 , roomid  });
   };
 
   const renderItem = ({ item }) => {
@@ -47,7 +48,7 @@ export const Chat = ({navigation}) => {
           <TouchableOpacity key={post._id} >
             <View>
 
-              <Text style={styles.postDescription}  onPress={() => navigateToNotification(post._id, post.employer)}  >Job: {post._id} - Employer: {post.employer}</Text>
+              <Text style={styles.postDescription}  onPress={() => navigateToNotification(post._id, post.employer_id, post._id)}  >Job: {post._id} - Employer: {post.employer_id}</Text>
 
 
             </View>
