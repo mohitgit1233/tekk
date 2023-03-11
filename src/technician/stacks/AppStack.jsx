@@ -46,6 +46,7 @@ export const AppStack = () => {
      <Stack.Screen name='imageUpload' component={ImagePickerExample}></Stack.Screen>
      <Stack.Screen name='SubChat' component={SubChat}  ></Stack.Screen>
 
+     <Stack.Screen name='imageUpload' component={ImagePickerExample}></Stack.Screen>
      
      {/* <Stack.Screen name='Logout' component={Login}></Stack.Screen> */}
 
@@ -129,6 +130,7 @@ export const TabStack = () => {
       
       {/* <Tab.Screen name="subs" component={SubChat} /> */}
 
+      
     
     </Tab.Navigator>
   );
