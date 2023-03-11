@@ -41,7 +41,7 @@ export const AllChats = ({navigation}) => {
 <ScrollView> 
 
     <View style={styles.container}>
-      <Text style={styles.head}>Select Employer To Chat</Text>
+      <Text style={styles.head}>Select Technician To Chat</Text>
 
       {data1.map((post) => {
         return (
