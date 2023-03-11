@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 
 const connection_api = 'http://192.168.5.131:3000/connection';
 const message_api = 'http://192.168.5.131:3000/message';
-const socket_api = 'http://192.168.0.46:5001'
+const socket_api = 'http://localhost:5001'
 
 export const SubChat = ({ navigation, route }) => {
     const { propValue, p2, roomid } = route.params;
@@ -30,7 +30,8 @@ export const SubChat = ({ navigation, route }) => {
             
 
             // setData(json)
-            setMessages(messages => [...messages, json  ]);
+            setMessages(json)
+            // setMessages(messages => [...messages, json[0]  ]);
         
             console.log("speciallllll===============================l");
             console.log(json);
@@ -108,7 +109,7 @@ export const SubChat = ({ navigation, route }) => {
 
             await socket.emit("send_message", messageData);
 
-            setMessages(messages => [...messages, messageData]);
+            // setMessages(messages => [...messages, messageData]);
 
             console.log("special");
             console.log(messages);
@@ -154,7 +155,7 @@ export const SubChat = ({ navigation, route }) => {
                 <FlatList
                     data={messages}
                     renderItem={renderItem}
-                    // keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item, index) => index.toString()}
                 />
 
 
