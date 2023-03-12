@@ -70,19 +70,24 @@ export const Profile = () => {
   };
 
   const updateProfileImage = async (tech_id, imageUri) => {
+    console.log("updateProfileImage calledddd");
     const formData = new FormData();
-    formData.append('image', {
+    formData.append('image1', {
       uri: imageUri,
       name: 'profile-image.jpg',
       type: 'image/jpeg',
     });
+    console.log("r1 calledddd");
+
     const response = await fetch(`http://localhost:5001/api/v1/technicians/${tech_id}`, {
-      method: 'PUT',
+      method: 'PATCH',
       body: formData,
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
+    console.log("r2 calledddd");
+
     const data = await response.json();
     console.log(data);
   };
