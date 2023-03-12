@@ -56,7 +56,7 @@ export const JobPosts = () => {
             <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id, tech_id: tech_id })}>
               <View style={styles.postContainer}>
                 <View style={styles.postTitleContainer}>
-                  <Image style={styles.postImage} source={{ uri: post.picture }} />
+                  <Image style={styles.postImage} source={{ uri: post.images[0] }} />
                   <View style={styles.postTitle}>
                     <Text style={styles.postTitleText}>{post.title}</Text>
                     <Text style={styles.postSubtitleText}>{post.location}</Text>

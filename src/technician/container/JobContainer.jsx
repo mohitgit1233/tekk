@@ -1,10 +1,31 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, Button,ScrollView,FlatList, TouchableOpacity } from 'react-native';
 import Moment from 'moment';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { getJobById } from '../../../services/api';
 
 const JobContainer = ({ job, refreshData }) => {
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goToNext = () => {
+    setCurrentIndex(currentIndex + 1);
+  };
+
+  const goToPrevious = () => {
+    setCurrentIndex(currentIndex - 1);
+  };
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: item }} style={styles.image} />
+      </View>
+    );
+  };
+
+
+  
   const navigation = useNavigation();
   const [post, setPost] = useState(null);
   const { params } = useRoute();
@@ -33,7 +54,17 @@ const JobContainer = ({ job, refreshData }) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.postImage} source={{ uri: post.picture }} />
+      {/* <Image style={styles.postImage} source={{ uri: post.images[2] }} /> */}
+      <ScrollView horizontal={true}>
+        {post.images.map((image, index) => (
+          <Image key={index} source={{ uri: image }} style={styles.image2} />
+        ))}
+      </ScrollView>
+
+
+
+
+
       <Text style={styles.postDescription}>{post.title}</Text>
       <Text style={styles.postDescription}>{post.description}</Text>
       <Text style={styles.postDescription}>Posted: {Moment(post.posted_date).format('d/MM/YYYY')}</Text>
@@ -61,6 +92,20 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 25,
   },
+  container2: {
+    // flex: 1,
+    // backgroundColor: '#fff',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+  },
+  image2: {
+    width: 150,
+    height: 150,
+    marginRight: 10,
+  },
+
+
+
 });
 
 export default JobContainer;
