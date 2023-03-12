@@ -16,7 +16,7 @@ export const MyJob = ({ navigation }) => {
   const [searchTerm, setSearchTerm] = useState('');
   // const url = "http://localhost:5001/api/v1/jobs";
 
-  const urlOffer = `http://localhost:5001/api/v1/technician/${tech_id}/offers`
+  // const urlOffer = `http://localhost:5001/api/v1/technician/${tech_id}/offers`
 
   useEffect(() => {
     // const fetchData = async() =>{
