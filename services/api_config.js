@@ -1,4 +1,7 @@
-export const API_BASE_URL = 'http://tekk-env.eba-udyk2w25.us-west-2.elasticbeanstalk.com/api/v1';
+//SOCKET
+// export const SOCKET_API = 'http://localhost:5001'
+export const SOCKET_API = 'http://tekk-env.eba-udyk2w25.us-west-2.elasticbeanstalk.com'
+export const API_BASE_URL = `${SOCKET_API}/api/v1`
 
 export const OFFERS_BY_JOBID = (id) => `${API_BASE_URL}/job/${id}/offers`;
 // You can define other API URLs here as well
@@ -29,5 +32,3 @@ export const EMPLOYMENT_BY_OFFERID  = (id) =>  `${API_BASE_URL}/offer/${id}/empl
 export const OFFERS_BY_TECHID  = (id) =>  `${API_BASE_URL}/technician/${id}/offers`
 
 
-//SOCKET
-export const SOCKET_API = 'http://tekk-env.eba-udyk2w25.us-west-2.elasticbeanstalk.com'
