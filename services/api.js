@@ -182,6 +182,19 @@ export const updateTechnicianImage = async (id=null,body=null) => {
       return data
 }
 
+export const login = async (id=null,body=null) => {
+    const response = await fetch(`${API_BASE_URL}/login`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      const data = await response.json();
+      return data
+}
+
 //usage in components
 // import { getAllOffers } from './api';
 
