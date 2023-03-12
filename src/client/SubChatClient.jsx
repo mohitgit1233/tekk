@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView } from 'react-native';
 import io from 'socket.io-client';
-import { getMessages } from '../../services/api';
+import { getMessages,getUserById } from '../../services/api';
 import { SOCKET_API } from '../../services/api_config';
 
 
@@ -16,8 +16,9 @@ export const SubChatClient = ({ navigation, route }) => {
     const [tomessage, set_tomessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [sender, setSender] = useState("User");
-
     const [tech_id, setTech_id] = useState("63f1b9adcf55c1d5b65f58ad");
+    const [tech_name, settech] = useState("");
+    const [emp_name, setemp] = useState("");
 
     //   const [socket, setSocket] = useState(null);
     const socket = io.connect(SOCKET_API);
@@ -39,6 +40,10 @@ export const SubChatClient = ({ navigation, route }) => {
         // })
         //   .catch((error) => console.error(error));
         const json = await getMessages()
+        const tech_name = await getUserById(p2)
+        const emp_name = await getUserById(tech_id)
+        settech(tech_name.name)
+        setemp(emp_name.name)
         setMessages(json)
         }
         see()
@@ -128,7 +133,9 @@ export const SubChatClient = ({ navigation, route }) => {
     const renderItem = ({ item }) => {
         return (
             <View style={styles.message}>
-                <Text style={styles.sender} >{item.sender}</Text>
+                {/* <Text style={styles.sender} >{item.sender_id}</Text> */}
+                <Text style={styles.sender} >{item.date}</Text>
+                { item.docModel==="technician" ? <Text style={styles.sender} >{tech_name}</Text> : <Text style={styles.sender} >{emp_name}</Text>  }
                 <Text>{item.message}</Text>
             </View>
         );

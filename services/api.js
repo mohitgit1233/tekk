@@ -165,6 +165,10 @@ export const getOffersByTechId = async (id=null) => {
     return await generic(OFFERS_BY_TECHID,id)
 }
 
+export const getUserById = async (id=null) => {
+    return await generic(`${API_BASE_URL}/users/${id}`)
+}
+
 export const updateTechnicianImage = async (id=null,body=null) => {
     const response = await fetch(`${API_BASE_URL}/technicians/${id}`, {
         method: 'PATCH',
