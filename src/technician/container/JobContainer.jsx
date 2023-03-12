@@ -7,24 +7,6 @@ import { getJobById } from '../../../services/api';
 const JobContainer = ({ job, refreshData }) => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const goToNext = () => {
-    setCurrentIndex(currentIndex + 1);
-  };
-
-  const goToPrevious = () => {
-    setCurrentIndex(currentIndex - 1);
-  };
-
-  const renderItem = ({ item, index }) => {
-    return (
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: item }} style={styles.image} />
-      </View>
-    );
-  };
-
-
   
   const navigation = useNavigation();
   const [post, setPost] = useState(null);
