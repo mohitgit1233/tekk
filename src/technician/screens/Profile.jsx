@@ -49,6 +49,9 @@
 import React, { useState } from 'react';
 import { Button, Image, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { updateTechnicianImage } from '../../../services/api';
+import { SOCKET_API } from '../../../services/api_config';
+
 
 export const Profile = () => {
   const [image, setImage] = useState(null);
@@ -79,17 +82,9 @@ export const Profile = () => {
     });
     console.log("r1 calledddd");
 
-    const response = await fetch(`http://localhost:5001/api/v1/technicians/${tech_id}`, {
-      method: 'PATCH',
-      body: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    console.log("r2 calledddd");
-
-    const data = await response.json();
+    const data = await updateTechnicianImage(tech_id, formData)
     console.log(data);
+    console.log("success upload");
   };
 
   return (

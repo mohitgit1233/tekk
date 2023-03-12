@@ -12,7 +12,8 @@ import { OFFERS_BY_JOBID,
     CLOCKOUT,
     EMPLOYMENT_BY_OFFERID,
     OFFERS_BY_TECHID,
-    NOTIFICATIONS_BY_EMPID
+    NOTIFICATIONS_BY_EMPID,
+    API_BASE_URL
 } from './api_config';
 
 
@@ -162,6 +163,19 @@ export const getEmploymentByOfferId = async (id=null) => {
 }
 export const getOffersByTechId = async (id=null) => {
     return await generic(OFFERS_BY_TECHID,id)
+}
+
+export const updateTechnicianImage = async (id=null,body=null) => {
+    const response = await fetch(`${API_BASE_URL}/technicians/${id}`, {
+        method: 'PATCH',
+        body: body,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      const data = await response.json();
+      return data
 }
 
 //usage in components
