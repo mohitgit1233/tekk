@@ -25,12 +25,7 @@ export const Login = () => {
   const [show, setShow] = React.useState(false);
   const [text, setText] = useState("a2@gmail.com");
   const [text2, setText2] = useState("12345678");
-  const handleTextChange = (inputText) => {
-    setText(inputText);
-  };
-  const handleTextChange2 = (inputText) => {
-    setText2(inputText);
-  };
+
   const handleSubmit = async () => {
     // Do something with the text value, e.g. send it to a server
     //technician
