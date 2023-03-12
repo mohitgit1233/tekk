@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 //FIXME
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { postOffer } from '../../services/api';
 
 const SendOffer = ({ route }) => {
   const { jobId, refreshData,tech_id } = route.params;
@@ -13,7 +14,7 @@ const SendOffer = ({ route }) => {
   const navigation = useNavigation();
   console.log('in sending',tech_id)
 
-  const handleSendOffer = () => {
+  const handleSendOffer = async () => {
     if (!offerPrice || !offerHours || !preferStartDate) {
       alert('Please fill in all fields.');
       return;
@@ -28,16 +29,18 @@ const SendOffer = ({ route }) => {
       
     };
 
-    fetch('http://localhost:5001/api/v1/offers', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(offer)
-    })
-    .then(response => response.json())
-    .then(data => {
-      navigation.navigate('ViewOffer', { offer: data, refreshData: refreshData });
-    })
-    .catch(error => console.error(error));
+    // fetch('http://localhost:5001/api/v1/offers', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(offer)
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //   navigation.navigate('ViewOffer', { offer: data, refreshData: refreshData });
+    // })
+    // .catch(error => console.error(error));
+    const json = await postOffer(null, offer)
+    navigation.navigate('ViewOffer', { offer: data, refreshData: refreshData });
   };
 
   return (

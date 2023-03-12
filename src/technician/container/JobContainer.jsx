@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
 import Moment from 'moment';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { getJobById } from '../../../services/api';
 
 const JobContainer = ({ job, refreshData }) => {
   const navigation = useNavigation();
@@ -11,10 +12,15 @@ const JobContainer = ({ job, refreshData }) => {
 
   console.log('in container',tech_id)
   useEffect(() => {
-    fetch(`http://localhost:5001/api/v1/jobs/${id}`)
-      .then((resp) => resp.json())
-      .then((json) => setPost(json))
-      .catch((error) => console.error(error));
+    // fetch(`http://localhost:5001/api/v1/jobs/${id}`)
+    //   .then((resp) => resp.json())
+    //   .then((json) => setPost(json))
+    //   .catch((error) => console.error(error));
+    const see = async () => {
+      const json = await getJobById(id)
+      setPost(json)
+    }
+    see()
   }, [id]);
 
   const handleSendOffer = () => {

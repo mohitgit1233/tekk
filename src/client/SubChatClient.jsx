@@ -2,11 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView } from 'react-native';
 import io from 'socket.io-client';
+import { getMessages } from '../../services/api';
+import { SOCKET_API } from '../../services/api_config';
 
 
-const connection_api = 'http://192.168.5.131:3000/connection';
-const message_api = 'http://192.168.5.131:3000/message';
-const socket_api = 'http://localhost:5001'
+// const connection_api = 'http://192.168.5.131:3000/connection';
+// const message_api = 'http://192.168.5.131:3000/message';
+// const socket_api = 'http://localhost:5001'
 
 export const SubChatClient = ({ navigation, route }) => {
     const { propValue, p2, roomid } = route.params;
@@ -18,24 +20,26 @@ export const SubChatClient = ({ navigation, route }) => {
     const [tech_id, setTech_id] = useState("63f1b9adcf55c1d5b65f58ad");
 
     //   const [socket, setSocket] = useState(null);
-    const socket = io.connect(socket_api);
+    const socket = io.connect(SOCKET_API);
 
 
     useEffect(() => {
         //populate messages using database
         const see = async()=>{
-            await fetch('http://localhost:5001/api/v1/messages')
-          .then((resp) => resp.json())
-          .then((json) => {
+        //     await fetch('http://localhost:5001/api/v1/messages')
+        //   .then((resp) => resp.json())
+        //   .then((json) => {
             
-            // setData(json)
-            setMessages(json)
-            // setMessages(messages => [...messages, json[0]  ]);
-            console.log("speciallllll===============================l");
-            console.log(json);
+        //     // setData(json)
+        //     setMessages(json)
+        //     // setMessages(messages => [...messages, json[0]  ]);
+        //     console.log("speciallllll===============================l");
+        //     console.log(json);
         
-        })
-          .catch((error) => console.error(error));
+        // })
+        //   .catch((error) => console.error(error));
+        const json = await getMessages()
+        setMessages(json)
         }
         see()
 

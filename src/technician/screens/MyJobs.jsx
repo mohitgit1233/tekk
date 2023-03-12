@@ -3,6 +3,7 @@ import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, Vi
 import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
+import { getOffersByTechId } from '../../../services/api';
 
 const tech_id = '63f17ce257353e03afc8f124'
 
@@ -31,14 +32,16 @@ export const MyJob = ({ navigation }) => {
     // fetchData()
 
     const fetchOfferData = async() =>{
-      try {
-        const response = await fetch(urlOffer);
-        const json = await response.json();
-        setOffers(json);
+      // try {
+      //   const response = await fetch(urlOffer);
+      //   const json = await response.json();
+      //   setOffers(json);
       
-      } catch (error) {
-        console.error(error);
-      }
+      // } catch (error) {
+      //   console.error(error);
+      // }
+      const json = await getOffersByTechId(tech_id)
+      setOffers(json);
     }
     fetchOfferData()
   }, []);

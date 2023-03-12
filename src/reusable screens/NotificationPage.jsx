@@ -3,6 +3,7 @@ import React from 'react'
 // import { ScrollView } from 'native-base';
 import { ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
 import { useState, useEffect } from 'react';
+import { getNotificationsByTechId } from '../../services/api';
 
 const NotificationPage = () => {
 
@@ -10,16 +11,19 @@ const NotificationPage = () => {
 
   const tech_id = '63f17ce257353e03afc8f124'// to be replaced 
  
-  const new_url = `http://localhost:5001/api/v1/technicians/${tech_id}/notifications`
+  // const new_url = `http://localhost:5001/api/v1/technicians/${tech_id}/notifications`
 
 
   useEffect(() => {
-    fetch(new_url)
-      .then((resp) => resp.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error));
-     
-
+    // fetch(new_url)
+    //   .then((resp) => resp.json())
+    //   .then((json) => setData(json))
+    //   .catch((error) => console.error(error));
+     const see = async () => {
+      const json  = await getNotificationsByTechId(tech_id)
+      setData(json)
+     }
+     see()
   }, []);
 
 

@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { CommonActions } from '@react-navigation/native';
+import { postJobs } from '../../services/api';
 
 const CreatePost = () => {
 
@@ -35,7 +36,7 @@ const CreatePost = () => {
         setStartDate(newDate);
       }
     }
-    const handleSendOffer = () => {
+    const handleSendOffer = async () => {
       const offer = {
         client_id: clientId,
         title:postTitle,
@@ -46,16 +47,20 @@ const CreatePost = () => {
         location:postAddress        
       };
   
-      fetch('http://localhost:5001/api/v1/jobs', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(offer)
-      })
-      .then(response => response.json())
-      .then(data => {
-        navigation.navigate('MyPosts');
-      })
-      .catch(error => console.error(error));
+
+      // fetch('http://localhost:5001/api/v1/jobs', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(offer)
+      // })
+      // .then(response => response.json())
+      // .then(data => {
+      //   navigation.navigate('MyPosts');
+      // })
+      // .catch(error => console.error(error));
+
+      const json = await postJobs(null,offer)
+      navigation.navigate('MyPosts');
     };
   return (
     <View>

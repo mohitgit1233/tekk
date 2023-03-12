@@ -3,24 +3,19 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView,TouchableOpacity, ScrollView } from 'react-native';
 import { SubChatClient }  from './SubChatClient'
 import { useNavigation } from '@react-navigation/native';
-const connection_api = 'http://192.168.5.131:3000/connection';
-const message_api = 'http://192.168.5.131:3000/message';
+import { getJobs } from '../../services/api';
+
 
 export const AllChats = ({navigation}) => {
   const [data1, setData1] = useState([]);
 
   useEffect(() => {
-    const getJobs = async()=>{
+    const fetchData = async()=>{
       // await fetch("http://localhost:5001/api/v1/jobs")
-      await fetch("http://localhost:5001/api/v1/rooms")
-         .then((resp) => resp.json())
-         .then((json) => {
-          console.log(json);
-          setData1(json)
-        })
-         .catch((error) => console.error(error));
-       }
-       getJobs()
+      const json =  await getJobs()
+      setData1(json)
+    }
+    fetchData()
   }, []);
 
   const navigateToNotification = (kindof_prop1, p2, roomid ) => {

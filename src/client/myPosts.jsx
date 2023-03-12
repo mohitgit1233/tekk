@@ -4,6 +4,7 @@ import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { getJobsByEmployerId } from '../../services/api';
 
 const MyPosts = ({ route }) => {
     const [data, setData] = useState([]);
@@ -17,14 +18,16 @@ const MyPosts = ({ route }) => {
 
   let filteredData = []
  
-  const url = 'http://localhost:5001/api/v1/employer/63f1b9adcf55c1d5b65f58ad/jobs';
+  // const url = 'http://localhost:5001/api/v1/employer/63f1b9adcf55c1d5b65f58ad/jobs';
 
   useEffect(() => {
     const see = async()=>{
-   await fetch(url)
-      .then((resp) => resp.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error));
+  //  await fetch(url)
+  //     .then((resp) => resp.json())
+  //     .then((json) => setData(json))
+  //     .catch((error) => console.error(error));
+      const json = await getJobsByEmployerId("63f1b9adcf55c1d5b65f58ad")
+      setData(json)
     }
     see()
   }, []);

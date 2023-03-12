@@ -5,21 +5,27 @@ import { useNavigation } from '@react-navigation/native';
 import { AntDesign,MaterialCommunityIcons } from '@expo/vector-icons';
 import NotificationBell from '../../reusable screens/NotificationBell';
 import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
+import { getJobs } from '../../../services/api';
 
 export const JobPosts = () => {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [tech,setTech] = useState([]);
 
-  const url = 'http://localhost:5001/api/v1/jobs';
+  // const url = 'http://localhost:5001/api/v1/jobs';
 
   const tech_id = '63f17ce257353e03afc8f124'; // to be replaced 
 
   useEffect(() => {
-    fetch(url)
-      .then((resp) => resp.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error));
+    // fetch(url)
+    //   .then((resp) => resp.json())
+    //   .then((json) => setData(json))
+    //   .catch((error) => console.error(error));
+    const see =  async () => {
+      const json = await getJobs()
+      setData(json)
+    }
+    see()
   }, []);
 
   const filteredData = data.filter(

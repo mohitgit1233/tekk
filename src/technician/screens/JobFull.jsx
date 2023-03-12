@@ -5,6 +5,7 @@ import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ClockInOut from './ClockInOut';
+import { getEmploymentByOfferId } from '../../../services/api';
 
 const JobFull = () => {
     const [data, setData] = useState([]);
@@ -21,10 +22,12 @@ const JobFull = () => {
     
   useEffect(() => {
     const see = async()=>{
-        await fetch(url)
-      .then((resp) => resp.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error));
+      //   await fetch(url)
+      // .then((resp) => resp.json())
+      // .then((json) => setData(json))
+      // .catch((error) => console.error(error));
+      const json = await getEmploymentByOfferId(id);
+      setData(json)
     }
     see()
   }, []);

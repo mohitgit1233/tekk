@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView,TouchableOpacity, ScrollView } from 'react-native';
 import { SubChat }  from './SubChat'
 import { useNavigation } from '@react-navigation/native';
-const connection_api = 'http://192.168.5.131:3000/connection';
-const message_api = 'http://192.168.5.131:3000/message';
+import { getRooms } from '../../../services/api';
+
+// const connection_api = 'http://192.168.5.131:3000/connection';
+// const message_api = 'http://192.168.5.131:3000/message';
 
 export const Chat = ({navigation}) => {
   const [data1, setData1] = useState([]);
@@ -12,13 +14,17 @@ export const Chat = ({navigation}) => {
   useEffect(() => {
     const getJobs = async()=>{
       // await fetch("http://localhost:5001/api/v1/jobs")
-      await fetch("http://localhost:5001/api/v1/rooms")
-         .then((resp) => resp.json())
-         .then((json) => {
-          console.log(json);
-          setData1(json)
-        })
-         .catch((error) => console.error(error));
+      // await fetch("http://localhost:5001/api/v1/rooms")
+      //    .then((resp) => resp.json())
+      //    .then((json) => {
+      //     console.log(json);
+      //     setData1(json)
+      //   })
+      //    .catch((error) => console.error(error));
+
+      const json = await getRooms()
+      setData1(json)
+
        }
        getJobs()
   }, []);

@@ -11,7 +11,8 @@ import { OFFERS_BY_JOBID,
     CLOCKIN,
     CLOCKOUT,
     EMPLOYMENT_BY_OFFERID,
-    OFFERS_BY_TECHID
+    OFFERS_BY_TECHID,
+    NOTIFICATIONS_BY_EMPID
 } from './api_config';
 
 
@@ -26,13 +27,14 @@ import { OFFERS_BY_JOBID,
 
 export const generic = async (url, id=null ) => {
 try {
+    let response = null
     if (id)
     {
-        const response = await fetch(url(id));
+        response = await fetch(url(id));
     }
     else
     {
-        const response = await fetch(url);
+        response = await fetch(url);
     }
     const data = await response.json();
     return data;
@@ -46,16 +48,54 @@ export const getOffersByJobId = async (id=null) => {
     return await generic(OFFERS_BY_JOBID,id)
 }
 export const getRooms = async (id=null) => {
-    return await generic(ROOM)
+    return await generic(ROOMS)
 }
-export const acceptOffer = async (id=null) => {
-    return await generic(ACCEPT_OFFER,id)
+export const acceptOffer = async (id=null,body=null) => {
+    try {
+        const response = await fetch(ACCEPT_OFFER(id),{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
+
+
 export const rejectOffer = async (id=null) => {
-    return await generic(REJECT_OFFER,id)
+    try {
+        const response = await fetch(REJECT_OFFER(id),{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
 export const getJobs = async (id=null) => {
     return await generic(JOBS,id)
+}
+export const postJobs = async (id=null,body=null) => {
+    try {
+        const response = await fetch(JOBS,{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
 export const getJobsByEmployerId = async (id=null) => {
     return await generic(JOBS_BY_EMPLOYER_ID,id)
@@ -67,16 +107,55 @@ export const getMessages = async (id=null) => {
     return await generic(MESSAGES,id)
 }
 export const getNotificationsByTechId = async (id=null) => {
-    return await generic(MESSAGES,id)
+    return await generic(NOTIFICATIONS_BY_TECHID,id)
+}
+export const getNotificationsByEmpId = async (id=null) => {
+    return await generic(NOTIFICATIONS_BY_EMPID,id)
 }
 export const getOffers = async (id=null) => {
     return await generic(ALL_OFFERS,id)
 }
-export const clockIn = async (id=null) => {
-    return await generic(CLOCKIN,id)
+export const postOffer = async (id=null,body=null) => {
+    try {
+        const response = await fetch(ALL_OFFERS,{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
-export const clockOut = async (id=null) => {
-    return await generic(CLOCKOUT,id)
+export const clockIn = async (id=null,body=null) => {
+    try {
+        const response = await fetch(CLOCKIN,{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+export const clockOut = async (id=null,body=null) => {
+    try {
+        const response = await fetch(CLOCKOUT,{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
 export const getEmploymentByOfferId = async (id=null) => {
     return await generic(EMPLOYMENT_BY_OFFERID,id)

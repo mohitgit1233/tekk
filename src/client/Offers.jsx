@@ -4,6 +4,8 @@ import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { getJobsByEmployerId } from '../../services/api';
+
 //Requests
 const Offers = () => {
     const [data, setData] = useState([]);
@@ -12,14 +14,15 @@ const Offers = () => {
   // const [postStatus, setpostStatus] = useState('all')
   
  
-  const url = 'http://localhost:5001/api/v1/employer/63f1b9adcf55c1d5b65f58ad/jobs';
+  // const url = 'http://localhost:5001/api/v1/employer/63f1b9adcf55c1d5b65f58ad/jobs';
 
-  useEffect(() => {
-    fetch(url)
-      .then((resp) => resp.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error));
-      
+  useEffect(async () => {
+    // fetch(url)
+    //   .then((resp) => resp.json())
+    //   .then((json) => setData(json))
+    //   .catch((error) => console.error(error));
+    const json = await getJobsByEmployerId("63f1b9adcf55c1d5b65f58ad")
+    setData(json)
   }, []);
 
      const filteredData = data.filter(post => post.status === 'offered' && post.title.toLowerCase().includes(searchTerm.toLowerCase()));

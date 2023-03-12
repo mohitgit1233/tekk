@@ -5,6 +5,7 @@ import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import { getOffersByJobId,acceptOffer } from '../../services/api';
 
 const AllOffers = () => {
 
@@ -18,14 +19,22 @@ const AllOffers = () => {
     const navigation = useNavigation()
   console.log(id)
  
-  const url = `http://localhost:5001/api/v1/job/${id}/offers`;
+  // const url = `http://localhost:5001/api/v1/job/${id}/offers`;
 
   useEffect(() => {
-    fetch(url)
-      .then((resp) => resp.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error));
-      
+    // fetch(url)
+    //   .then((resp) => resp.json())
+    //   .then((json) => setData(json))
+    //   .catch((error) => console.error(error));
+
+    const fetchData = async () => {
+    const offersData = await getOffersByJobId(id);
+    console.log("chekkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    console.log(offersData);
+    setData(offersData);
+    };
+    fetchData();
+    
   }, []);
 
 //   const showToast = () => {
@@ -38,7 +47,7 @@ const AllOffers = () => {
      const filteredData = data
     console.log(data)
 
-    const handleClick = (pid,teid) =>{
+    const handleClick = async (pid,teid) =>{
         console.log(pid)
             const offer = {
                 technician_id:teid,
@@ -47,16 +56,19 @@ const AllOffers = () => {
                 jobID:id       
             };
 
-            fetch(`http://localhost:5001/api/v1/offers/${pid}/accept`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(offer)
-            })
-            .then((response) => {response.json()
-            console.log(response)
-            useEffect
-            })
-            .catch(error => console.error(error));
+            // fetch(`http://localhost:5001/api/v1/offers/${pid}/accept`, {
+            //   method: 'POST',
+            //   headers: { 'Content-Type': 'application/json' },
+            //   body: JSON.stringify(offer)
+            // })
+            // .then((response) => {response.json()
+            // console.log(response)
+            // useEffect
+            // })
+            // .catch(error => console.error(error));
+
+            const data1 = await acceptOffer(id,offer);
+
             navigation.goBack();
     }
   return (
