@@ -1,13 +1,31 @@
 import { useState,useContext } from 'react';
-import { Button, TextInput, View,StyleSheet,Text } from 'react-native';
+import { Button, TextInput, View,StyleSheet,Text,Image,FlatList , ScrollView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { CommonActions } from '@react-navigation/native';
 import { postJobs } from '../../services/api';
 import AppContext from '../../AppContext';
-
+import * as ImagePicker from 'expo-image-picker';
+import { updateTechnicianImage, patchJobImages } from '../../services/api';
 const CreatePost = () => {
+  // const [image, setImage] = useState(null);
+  // const tech_id = '63f17ce257353e03afc8f124';
+
+  const pickImages = async () => {
+    let results = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      multiple: true, // enable multiple image selection
+    });
+  
+    if (!results.cancelled) {
+      setImages([...images, ...results.assets.map((asset) => asset.uri)]);
+    }
+  };
+
   const { loggedInUser, setLoggedInUser } = useContext(AppContext);
 
     const [clientId,setClientId] = useState(loggedInUser.id)
@@ -62,10 +80,27 @@ const CreatePost = () => {
       // .catch(error => console.error(error));
 
       const json = await postJobs(null,offer)
+      console.log("jshonnnnnnnn");
+    console.log(json._id);
+      //upload job images
+      const formData = new FormData();
+      for (let i =0; i<images.length;i++)
+      {
+        formData.append('images_ar', {
+          uri: images[i],
+          name: `postimg${i}.jpg`,
+          type: 'image/jpeg',
+        });
+      }
+
+      const json2 = await patchJobImages(json._id, formData)
+
       navigation.navigate('MyPosts');
     };
   return (
-    <View>
+    <ScrollView>
+
+    <View style={styles.abc}>
     <TextInput
       placeholder="Title"
       value={postTitle}
@@ -125,7 +160,17 @@ const CreatePost = () => {
       setValue={setRequirement}
       setItems={setItems}
     />
-    
+      <Button title="Add Site Images" onPress={pickImages} />
+      <FlatList
+      horizontal={true}
+  data={images}
+  renderItem={({ item }) => (
+    <Image source={{ uri: item }} style={{ width: 200, height: 200 }} />
+  )}
+  keyExtractor={(item) => item}
+/>
+      {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
+      {/* {image && <Button title="Submit" onPress={() => updateProfileImage(tech_id, image)} />}     */}
 
     <Button
       title="Submit Post"
@@ -133,6 +178,8 @@ const CreatePost = () => {
     //   jobId={jobId}
     />
   </View>
+  </ScrollView>
+
   )
 }
 const styles = StyleSheet.create({
@@ -147,12 +194,12 @@ field:{
       borderStyle: 'solid',
       padding: 10,
      margin:15,
-    
-     
-      
   },
   buton:{
     display:'none'
+  },
+  abc: {
+    backgroundColor: "white"
   }
 
 })

@@ -181,6 +181,19 @@ export const updateTechnicianImage = async (id=null,body=null) => {
       const data = await response.json();
       return data
 }
+export const patchJobImages = async (id=null,body=null) => {
+    const response = await fetch(`${API_BASE_URL}/jobs/${id}/images`, {
+        method: 'PATCH',
+        body: body,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      const data = await response.json();
+      return data
+}
+
 
 export const login = async (id=null,body=null) => {
     const response = await fetch(`${API_BASE_URL}/login`, {
