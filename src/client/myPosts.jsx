@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
 import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getJobsByEmployerId } from '../../services/api';
+import AppContext from '../../AppContext';
 
 const MyPosts = ({ route }) => {
+  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+
     const [data, setData] = useState([]);
     const navigation = useNavigation();
     const [status,SetStatus] = useState('')
@@ -25,7 +28,7 @@ const MyPosts = ({ route }) => {
   //     .then((resp) => resp.json())
   //     .then((json) => setData(json))
   //     .catch((error) => console.error(error));
-      const json = await getJobsByEmployerId("63f1b9adcf55c1d5b65f58ad")
+      const json = await getJobsByEmployerId(loggedInUser.id)
       setData(json)
     }
     see()

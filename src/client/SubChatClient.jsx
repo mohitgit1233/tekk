@@ -1,9 +1,10 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView } from 'react-native';
 import io from 'socket.io-client';
 import { getMessages,getUserById } from '../../services/api';
 import { SOCKET_API } from '../../services/api_config';
+import AppContext from '../../AppContext';
 
 
 // const connection_api = 'http://192.168.5.131:3000/connection';
@@ -11,13 +12,14 @@ import { SOCKET_API } from '../../services/api_config';
 // const socket_api = 'http://localhost:5001'
 
 export const SubChatClient = ({ navigation, route }) => {
+    const { loggedInUser, setLoggedInUser } = useContext(AppContext);
     const { propValue, p2, roomid } = route.params;
 
     const [tomessage, set_tomessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [sender, setSender] = useState("User");
     //actually client id 😉
-    const [tech_id, setTech_id] = useState("63f1b9adcf55c1d5b65f58ad");
+    const [tech_id, setTech_id] = useState(loggedInUser.id);
     const [tech_name, settech] = useState("");
     const [emp_name, setemp] = useState("");
 

@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import { Button, TextInput, View,StyleSheet,Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { CommonActions } from '@react-navigation/native';
 import { postJobs } from '../../services/api';
+import AppContext from '../../AppContext';
 
 const CreatePost = () => {
+  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
 
-    const [clientId,setClientId] = useState('63f1b9adcf55c1d5b65f58ad')
+    const [clientId,setClientId] = useState(loggedInUser.id)
     // const { refreshData} = route.params;
     const [postTitle, setPostTitle] = useState('');
     const [postAddress, setPostAddress] = useState('');

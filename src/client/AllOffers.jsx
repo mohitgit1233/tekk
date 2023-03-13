@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
 import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
@@ -6,10 +6,13 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { getOffersByJobId,acceptOffer } from '../../services/api';
+import AppContext from '../../AppContext';
 
 const AllOffers = () => {
+  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
 
-    const emp_id = '63f1b9adcf55c1d5b65f58ad'
+
+    // const emp_id = '63f1b9adcf55c1d5b65f58ad'
     const [data, setData] = useState([]);
     const[accept_id,SetAcceptID] = useState('')
   const [searchTerm, setSearchTerm] = useState('');
@@ -51,7 +54,7 @@ const AllOffers = () => {
         console.log(pid)
             const offer = {
                 technician_id:teid,
-                employer_id:emp_id,
+                employer_id:loggedInUser.id,
                 offer_id: pid,
                 jobID:id       
             };
