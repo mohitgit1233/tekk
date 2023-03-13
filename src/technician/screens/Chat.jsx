@@ -1,14 +1,16 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView,TouchableOpacity, ScrollView } from 'react-native';
 import { SubChat }  from './SubChat'
 import { useNavigation } from '@react-navigation/native';
 import { getRooms } from '../../../services/api';
-
+import AppContext from '../../../AppContext';
 // const connection_api = 'http://192.168.5.131:3000/connection';
 // const message_api = 'http://192.168.5.131:3000/message';
 
 export const Chat = ({navigation}) => {
+  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+
   const [data1, setData1] = useState([]);
 
   useEffect(() => {
@@ -23,7 +25,11 @@ export const Chat = ({navigation}) => {
       //    .catch((error) => console.error(error));
 
       const json = await getRooms()
-      setData1(json)
+      console.log(json);
+      console.log(loggedInUser.id);
+      const filteredArray = json.filter((item) => item.technician_id === loggedInUser.id);
+
+      setData1(filteredArray)
 
        }
        getJobs()
