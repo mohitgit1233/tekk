@@ -17,16 +17,29 @@ import Icon from 'react-native-ionicons';
 import { CommonActions } from '@react-navigation/native';
 import {login} from '../../services/api'
 
+import Toast from 'react-native-toast-message';
+
 const Tab = createMaterialTopTabNavigator();
 
 // import jobFeed from './technician/JobPosts';
 const Stack = createNativeStackNavigator();
 
 export const Login = () => {
+  // const { show } = SuccessToast();
+
+  const handlePress = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Success',
+      text2: 'You have successfully completed the action.',
+      visibilityTime: 2000,
+      position: 'bottom'
+    });
+  };
   const { loggedInUser, setLoggedInUser } = useContext(AppContext);
 
   const navigation = useNavigation();
-  const [show, setShow] = React.useState(false);
+  const [show2, setShow2] = React.useState(false);
   const [text, setText] = useState("a2@gmail.com");
   const [text2, setText2] = useState("12345678");
 
@@ -121,7 +134,7 @@ export const Login = () => {
       base: "75%",
       md: "25%"
     }} style={styles.field} 
-    type={show ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow(!show)}>
+    type={show2 ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow2(!show2)}>
             <Icon  size={5} mr="2" color="muted.400" />
           </Pressable>} placeholder="Password"   onChangeText={(e)=>setText2(e)} defaultValue={text2} />
 
@@ -130,6 +143,9 @@ export const Login = () => {
         title="Login"
         onPress={handleSubmit}
       />
+       <Button title="Show Toast" onPress={handlePress} />
+       <Toast ref={(ref) => Toast.setRef(ref)} />
+
       {/* <Button style={styles.botton}
         title="Login as Client"
         onPress={handleSubmit2}
