@@ -1,12 +1,15 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView,TouchableOpacity, ScrollView } from 'react-native';
 import { SubChatClient }  from './SubChatClient'
 import { useNavigation } from '@react-navigation/native';
 import { getJobs, getRooms } from '../../services/api';
+import AppContext from '../../AppContext';
 
 
 export const AllChats = ({navigation}) => {
+  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+
   const [data1, setData1] = useState([]);
 
   useEffect(() => {
@@ -14,8 +17,11 @@ export const AllChats = ({navigation}) => {
       // await fetch("http://localhost:5001/api/v1/jobs")
       // const json =  await getJobs()
       const json =  await getRooms()
+      console.log(loggedInUser.id);
+      const filteredArray = json.filter((item) => item.employer_id === loggedInUser.id);
 
-      setData1(json)
+      setData1(filteredArray)
+      // setData1(json)
     }
     fetchData()
   }, []);
