@@ -6,7 +6,7 @@ import { getMessages,getUserById } from '../../../services/api';
 import { SOCKET_API } from '../../../services/api_config';
 // import React, { useState, useEffect, } from 'react';
 import AppContext from '../../../AppContext';
-
+import Moment from 'moment';
 // const connection_api = 'http://192.168.5.131:3000/connection';
 // const message_api = 'http://192.168.5.131:3000/message';
 
@@ -149,7 +149,7 @@ export const SubChat = ({ navigation, route }) => {
         return (
             <View style={styles.message}>
                 {/* <Text style={styles.sender} >{item.sender_id}</Text> */}
-                <Text style={styles.sender} >{item.date}</Text>
+                <Text style={styles.sender} >{Moment(item.date).format('MMMM Do, YYYY')}</Text>
                 { item.docModel==="technician" ? <Text style={styles.sender} >{tech_name}</Text> : <Text style={styles.sender} >{emp_name}</Text>  }
                 <Text>{item.message}</Text>
             </View>
