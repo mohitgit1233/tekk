@@ -7,7 +7,9 @@ import { Chat } from '../technician/screens/Chat';
 import { AppStackClient } from '../client/stacks/AppStackClient';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { View, TextInput, Button } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AppContext from '../../AppContext';
+
 import { StatusBar } from 'expo-status-bar';
 // import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -21,6 +23,8 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export const Login = () => {
+  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+
   const navigation = useNavigation();
   const [show, setShow] = React.useState(false);
   const [text, setText] = useState("a2@gmail.com");
@@ -40,6 +44,11 @@ export const Login = () => {
       console.log("4444444444444444");
       console.log(json1.data.name);
       if (json1.isTechnician===true){
+        setLoggedInUser({
+          id: json1.data._id,
+          name: json1.data.name,
+          isTechnician: json1.data.isTechnician
+        })
       // Reset the navigation stack and navigate to the technician portal
       navigation.dispatch(
         CommonActions.reset({
@@ -51,6 +60,12 @@ export const Login = () => {
         })
       );
       }else{
+        setLoggedInUser({
+          id: json1.data._id,
+          name: json1.data.name,
+          isTechnician: json1.data.isTechnician
+        })
+
         navigation.dispatch(
           CommonActions.reset({
             index: 0,

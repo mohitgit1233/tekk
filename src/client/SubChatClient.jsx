@@ -16,6 +16,7 @@ export const SubChatClient = ({ navigation, route }) => {
     const [tomessage, set_tomessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [sender, setSender] = useState("User");
+    //actually client id 😉
     const [tech_id, setTech_id] = useState("63f1b9adcf55c1d5b65f58ad");
     const [tech_name, settech] = useState("");
     const [emp_name, setemp] = useState("");

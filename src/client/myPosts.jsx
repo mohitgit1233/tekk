@@ -18,7 +18,6 @@ const MyPosts = ({ route }) => {
 
   let filteredData = []
  
-  // const url = 'http://localhost:5001/api/v1/employer/63f1b9adcf55c1d5b65f58ad/jobs';
 
   useEffect(() => {
     const see = async()=>{

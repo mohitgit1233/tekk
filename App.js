@@ -14,6 +14,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Login } from './src/login/Login'
 import Splash from './src/Splash';
 import React, { useState, useEffect } from 'react';
+import AppContext from './AppContext';
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -27,15 +28,21 @@ export default function App() {
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [loggedInUser,setLoggedInUser] = useState({
+    id: "635cc7967007ac4c3cc1aabb",
+    // id:"633a08d5dcc833764b361dc3",
+    name: "Jane",
+    isTechnician: true
+  })
+  
 
-
-  const handleTextChange = (inputText) => {
-    setText(inputText);
-  };
-  const handleSubmit = () => {
-    // Do something with the text value, e.g. send it to a server
-    console.log(text);
-  };
+  // const handleTextChange = (inputText) => {
+  //   setText(inputText);
+  // };
+  // const handleSubmit = () => {
+  //   // Do something with the text value, e.g. send it to a server
+  //   console.log(text);
+  // };
 
   useEffect(() => {
     setTimeout(() => {
@@ -45,6 +52,8 @@ export default function App() {
   
   return (
     <>
+    <AppContext.Provider value={{ loggedInUser, setLoggedInUser  }}>
+
     {isLoading ? <Splash /> :     <NavigationContainer>
       <NativeBaseProvider>
 
@@ -57,6 +66,7 @@ export default function App() {
       </NativeBaseProvider>
 
     </NavigationContainer>}
+    </AppContext.Provider>
 
 
 

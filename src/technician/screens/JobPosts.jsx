@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 import Moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
@@ -6,8 +6,11 @@ import { AntDesign,MaterialCommunityIcons } from '@expo/vector-icons';
 import NotificationBell from '../../reusable screens/NotificationBell';
 import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
 import { getJobs } from '../../../services/api';
+import AppContext from '../../../AppContext';
 
 export const JobPosts = () => {
+  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [tech,setTech] = useState([]);
@@ -40,6 +43,7 @@ export const JobPosts = () => {
     
       <>
       <Box bg="white" height="100%">
+        {/* <Text>{loggedInUser.name}</Text> */}
       <View style={styles.header}>
       <View style={styles.searchContainer}>
         <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
