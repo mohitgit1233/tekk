@@ -39,41 +39,45 @@ export const JobPosts = () => {
   const navigation = useNavigation();
 
   return (
-    
-      <>
+    <>
       <Box bg="white" height="100%">
-        {/* <Text>{loggedInUser.name}</Text> */}
-      <View style={styles.header}>
-      <View style={styles.searchContainer}>
-        <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search Jobs"
-          onChangeText={(text) => setSearchTerm(text)}
-          value={searchTerm} />
-      </View>
-    </View><ScrollView contentContainerStyle={styles.container}>
-        {filteredData.map((post) => {
-          Moment.locale('en');
-          return (
-            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id, tech_id: loggedInUser.id })}>
-              <View style={styles.postContainer}>
-                <View style={styles.postTitleContainer}>
-                  <Image style={styles.postImage} source={{ uri: post.images[0] }} />
-                  <View style={styles.postTitle}>
-                    <Text style={styles.postTitleText}>{post.title}</Text>
-                    <Text style={styles.postSubtitleText}>{post.location}</Text>
+        <View style={styles.header}>
+          <View style={styles.searchContainer}>
+            <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search Jobs"
+              onChangeText={(text) => setSearchTerm(text)}
+              value={searchTerm}
+            />
+          </View>
+        </View>
+        <ScrollView contentContainerStyle={styles.container}>
+          {filteredData.map((post) => {
+            Moment.locale('en');
+            return (
+              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id, tech_id: loggedInUser.id })}>
+                <View style={styles.postContainer}>
+                  <View style={styles.postTitleContainer}>
+                    <Image style={styles.postImage} source={{ uri: post.images[0] }} />
+                    <View style={styles.postContent}>
+                      <View style={styles.postHeader}>
+                        <Text style={styles.postTitleText}>{post.title}</Text>
+                        <Text style={styles.postSubtitleText}>{post.location}</Text>
+                        <Text style={styles.postDate}>{Moment(post.posted_date).format('MMMM Do, YYYY')}</Text>
+                      </View>
+                      <Text style={styles.postDescription}>{post.description}</Text>
+                    </View>
                   </View>
                 </View>
-                <Text style={styles.postDescription}>{post.description}</Text>
-                <Text style={styles.postDate}>{Moment(post.posted_date).format('MMMM Do, YYYY')}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
-      </Box></>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </Box>
+    </>
   );
+  
 };
 
 const styles = StyleSheet.create({
