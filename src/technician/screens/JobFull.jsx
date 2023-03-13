@@ -53,9 +53,9 @@ const JobFull = () => {
               <Text>Job Description :</Text>
               <Text style={styles.postDescription}>{data[0] && data[0].job.description}</Text>
               <Text>Hours spent-- seconds :</Text>
-              <Text style={styles.postDescription}>{data[0] && data[0].total_hours }</Text>
+              <Text style={styles.postDescription}>{data[0] && data[0].total_hours.toFixed(2) }</Text>
               <Text>Total income :</Text>
-              <Text style={styles.postDescription}>{data[0] && data[0].total_income }</Text>
+              <Text style={styles.postDescription}>{data[0] && data[0].total_income.toFixed(2) }</Text>
             </View>   
 
           

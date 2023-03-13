@@ -149,7 +149,7 @@ export const SubChat = ({ navigation, route }) => {
         return (
             <View style={styles.message}>
                 {/* <Text style={styles.sender} >{item.sender_id}</Text> */}
-                <Text style={styles.sender} >{Moment(item.date).format('MMMM Do, YYYY')}</Text>
+                <Text style={styles.sender}>{Moment(item.date).format('MMMM Do, YYYY,HH:mm A')}</Text>
                 { item.docModel==="technician" ? <Text style={styles.sender} >{tech_name}</Text> : <Text style={styles.sender} >{emp_name}</Text>  }
                 <Text>{item.message}</Text>
             </View>
