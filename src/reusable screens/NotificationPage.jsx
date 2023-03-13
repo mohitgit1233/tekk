@@ -28,20 +28,28 @@ const NotificationPage = () => {
      see()
   }, []);
 
+  async function onDismiss(id) {
+    // const json = await deleteNotificationById(id)
+    // setData(json)
+  }
+
 
   return (
     <ScrollView contentContainerStyle={styles.container} >
     <View>
-      <Text>NotificationPage</Text>
+      {/* <Text>NotificationPage</Text> */}
     </View>
-    {data.map((post) => {
+    {data.map((post,index) => {
         return (
           <TouchableOpacity key={post._id} >
-            <View>
+            <View  key={index} style={styles.card} >
 
-              <Text style={styles.postDescription}>{post.heading}</Text>
-              <Text style={styles.postDescription}>{post.text}</Text>
-
+              <Text style={styles.postHeading}>{post.heading}</Text>
+              <Text style={styles.postDate}>{post.date}</Text>
+              <Text style={styles.postText}>{post.text}</Text>
+              <TouchableOpacity style={styles.dismissButton} onPress={() => onDismiss(post._id)}>
+            <Text style={styles.dismissButtonText}>X</Text>
+          </TouchableOpacity>
 
             </View>
           </TouchableOpacity>
@@ -53,7 +61,47 @@ const NotificationPage = () => {
 
 export default NotificationPage
 
-const styles = StyleSheet.create({  container: {
-  backgroundColor: '#F5FCFF',
-  padding: 10,
-},})
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  card: {
+    backgroundColor: '#f5f5f5',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+  },
+  postHeading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  postDate: {
+    fontSize: 16,
+    color: '#888',
+    marginBottom: 16,
+  },
+  postText: {
+    fontSize: 18,
+    lineHeight: 24,
+  },
+  dismissButton: {
+    backgroundColor: '#ccc',
+    borderRadius: 16,
+    width: 32,
+    height: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 16,
+    right: 16,
+  },
+  dismissButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
