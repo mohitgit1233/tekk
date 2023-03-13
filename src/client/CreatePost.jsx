@@ -10,7 +10,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { updateTechnicianImage, patchJobImages } from '../../services/api';
 const CreatePost = () => {
   // const [image, setImage] = useState(null);
-  // const tech_id = '63f17ce257353e03afc8f124';
 
   const pickImages = async () => {
     let results = await ImagePicker.launchImageLibraryAsync({
