@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView,TouchableOpacity, ScrollView } from 'react-native';
 import { SubChatClient }  from './SubChatClient'
 import { useNavigation } from '@react-navigation/native';
-import { getJobs } from '../../services/api';
+import { getJobs, getRooms } from '../../services/api';
 
 
 export const AllChats = ({navigation}) => {
@@ -12,7 +12,9 @@ export const AllChats = ({navigation}) => {
   useEffect(() => {
     const fetchData = async()=>{
       // await fetch("http://localhost:5001/api/v1/jobs")
-      const json =  await getJobs()
+      // const json =  await getJobs()
+      const json =  await getRooms()
+
       setData1(json)
     }
     fetchData()
