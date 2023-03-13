@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
 import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
 import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { getOffersByTechId } from '../../../services/api';
-
-const tech_id = '63f17ce257353e03afc8f124'
+import React, { useState, useEffect,useContext } from 'react';
+import AppContext from '../../../AppContext';
+// const tech_id = '63f17ce257353e03afc8f124'
 
 export const MyJob = ({ navigation }) => {
+  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
 
   const data2 = [];
   const [data, setData] = useState([]);
@@ -40,7 +42,7 @@ export const MyJob = ({ navigation }) => {
       // } catch (error) {
       //   console.error(error);
       // }
-      const json = await getOffersByTechId(tech_id)
+      const json = await getOffersByTechId(loggedInUser.id)
       setOffers(json);
     }
     fetchOfferData()

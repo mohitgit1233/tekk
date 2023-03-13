@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
 import Moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { getNotificationsByTechId } from '../../services/api';
-
+import AppContext from '../../AppContext';
 const NotificationBell = ({ hasNotifications }) => {
+  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
   const [notificationCount, setNotificationCount] = useState(0);
 
-  const tech_id = '63f17ce257353e03afc8f124' // to be replaced
+  // const tech_id = '63f17ce257353e03afc8f124' // to be replaced
 
   // const new_url = `http://localhost:5001/api/v1/technicians/${tech_id}/notifications`
 
@@ -22,7 +23,7 @@ const NotificationBell = ({ hasNotifications }) => {
     //   .then((json) => setNotificationCount(json))
     //   .catch((error) => console.error(error));
     const see = async ()=> {
-      const json = await getNotificationsByTechId(tech_id)
+      const json = await getNotificationsByTechId(loggedInUser.id)
       setNotificationCount(json)
     }
     see()

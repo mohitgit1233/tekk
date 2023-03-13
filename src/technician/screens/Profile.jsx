@@ -46,16 +46,18 @@
 //   );
 // };
 
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import { Button, Image, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { updateTechnicianImage } from '../../../services/api';
 import { SOCKET_API } from '../../../services/api_config';
-
+import React, { useState, useEffect,useContext } from 'react';
+import AppContext from '../../../AppContext';
 
 export const Profile = () => {
+  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
   const [image, setImage] = useState(null);
-  const tech_id = '63f17ce257353e03afc8f124';
+  // const tech_id = '63f17ce257353e03afc8f124';
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -82,7 +84,7 @@ export const Profile = () => {
     });
     console.log("r1 calledddd");
 
-    const data = await updateTechnicianImage(tech_id, formData)
+    const data = await updateTechnicianImage(loggedInUser.id, formData)
     console.log(data);
     console.log("success upload");
   };
@@ -91,7 +93,7 @@ export const Profile = () => {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Button title="Pick an image from camera roll" onPress={pickImage} />
       {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-      {image && <Button title="Submit" onPress={() => updateProfileImage(tech_id, image)} />}
+      {image && <Button title="Submit" onPress={() => updateProfileImage(loggedInUser.id, image)} />}
     </View>
   );
 };

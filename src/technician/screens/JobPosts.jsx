@@ -7,7 +7,6 @@ import NotificationBell from '../../reusable screens/NotificationBell';
 import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
 import { getJobs } from '../../../services/api';
 import AppContext from '../../../AppContext';
-
 export const JobPosts = () => {
   const { loggedInUser, setLoggedInUser } = useContext(AppContext);
 
@@ -17,7 +16,7 @@ export const JobPosts = () => {
 
   // const url = 'http://localhost:5001/api/v1/jobs';
 
-  const tech_id = '63f17ce257353e03afc8f124'; // to be replaced 
+  // const tech_id = '63f17ce257353e03afc8f124'; // to be replaced 
 
   useEffect(() => {
     // fetch(url)
@@ -57,7 +56,7 @@ export const JobPosts = () => {
         {filteredData.map((post) => {
           Moment.locale('en');
           return (
-            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id, tech_id: tech_id })}>
+            <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id, tech_id: loggedInUser.id })}>
               <View style={styles.postContainer}>
                 <View style={styles.postTitleContainer}>
                   <Image style={styles.postImage} source={{ uri: post.images[0] }} />

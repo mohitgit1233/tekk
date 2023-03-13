@@ -1,11 +1,13 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 //FIXME
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { postOffer } from '../../services/api';
-
+import React, { useState, useEffect,useContext } from 'react';
+import AppContext from '../../AppContext';
 const SendOffer = ({ route }) => {
+  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
   const { jobId, refreshData,tech_id } = route.params;
   const [offerPrice, setOfferPrice] = useState('');
   const [offerHours, setOfferHours] = useState('');
@@ -24,7 +26,7 @@ const SendOffer = ({ route }) => {
       jobID: jobId,
       offerPrice: parseInt(offerPrice),
       offerHours: parseInt(offerHours),
-      technicianId:'63f17ce257353e03afc8f124',
+      technicianId: loggedInUser.id,
       prefer_start_date: preferStartDate,
       
     };
