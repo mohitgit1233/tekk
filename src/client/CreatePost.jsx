@@ -4,10 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { CommonActions } from '@react-navigation/native';
-import { postJobs } from '../../services/api';
+import { postJobs,pushToTechnicians } from '../../services/api';
 import AppContext from '../../AppContext';
 import * as ImagePicker from 'expo-image-picker';
 import { updateTechnicianImage, patchJobImages } from '../../services/api';
+// import { Picker } from '@react-native-picker/picker';
 const CreatePost = () => {
   // const [image, setImage] = useState(null);
 
@@ -94,6 +95,13 @@ const CreatePost = () => {
 
       const json2 = await patchJobImages(json._id, formData)
 
+      //push notification to all the technicianssssssssssss
+      const obj1 = {
+        "heading": "New Job Added",
+    "text": `employer ${loggedInUser.name} looking for a ${requirement}`
+}
+      const json3 = await pushToTechnicians(null,obj1)
+
       navigation.navigate('MyPosts');
     };
   return (
@@ -159,6 +167,15 @@ const CreatePost = () => {
       setValue={setRequirement}
       setItems={setItems}
     />
+          {/* <Picker style={{margin:"auto",marginBottom:10}}
+        selectedValue={selectedValue}
+        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+      >
+        <Picker.Item label="Java" value="java" />
+        <Picker.Item label="JavaScript" value="js" />
+        <Picker.Item label="Python" value="python" />
+      </Picker> */}
+
       <Button title="Add Site Images" onPress={pickImages} />
       <FlatList
       horizontal={true}
