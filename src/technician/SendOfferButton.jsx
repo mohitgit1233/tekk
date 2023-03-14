@@ -42,7 +42,7 @@ const SendOffer = ({ route }) => {
     // })
     // .catch(error => console.error(error));
     const json = await postOffer(null, offer)
-    navigation.navigate('ViewOffer', { offer: data, refreshData: refreshData });
+    navigation.navigate('ViewOffer', { offer: json, refreshData: refreshData });
   };
 
   return (
