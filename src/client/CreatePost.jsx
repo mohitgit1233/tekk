@@ -1,5 +1,5 @@
 import { useState,useContext } from 'react';
-import { Button, TextInput, View,StyleSheet,Text,Image,FlatList , ScrollView} from 'react-native';
+import { Button, TextInput, View,StyleSheet,Text,Image,FlatList , ScrollView, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -104,120 +104,147 @@ const CreatePost = () => {
 
       navigation.navigate('MyPosts');
     };
-  return (
-    <ScrollView>
-
-    <View style={styles.abc}>
-    <TextInput
-      placeholder="Title"
-      value={postTitle}
-      style={styles.field}
-      onChangeText={setPostTitle}
-      keyboardType="string"
-    />
-    <TextInput
-      placeholder="Address"
-      value={postAddress}
-      style={styles.field}
-      onChangeText={setPostAddress}
-      keyboardType="string"
-    />
-    <TextInput
-      placeholder="Phone Number"
-      value={postPhone}
-      style={styles.field}
-      onChangeText={setPostPhone}
-      keyboardType='numeric'
-    />
-    <TextInput
-      placeholder="Maximum Cost"
-      value={postMaxCost}
-      style={styles.field}
-      onChangeText={setPostMaxCost}
-      keyboardType="string"
-    />
-     <View style={{textAlign:'center',fontSize:'25',display:'flex',flexDirection:'column',alignItems:'center'}}>
-      <Text style={{textAlign:'center',fontSize:'20'
-    }}>Pick a date</Text>
-      {showPicker && (
-        <DateTimePicker
-        style={{alignItems:'center' }}
-          value={startDate}
-          mode="date"
-          onChange={onDateChange}
-        />
-      )}
-    </View>
- 
-
-
-    <TextInput
-      placeholder="Desciption"
-      value={jobDescription}
-      style={styles.field}
-      onChangeText={setJobDescription}
-      keyboardType="string"
-    />
-      <DropDownPicker
-      style={{margin:"auto",marginBottom:10}}
-      open={open}
-      value={requirement}
-      items={items}
-      setOpen={setOpen}
-      setValue={setRequirement}
-      setItems={setItems}
-    />
-          {/* <Picker style={{margin:"auto",marginBottom:10}}
-        selectedValue={selectedValue}
-        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-      >
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="JavaScript" value="js" />
-        <Picker.Item label="Python" value="python" />
-      </Picker> */}
-
-      <Button title="Add Site Images" onPress={pickImages} />
-      <FlatList
-      horizontal={true}
-  data={images}
-  renderItem={({ item }) => (
-    <Image source={{ uri: item }} style={{ width: 200, height: 200 }} />
-  )}
-  keyExtractor={(item) => item}
-/>
-      {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
-      {/* {image && <Button title="Submit" onPress={() => updateProfileImage(tech_id, image)} />}     */}
-
-    <Button
-      title="Submit Post"
-      onPress={handleSendOffer}
-    //   jobId={jobId}
-    />
-  </View>
-  </ScrollView>
-
-  )
+    return (
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.form}>
+          <Text style={styles.heading}>Create Job Post</Text>
+    
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Title"
+              value={postTitle}
+              style={styles.input}
+              onChangeText={setPostTitle}
+            />
+            <TextInput
+              placeholder="Address"
+              value={postAddress}
+              style={styles.input}
+              onChangeText={setPostAddress}
+            />
+            <TextInput
+              placeholder="Phone Number"
+              value={postPhone}
+              style={styles.input}
+              onChangeText={setPostPhone}
+              keyboardType="numeric"
+            />
+            <TextInput
+              placeholder="Maximum Cost"
+              value={postMaxCost}
+              style={styles.input}
+              onChangeText={setPostMaxCost}
+            />
+            <TouchableOpacity
+              style={styles.input}
+              onPress={() => setShowPicker(true)}
+            >
+              <Text style={styles.inputLabel}>Pick a date</Text>
+              {showPicker && (
+                <DateTimePicker
+                  style={styles.datePicker}
+                  value={startDate}
+                  mode="date"
+                  onChange={onDateChange}
+                />
+              )}
+            </TouchableOpacity>
+            <DropDownPicker
+              style={styles.dropdown}
+              open={open}
+              value={requirement}
+              items={items}
+              setOpen={setOpen}
+              setValue={setRequirement}
+              setItems={setItems}
+              placeholder="Select a requirement"
+            />
+            <TextInput
+              placeholder="Description"
+              value={jobDescription}
+              style={styles.input}
+              onChangeText={setJobDescription}
+              multiline={true}
+              numberOfLines={4}
+            />
+            <TouchableOpacity style={styles.addImagesButton} onPress={pickImages}>
+              <Text style={styles.addImagesButtonText}>Add Site Images</Text>
+            </TouchableOpacity>
+            <FlatList
+              horizontal={true}
+              data={images}
+              renderItem={({ item }) => (
+                <Image
+                  source={{ uri: item }}
+                  style={styles.imagePreview}
+                  resizeMode="cover"
+                />
+              )}
+              keyExtractor={(item) => item}
+              style={styles.imageList}
+            />
+          </View>
+    
+          <TouchableOpacity style={styles.submitButton} onPress={handleSendOffer}>
+            <Text style={styles.submitButtonText}>Submit Post</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
 }
 const styles = StyleSheet.create({
-field:{
-    fontSize:'x-large',
-    border: '1px solid black',
-    padding:'3%',
-    textAlign:'center',
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    padding: 16,
+  },
+  formContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    padding: 16,
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  input: {
     borderWidth: 1,
-      borderColor: 'black',
-      borderRadius: 10,
-      borderStyle: 'solid',
-      padding: 10,
-     margin:15,
+    borderColor: '#CCCCCC',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginBottom: 16,
+    fontSize: 16,
   },
-  buton:{
-    display:'none'
+  button: {
+    backgroundColor: '#5D2DFD',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
   },
-  abc: {
-    backgroundColor: "white"
-  }
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+  },
+  datePickerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: '#CCCCCC',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginBottom: 16,
+  },
+  dateText: {
+    fontSize: 16,
+  },
+  dropdownContainer: {
+    marginBottom: 16,
+  },
+});
 
-})
 
 export default CreatePost
