@@ -41,28 +41,26 @@ export const AllChats = ({navigation}) => {
   };
 
   return (
-<ScrollView> 
 
-    <View style={styles.container}>
-      <Text style={styles.head}>Select Technician To Chat</Text>
+<View style={styles.container}>
+  <Text style={styles.head}>Select Technician To Chat</Text>
 
-      {data1.map((post) => {
-        return (
-          <TouchableOpacity key={post._id} >
-            <View>
+  <FlatList
+style={styles.list}
+data={data1}
+keyExtractor={(item) => item._id}
+renderItem={({ item }) => (
+<View style={styles.postContainer}>
+  <TouchableOpacity onPress={() => navigateToNotification(item._id, item.technician_id, item._id)}>
+    <Text style={styles.postDescription}>Job: {item._id} - Technician: {item.technician_id}</Text>
+  </TouchableOpacity>
+</View>
+)}
+/>
 
-              <Text style={styles.postDescription}  onPress={() => navigateToNotification(post._id, post.technician_id, post._id)}  >Job: {post._id} - Employer: {post.employer_id}</Text>
 
-
-            </View>
-          </TouchableOpacity>
-        );
-      })}
-
-
-      {/* <Button title="adil" onPress={() => navigateToNotification("adilsaju_emp")}  >Adil</Button> */}
-    </View>
-</ScrollView> 
+  {/* <Button title="adil" onPress={() => navigateToNotification("adilsaju_emp")}  >Adil</Button> */}
+</View>
 
   );
 };
@@ -72,10 +70,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 10,
-    color: 'white'
   },
   head: {
-    fontSize: 30
-  }
-
+    fontSize: 30,
+    marginVertical: 10,
+  },
+  list: {
+    flex: 1,
+  },
+  postContainer: {
+    marginVertical: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    backgroundColor: '#F2F2F2',
+    borderRadius: 10,
+  },
+  postDescription: {
+    fontSize: 18,
+  },
 });
