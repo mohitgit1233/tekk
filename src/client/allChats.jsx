@@ -52,7 +52,7 @@ keyExtractor={(item) => item._id}
 renderItem={({ item }) => (
 <View style={styles.postContainer}>
   <TouchableOpacity onPress={() => navigateToNotification(item._id, item.technician_id, item._id)}>
-    <Text style={styles.postDescription}>Job: {item._id} - Technician: {item.technician_id}</Text>
+    <Text style={styles.postDescription}>Job: {item.job_id} - Technician: {item.technician_id}</Text>
   </TouchableOpacity>
 </View>
 )}

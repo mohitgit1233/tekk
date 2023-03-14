@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import { getOffersByJobId,acceptOffer } from '../../services/api';
+import { getOffersByJobId,acceptOffer, createRoom } from '../../services/api';
 import AppContext from '../../AppContext';
 
 const AllOffers = () => {
@@ -74,6 +74,20 @@ const AllOffers = () => {
 
             navigation.goBack();
     }
+    const goToChatRoom = async (jid,tid,eid) =>{
+        const obj = {
+          "technician": tid,
+          "employer": eid,
+          "job": jid
+      }
+     
+          const json = await createRoom(null,obj);
+
+          console.log("asskjdkjldaskdsajlkdasjkldasjklsadjkldas created room");
+
+          navigation.navigate('SubChatClient', {  });
+
+  }
   return (
     <>
     {filteredData.map((post) => {
@@ -101,7 +115,7 @@ const AllOffers = () => {
                 >Decline</Button>
                 <Button style={{margin:10}}
                 title="Chat"
-                // onPress={() => {handleClick(post._id,post.technician_who_offered._id)}}
+                onPress={() => {goToChatRoom(id,post.technician_who_offered._id, loggedInUser.id)}}
                 //   jobId={jobId}
                 >Chat</Button>
             </View>

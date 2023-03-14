@@ -61,7 +61,7 @@ export const Chat = ({navigation}) => {
   renderItem={({ item }) => (
     <View style={styles.postContainer}>
       <TouchableOpacity onPress={() => navigateToNotification(item._id, item.employer_id, item._id)}>
-        <Text style={styles.postDescription}>Job: {item._id} - Employer: {item.employer_id}</Text>
+        <Text style={styles.postDescription}>Job: {item.job_id} - Employer: {item.employer_id}</Text>
       </TouchableOpacity>
     </View>
   )}

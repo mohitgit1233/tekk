@@ -66,6 +66,20 @@ export const acceptOffer = async (id=null,body=null) => {
     }
 }
 
+export const createRoom = async (id=null,body=null) => {
+    try {
+        const response = await fetch(ROOMS,{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
 
 export const rejectOffer = async (id=null) => {
     try {
