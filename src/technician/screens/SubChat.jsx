@@ -46,7 +46,7 @@ export const SubChat = ({ navigation, route }) => {
         
         // })
         //   .catch((error) => console.error(error));
-        const json = await getMessages()
+        const json = await getMessages(roomid)
         const tech_name = await getUserById(tech_id)
         const emp_name = await getUserById(p2)
         console.log("=========================");

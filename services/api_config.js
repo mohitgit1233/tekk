@@ -17,7 +17,9 @@ export const JOBS = `${API_BASE_URL}/jobs`
 export const JOBS_BY_EMPLOYER_ID  = (id) => `${API_BASE_URL}/employer/${id}/jobs`
 export const JOB_BY_ID = (id) => `${API_BASE_URL}/jobs/${id}`;
 
-export const MESSAGES = `${API_BASE_URL}/messages`
+// export const MESSAGES = `${API_BASE_URL}/messages`
+export const MESSAGES  = (id) => `${API_BASE_URL}/rooms/${id}/messages`
+
 
 export const NOTIFICATIONS_BY_TECHID  = (id) => `${API_BASE_URL}/technicians/${id}/notifications`
 export const NOTIFICATIONS_BY_EMPID  = (id) => `${API_BASE_URL}/employers/${id}/notifications`
