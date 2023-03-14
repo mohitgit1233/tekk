@@ -53,7 +53,11 @@ export const Chat = ({navigation}) => {
 
     <View style={styles.container}>
       <Text style={styles.head}>Select Employer To Chat</Text>
-
+      <View style={styles.postContainer}>
+        <TouchableOpacity >
+          <Text style={styles.postDescription}> Ask AI</Text>
+        </TouchableOpacity>
+      </View>
       <FlatList
   style={styles.list}
   data={data1}

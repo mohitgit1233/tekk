@@ -42,19 +42,23 @@ export const AllChats = ({navigation}) => {
 
   return (
 
-<View style={styles.container}>
-  <Text style={styles.head}>Select Technician To Chat</Text>
-
-  <FlatList
-style={styles.list}
-data={data1}
-keyExtractor={(item) => item._id}
-renderItem={({ item }) => (
-<View style={styles.postContainer}>
-  <TouchableOpacity onPress={() => navigateToNotification(item._id, item.technician_id, item._id)}>
-    <Text style={styles.postDescription}>Job: {item.job_id} - Technician: {item.technician_id}</Text>
-  </TouchableOpacity>
-</View>
+    <View style={styles.container}>
+      <Text style={styles.head}>Select Technician To Chat</Text>
+      <View style={styles.postContainer}>
+        <TouchableOpacity >
+          <Text style={styles.postDescription}> Ask AI</Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        style={styles.list}
+        data={data1}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => (
+          <View style={styles.postContainer}>
+            <TouchableOpacity onPress={() => navigateToNotification(item._id, item.technician_id, item._id)}>
+              <Text style={styles.postDescription}>Job: {item.job_id} - Technician: {item.technician_id}</Text>
+            </TouchableOpacity>
+          </View>
 )}
 />
 
