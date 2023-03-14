@@ -98,7 +98,7 @@ export const SubChatClient = ({ navigation, route }) => {
 
     function joinRoom() {
         console.log("guy joining");
-        socket.emit("join_room", "321");
+        socket.emit("join_room", roomid);
     }
 
 
@@ -106,7 +106,7 @@ export const SubChatClient = ({ navigation, route }) => {
     const handleSend = async () => {
         // set_tomessage('');
         const messageData = {
-            room: "321",
+            room: roomid,
             sender: tech_id,
             sender_type:"employer", //or employer
             job: propValue,
