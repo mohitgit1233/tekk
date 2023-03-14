@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {  Box, Checkbox, Text, Heading, VStack, FormControl, Input, Link, Button, HStack, Center, NativeBaseProvider } from "native-base";
+import {  Box, Radio, Text, Heading, VStack, FormControl, Input, Link, Button, HStack, Center, NativeBaseProvider } from "native-base";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import {AsyncStorage} from 'react-native';
@@ -48,14 +48,14 @@ export const Registration = ({navigation}) => {
               </FormControl>
               <FormControl>
                 <FormControl.Label>Would you like to be:</FormControl.Label>
-                  <Checkbox.Group onChange={setUserType} value={userType}>
+                  <Radio.Group name="exampleGroup" defaultValue="client" onChange={setUserType} value={userType}>
                     <HStack space={6}>
-                      <Checkbox value="client" my={2}>
+                      <Radio value="client" size="md" my={2}>
                         Client
-                      </Checkbox>
-                      <Checkbox value="technician" my={2}>Technician</Checkbox>
+                      </Radio>
+                      <Radio value="technician" size="md" my={2}>Technician</Radio>
                     </HStack>
-                  </Checkbox.Group>
+                  </Radio.Group>
               </FormControl>
               <Button onPress={handleSignUp} mt="2" colorScheme="indigo">
                 Sign Up

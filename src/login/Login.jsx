@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserAuth } from "../context/AuthContext";
 //import auth from '@react-native-firebase/auth';
 //import { GoogleSignin } from '@react-native-google-signin/google-signin';
+//import { auth } from "../firebase";
 
 export const Login = ({navigation}) => {
   /*GoogleSignin.configure({
@@ -14,30 +15,9 @@ export const Login = ({navigation}) => {
 
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
-  const { signIn,setUser } = UserAuth();
+  const { signIn,setUser, promptAsync } = UserAuth();
 
-  const onGoogleButtonPress = async () => { 
 
-  }
-
-  /*
-  const onGoogleButtonPress = async () => {
-    // Check if your device supports Google Play
-    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-  
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-  
-    // Sign-in the user with the credential
-    const user_sign_in =  auth().signInWithCredential(googleCredential);
-    user_sign_in.then(user => {
-      setUser(user.user)
-      navigation.navigate('clientHome');
-    }).catch(error => console.log(error))
-  } 
-*/
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -80,7 +60,7 @@ export const Login = ({navigation}) => {
               </Button>
 
               <Button title="Google Sign-In"
-      onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))} mt="2" colorScheme="indigo">
+      onPress={() => { promptAsync() }} mt="2" colorScheme="indigo">
                 Sign in using Google
               </Button>
 

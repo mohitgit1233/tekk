@@ -2,6 +2,7 @@
   "expo": {
     "name": "tekk",
     "slug": "tekk",
+    "scheme": "com.anonymous.tekk",
     "plugins": [
       "@react-native-google-signin/google-signin"
     ],
