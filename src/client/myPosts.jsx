@@ -34,6 +34,12 @@ const MyPosts = ({ route }) => {
     see()
   }, []);
   console.log(data.length)
+
+  const handleFilter = (status) => {
+    setpostStatus(status);
+  };
+
+
   if (data.length > 0){
     if (postStatus == 'all'){
         filteredData = data.filter(post => post.status !== 'offered' );
@@ -44,6 +50,25 @@ const MyPosts = ({ route }) => {
   
   console.log(data)
 
+  const renderItem = ({ item }) => {
+    Moment.locale('en');
+    return (
+      <TouchableOpacity
+        style={styles.postContainer}
+        key={item._id}
+        onPress={() =>
+          navigation.navigate('PostDetails', { id: item._id, status: item.status })
+        }>
+        <Image style={styles.postImage} source={{ uri: item.picture }} />
+        <View>
+          <Text style={styles.postTitle}>{item.title}</Text>
+          <Text style={styles.postDescription}>{item.description}</Text>
+          <Text style={styles.postDate}>{Moment(item.posted_date).format('D MMMM YYYY')}</Text>
+          <Text style={styles.postStatus}>{item.status}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
   return (
     <Box bg="white" height="100%">
       <View style={styles.searchContainer}>
@@ -56,116 +81,109 @@ const MyPosts = ({ route }) => {
         />
       </View>
       <View style={styles.filterContainer}>
-      <Button variant={postStatus === 'all' ? 'solid' : 'outline'} onPress={() => setpostStatus('all')} mr={2} mb={2}>All posts</Button>
-        <Button variant={postStatus === 'ongoing' ? 'solid' : 'outline'} onPress={() => setpostStatus('ongoing')} mr={2} mb={2}>Ongoing</Button>
-        <Button variant={postStatus === 'upcoming' ? 'solid' : 'outline'} onPress={() => setpostStatus('upcoming')} mb={2}>Upcoming</Button>
-        
+        <Button
+          variant={postStatus === 'all' ? 'solid' : 'outline'}
+          onPress={() => handleFilter('all')}
+          mr={2}
+          mb={2}>
+          All posts
+        </Button>
+        <Button
+          variant={postStatus === 'ongoing' ? 'solid' : 'outline'}
+          onPress={() => handleFilter('ongoing')}
+          mr={2}
+          mb={2}>
+          Ongoing
+        </Button>
+        <Button
+          variant={postStatus === 'upcoming' ? 'solid' : 'outline'}
+          onPress={() => handleFilter('upcoming')}
+          mb={2}>
+          Upcoming
+        </Button>
       </View>
-      <ScrollView contentContainerStyle={styles.container}>
-  {filteredData.length > 0 ? (
-    <>
-      {filteredData.map((post) => {
-        Moment.locale('en');
-        return (
-          <TouchableOpacity style={ styles.postContainerP } key={post._id} onPress={() => navigation.navigate('PostDetails', {id: post._id,status:post.status})}>
-            <View style={styles.postContainer}>
-              <Image style={styles.postImage} source={{ uri: post.picture }} />
-              <Text style={styles.postTitle}>{post.title}</Text>
-              <Text style={styles.postDescription}>{post.description}</Text>
-              <Text style={styles.postDate}>{Moment(post.posted_date).format('D MMMM YYYY')}</Text>
-              <Text style={styles.postDescription}>{post.status}</Text>
-            </View>
-          </TouchableOpacity>
-        );
-      })}
-    </>
-  ) : (
-    <>
-      <Text>nothing found</Text>
-    </>
-  )}
-</ScrollView>
-<TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('CreatePost')}>
-    <AntDesign name="plus" size={24} color="white" />
-  </TouchableOpacity>
+      <FlatList
+        data={filteredData}
+        renderItem={renderItem}
+        keyExtractor={(item) => item._id.toString()}
+        contentContainerStyle={styles.container}
+        ListEmptyComponent={<Text>Nothing found</Text>}
+      />
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => navigation.navigate('CreatePost')}>
+        <AntDesign name="plus" size={24} color="white" />
+      </TouchableOpacity>
     </Box>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
-  },
-  filterContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    display:'flex',
-    flexDirection:'row',
-    gap:20,
-    padding: 10,
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 5,
-  },
-  searchIcon: {
-    marginRight: 10,
-  },
-  searchInput: {
-    flex: 1,
-    height: 40,
-  },
   postContainer: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    padding: 20,
-    marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  postContainerP: {
-    // backgroundColor: 'red',
-    // flex: 1,
-    width: '100%', // Set width to stretch to maximum width
-  },
-  postTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  postDescription: {
-    fontSize: 16,
-    marginBottom: 10,
+  flexDirection: 'row',
+  padding: 16,
+  borderBottomWidth: 1,
+  borderBottomColor: '#ccc',
   },
   postImage: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-    borderRadius: 25,
+  width: 80,
+  height: 80,
+  borderRadius: 8,
+  marginRight: 16,
+  },
+  postTitle: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  marginBottom: 8,
+  },
+  postDescription: {
+  fontSize: 16,
+  marginBottom: 8,
+  },
+  postDate: {
+  fontSize: 14,
+  marginBottom: 8,
+  },
+  postStatus: {
+  fontSize: 14,
+  fontWeight: 'bold',
+  },
+  searchContainer: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  backgroundColor: '#f2f2f2',
+  paddingHorizontal: 16,
+  paddingVertical: 8,
+  },
+  searchIcon: {
+  marginRight: 8,
+  },
+  searchInput: {
+  flex: 1,
+  fontSize: 16,
+  },
+  filterContainer: {
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginVertical: 8,
   },
   addButton: {
-    backgroundColor: 'blue',
-    borderRadius: 50,
-    width: 50,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 20,
-    right: 30, // Change the value to move the button further to the right
+  position: 'absolute',
+  bottom: 32,
+  right: 32,
+  backgroundColor: '#2a9d8f',
+  borderRadius: 50,
+  width: 64,
+  height: 64,
+  alignItems: 'center',
+  justifyContent: 'center',
   },
-});
+  container: {
+  flexGrow: 1,
+  paddingBottom: 64,
+  },
+  });
+
 
 export default MyPosts;
