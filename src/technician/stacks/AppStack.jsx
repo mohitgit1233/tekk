@@ -107,7 +107,7 @@ export const TabStack = () => {
         }
       },
       tabBarInactiveTintColor: 'gray',
-      tabBarActiveTintColor: 'tomato',
+      tabBarActiveTintColor: '#0D937D',
     })}
   >
       

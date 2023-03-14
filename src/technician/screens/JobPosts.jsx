@@ -63,8 +63,14 @@ export const JobPosts = () => {
                     <View style={styles.postContent}>
                       <View style={styles.postHeader}>
                         <Text style={styles.postTitleText}>{post.title}</Text>
-                        <Text style={styles.postSubtitleText}>{post.location}</Text>
-                        <Text style={styles.postDate}>{Moment(post.posted_date).format('MMMM Do, YYYY')}</Text>
+                        {/* <Text style={styles.postSubtitleText}>{post.location}</Text> */}
+                        <Text style={{ marginRight: 5 }}>
+    <Text style={{ fontWeight: 'bold' }}>Posted Date:</Text>{' '}
+    {Moment(post.posted_date).format('M/DD/YYYY')}
+  </Text>
+
+
+
                       </View>
                       <Text style={styles.postDescription}>{post.description}</Text>
                     </View>
@@ -90,6 +96,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 10,
+  },
+  postDate: {
+    fontSize: 8,
   },
   searchContainer: {
     flexDirection: 'row',
@@ -132,7 +141,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   postTitleText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 5,
   },

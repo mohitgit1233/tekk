@@ -45,6 +45,7 @@ const JobContainer = ({ job, refreshData }) => {
       <View style={styles.postDetails}>
         <Text style={styles.postDescription}>{post.description}</Text>
         <Text style={styles.postDescription}>Posted: {Moment(post.posted_date).format('d/MM/YYYY')}</Text>
+        <Text style={styles.postDescription}>Location: {post.location}</Text>
         <Text style={styles.postDescription}>Prefered Start: {Moment(post.prefer_start_date).format('d/MM/YYYY')}</Text>
       </View>
       <TouchableOpacity style={styles.sendOfferButton} onPress={handleSendOffer}>
@@ -64,6 +65,10 @@ const styles = StyleSheet.create({
     padding: 30,
     alignItems: 'center',
   },
+  postSubtitleText: {
+    fontSize: 16,
+    color: '#888888',
+  },
   postTitle: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -79,8 +84,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 350,
+    height: 200,
     marginRight: 10,
   },
   postDetails: {
@@ -93,7 +98,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   sendOfferButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#0D937D',
     paddingVertical: 15,
     paddingHorizontal: 30,
     // borderRadius: 30,
