@@ -132,7 +132,7 @@ export const postOffer = async (id=null,body=null) => {
 }
 export const clockIn = async (id=null,body=null) => {
     try {
-        const response = await fetch(CLOCKIN,{
+        const response = await fetch(CLOCKIN(id),{
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
@@ -146,7 +146,7 @@ export const clockIn = async (id=null,body=null) => {
 }
 export const clockOut = async (id=null,body=null) => {
     try {
-        const response = await fetch(CLOCKOUT,{
+        const response = await fetch(CLOCKOUT(id),{
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
