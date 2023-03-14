@@ -44,11 +44,11 @@ export const Account = ({ navigation }) => {
           <Text fontSize="lg">Profile</Text>
         </Box>
       </TouchableOpacity>
-      <TouchableOpacity onPress={handleJobHistoryPress}>
+      {/* <TouchableOpacity onPress={handleJobHistoryPress}>
         <Box borderBottomWidth={1} borderBottomColor="gray.300" py={3}>
           <Text fontSize="lg">Job History</Text>
         </Box>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity onPress={handleNotificationsPress}>
         <Box borderBottomWidth={1} borderBottomColor="gray.300" py={3}>
           <Text fontSize="lg">Notifications</Text>
