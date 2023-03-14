@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, Text,Alert } from 'react-native';
+import { StyleSheet, Text} from 'react-native';
 import { NativeBaseProvider } from 'native-base';
 import Footer from './components/Footer';
 import { AppStack } from './src/technician/stacks/AppStack';
@@ -47,7 +47,6 @@ export default function App() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-      Alert.alert('This is an alert message!');
     }, 1000);
   }, []);
   
