@@ -98,11 +98,22 @@ export const MyJob = ({ navigation }) => {
             ) : (
               <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
                 <View style={styles.postContainer}>
+
+                  <View style={styles.postTitleContainer}>
                   <Image style={styles.postImage} source={{ uri: post.jobID.picture }} />
+                  <View style={styles.postContent}>
+                  <View style={styles.postHeader}>
+
+
+
                   <Text style={styles.postTitle}>{post.jobID.title}</Text>
-                  <Text style={styles.postDescription}>{post.jobID.description}</Text>
                   <Text style={styles.postDate}>{Moment(post.jobID.posted_date).format('D MMMM YYYY')}</Text>
+                  </View>
+                  <Text style={styles.postDescription}>{post.jobID.description}</Text>
+                  </View>
                 </View>
+                </View>
+
               </TouchableOpacity>
             )
           );
@@ -114,9 +125,17 @@ export const MyJob = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
     padding: 10,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  postDate: {
+    fontSize: 8,
   },
   filterContainer: {
     justifyContent: 'center',
@@ -129,48 +148,60 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
     paddingHorizontal: 10,
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
+    height: 40,
+    flex: 1,
+    marginRight: 10,
   },
   searchIcon: {
     marginRight: 10,
   },
   searchInput: {
     flex: 1,
-    height: 40,
+    fontSize: 16,
   },
   postContainer: {
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
-    padding: 20,
-    marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    padding: 10,
+    marginBottom: 10,
+    elevation: 2,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
-  postContainerP: {
-    width: '100%'
+  postTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  postImage: {
+    width: 150,
+    height: 100,
+    marginRight: 10,
+    borderRadius: 10
   },
   postTitle: {
+    flex: 1,
+  },
+  postTitleText: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
+  },
+  postSubtitleText: {
+    fontSize: 16,
+    color: '#888888',
   },
   postDescription: {
     fontSize: 16,
     marginBottom: 10,
+    flex: 1
   },
-  postImage: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-    borderRadius: 25,
+  postDate: {
+    fontSize: 14,
+    color: '#888888',
+    alignSelf: 'flex-end'
   },
-})
+});
