@@ -40,7 +40,7 @@ export const Login = () => {
 
   const navigation = useNavigation();
   const [show2, setShow2] = React.useState(false);
-  const [text, setText] = useState("a2@gmail.com");
+  const [text, setText] = useState("a@gmail.com");
   const [text2, setText2] = useState("12345678");
 
   const handleSubmit = async () => {
