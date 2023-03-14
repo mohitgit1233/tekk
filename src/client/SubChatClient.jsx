@@ -148,7 +148,7 @@ export const SubChatClient = ({ navigation, route }) => {
         <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior="padding"
-            keyboardVerticalOffset={64} // adjust this value as needed
+            keyboardVerticalOffset={120} // adjust this value as needed
         >
             <View style={styles.container}>
                 {/* <TextInput
