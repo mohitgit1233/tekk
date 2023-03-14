@@ -169,6 +169,10 @@ export const getUserById = async (id=null) => {
     return await generic(`${API_BASE_URL}/users/${id}`)
 }
 
+export const getIncomeHours = async (id=null) => {
+    return await generic(`${API_BASE_URL}/technicians/${id}/income_hours`)
+}
+
 export const updateTechnicianImage = async (id=null,body=null) => {
     const response = await fetch(`${API_BASE_URL}/technicians/${id}`, {
         method: 'PATCH',
