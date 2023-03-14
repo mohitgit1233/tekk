@@ -6,6 +6,7 @@ import { ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
 import { getNotificationsByTechId } from '../../services/api';
 import React, { useState, useEffect,useContext } from 'react';
 import AppContext from '../../AppContext';
+import Moment from 'moment';
 const NotificationPage = () => {
   const { loggedInUser, setLoggedInUser } = useContext(AppContext);
 
@@ -45,7 +46,7 @@ const NotificationPage = () => {
             <View  key={index} style={styles.card} >
 
               <Text style={styles.postHeading}>{post.heading}</Text>
-              <Text style={styles.postDate}>{post.date}</Text>
+              <Text style={styles.postDate}>{Moment(post.posted_date).format('D/MM/YYYY | h:mm a')}</Text>
               <Text style={styles.postText}>{post.text}</Text>
               <TouchableOpacity style={styles.dismissButton} onPress={() => onDismiss(post._id)}>
             <Text style={styles.dismissButtonText}>X</Text>
