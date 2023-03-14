@@ -17,13 +17,16 @@ const Offers = () => {
   
  
 
-  useEffect(async () => {
+  useEffect( () => {
     // fetch(url)
     //   .then((resp) => resp.json())
     //   .then((json) => setData(json))
     //   .catch((error) => console.error(error));
-    const json = await getJobsByEmployerId(loggedInUser.id)
-    setData(json)
+    const see = async ()=>{
+      const json = await getJobsByEmployerId(loggedInUser.id)
+      setData(json)
+    }
+    see()
   }, []);
 
      const filteredData = data.filter(post => post.status === 'offered' && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
