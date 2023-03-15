@@ -205,8 +205,8 @@ const styles = StyleSheet.create({
   imagee:{
     marginTop:60,
     marginBottom:40,
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     
   },
   label:{
