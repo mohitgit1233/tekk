@@ -6,10 +6,11 @@ import { Input, NativeBaseProvider } from 'native-base';
 import { Chat } from '../technician/screens/Chat';
 // import { AppStackClient } from '../client/stacks/AppStackClient';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { View, TextInput, Button } from 'react-native';
+import { View, TextInput, Button,Image,TouchableOpacity } from 'react-native';
 import React, { useState, useContext } from 'react';
 import AppContext from '../../AppContext';
-
+import { Fontisto } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 // import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -18,6 +19,7 @@ import { CommonActions } from '@react-navigation/native';
 import {login} from '../../services/api'
 
 import Toast from 'react-native-toast-message';
+
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -119,16 +121,26 @@ export const Login = () => {
   return (
 
     <View style={styles.container}>
+     
+      <Image source={require('../../assets/loginLogog.png')} style={styles.imagee}/>
+
       <StatusBar style="auto" />
-      <Text style={{fontSize:30}}>Sign into your account</Text>
-      <Text>Use email: as@gmail.com for client login</Text>
+      
+      
+      {/* <Text>Use email: as@gmail.com for client login</Text> */}
 
 
+      <View>
+      <Text style={styles.label}>Email</Text>
+      
       <Input w={{
       base: "75%",
       md: "25%"
     }}style={styles.field} 
      placeholder="Email" onChangeText={(e)=>setText(e)} defaultValue={text} />
+
+    
+    <Text style={styles.label}>Password</Text>
 
       <Input w={{
       base: "75%",
@@ -138,12 +150,15 @@ export const Login = () => {
             {/* <Icon  size={5} mr="2" color="red" /> */}
           </Pressable>} placeholder="Password"   onChangeText={(e)=>setText2(e)} defaultValue={text2} />
 
-
-      <Button style={styles.botton}
+  </View>
+      {/* <Button style={styles.botton}
         title="Login"
         onPress={handleSubmit}
-      />
-       <Button title="Show Toast" onPress={handlePress} />
+      /> */}
+      <TouchableOpacity style={styles.botton} onPress={handleSubmit}>
+        <Text style={styles.btntxt}>Login</Text>
+      </TouchableOpacity>
+       {/* <Button title="Show Toast" onPress={handlePress} /> */}
        {/* <Toast ref={(ref) => Toast.setRef(ref)} /> */}
 
       {/* <Button style={styles.botton}
@@ -154,6 +169,19 @@ export const Login = () => {
         title="Upload image bro"
         onPress={handleSubmit3}
       /> */}
+
+    <View style= {{display:'flex',flexDirection:'row',alignItems:'center'}}>
+    <Text style={{marginRight:5}} >New User?</Text><TouchableOpacity ><Text style={{textDecorationLine:'underline'}}>Sign up here.</Text></TouchableOpacity>
+    </View>
+
+    <Text style={{fontSize: 20, marginTop:30}}> - OR - </Text>
+    <Text style={{ marginTop:20}}> Sign in using: </Text>
+    <View style ={styles.iccons}>
+    <TouchableOpacity style={{borderWidth:1,borderRadius:50,padding:15,margin:15,borderColor:'#0D937D'}} ><Fontisto name="google" size={35}  color={'#0D937D'}/></TouchableOpacity>
+    {/* <TouchableOpacity style={{borderWidth:1,borderRadius:50,padding:15,margin:15,borderColor:'#0D937D'}} ><Fontisto name="facebook" size={30}  color={'#0D937D'}/></TouchableOpacity> */}
+    <TouchableOpacity style={{borderWidth:1,borderRadius:50,padding:15,margin:15,borderColor:'#0D937D'}} ><Fontisto name="apple" size={35} color={'#0D937D'}/></TouchableOpacity>
+    </View>
+    
     </View>
 
   );
@@ -162,18 +190,48 @@ export const Login = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F9F8F5',
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
+   
+  },
+  iccons:{
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'center',
+    alignItems:'center'
+    
+  },
+  imagee:{
+    marginTop:60,
+    marginBottom:40,
+    width: 100,
+    height: 100,
+    
+  },
+  label:{
+    marginBottom:5,
+    marginTop:20
   },
   field:{
     // fontSize:'x-large',
     // border: '1% solid black',
-    marginBottom:'2%'
-    
+    marginBottom:'2%',
+   
   },
   botton:{
-    margin:'10%',
-    padding:'10%'
+    backgroundColor: '#0D937D',
+    paddingVertical: 15,
+    paddingHorizontal: 100,
+    // borderRadius: 30,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  btntxt:{
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
   }
+
 });

@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, Text} from 'react-native';
 import { NativeBaseProvider } from 'native-base';
+
 import Footer from './components/Footer';
 import { AppStack } from './src/technician/stacks/AppStack';
 import { AppStackClient } from './src/client/stacks/AppStackClient';
@@ -76,9 +77,10 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#EAEAEA',
     alignItems: 'center',
     justifyContent: 'center',
   },
