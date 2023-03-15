@@ -17,6 +17,9 @@ import JobFull from '../screens/JobFull';
 import { Login } from '../../login/Login'
 import NotificationPage from '../../reusable screens/NotificationPage';
 import NotificationBell from '../../reusable screens/NotificationBell';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 // import ImagePickerExample from '../screens/imageupload';
 // import { CommonActions } from '@react-navigation/native';
 import { SubChat } from '../screens/SubChat'
@@ -71,8 +74,7 @@ export const TabStack = () => {
           );
         } else if (route.name === 'Activities') {
           return (
-            <Ionicons
-              name={'ios-list'}
+            <Feather name="activity"
               size={size}
               color={color}
             />
@@ -80,8 +82,8 @@ export const TabStack = () => {
         }
         else if (route.name === 'My Jobs') {
           return (
-            <Ionicons
-              name={'briefcase'}
+            <FontAwesome
+              name={'wrench'}
               size={size}
               color={color}
             />

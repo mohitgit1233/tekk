@@ -69,6 +69,7 @@ export const MyJob = ({ navigation }) => {
   
   return (
     <Box bg="white" height="100%">
+      <View style={styles.header}>
       <View style={styles.searchContainer}>
         <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
         <TextInput
@@ -77,6 +78,7 @@ export const MyJob = ({ navigation }) => {
           onChangeText={(text) => setSearchTerm(text)}
           value={searchTerm}
         />
+      </View>
       </View>
       <View style={styles.filterContainer}>
         <Button variant={jobStatus === 'ongoing' ? 'solid' : 'outline'} onPress={() => setJobStatus('ongoing')} mr={2} mb={2}>Ongoing</Button>
@@ -90,29 +92,27 @@ export const MyJob = ({ navigation }) => {
           Moment.locale('en');
           return (
             post.jobID === null ? (
-              <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
+              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
                 <View style={styles.postContainer}>
                   <Text>job id null. check backend</Text>
                 </View>
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
-                <View style={styles.postContainer}>
+              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
+              <View style={styles.postContainer}>
+  <View style={styles.postTitleContainer}>
+    <Image style={styles.postImage} source={{ uri: post.jobID.picture }} />
+    <View style={styles.postContent}>
+      <Text style={[styles.postTitle]}>{post.jobID.title}</Text>
+      <Text>
+        <Text style={{ fontWeight: 'bold' }}></Text>{' '}
+        {Moment(post.jobID.posted_date).format('M/DD/YYYY')}
+      </Text>
+      <Text style={styles.postDescription}>{post.jobID.description}</Text>
+    </View>
+  </View>
+</View>
 
-                  <View style={styles.postTitleContainer}>
-                  <Image style={styles.postImage} source={{ uri: post.jobID.picture }} />
-                  <View style={styles.postContent}>
-                  <View style={styles.postHeader}>
-
-
-
-                  <Text style={styles.postTitle}>{post.jobID.title}</Text>
-                  <Text style={styles.postDate}>{Moment(post.jobID.posted_date).format('D MMMM YYYY')}</Text>
-                  </View>
-                  <Text style={styles.postDescription}>{post.jobID.description}</Text>
-                  </View>
-                </View>
-                </View>
 
               </TouchableOpacity>
             )
@@ -133,9 +133,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 10,
-  },
-  postDate: {
-    fontSize: 8,
   },
   filterContainer: {
     justifyContent: 'center',
@@ -162,15 +159,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
   },
-  postContainer: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 10,
-    elevation: 2,
-    flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
   postTitleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -182,26 +170,40 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 10
   },
+  postContent: {
+    flex: 1
+  },
   postTitle: {
-    flex: 1,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  postDescription: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  postDate: {
+    fontSize: 14,
+    color: '#888888',
+  },
+  postContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    elevation: 2,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+  },
+  
+  postTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   postTitleText: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 5,
-  },
-  postSubtitleText: {
-    fontSize: 16,
-    color: '#888888',
-  },
-  postDescription: {
-    fontSize: 16,
-    marginBottom: 10,
-    flex: 1
-  },
-  postDate: {
-    fontSize: 14,
-    color: '#888888',
-    alignSelf: 'flex-end'
   },
 });
