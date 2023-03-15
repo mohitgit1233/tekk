@@ -39,12 +39,19 @@ const MyPosts = ({ route }) => {
     setpostStatus(status);
   };
 
+  const seeRefresh = async()=>{
+    await fetch(url)
+       .then((resp) => resp.json())
+       .then((json) => setData(json))
+       .catch((error) => console.error(error));
+     }
 
+  console.log(data.length)
   if (data.length > 0){
     if (postStatus == 'all'){
-        filteredData = data.filter(post => post.status !== 'offered' );
+        filteredData = data.filter(post => post.status !== 'offered' ).sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date));
     } else{
-        filteredData = data.filter(post => post && post.status === postStatus && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
+        filteredData = data.filter(post => post && post.status === postStatus && post.title.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date));
     }
 }
   
@@ -53,24 +60,25 @@ const MyPosts = ({ route }) => {
   const renderItem = ({ item }) => {
     Moment.locale('en');
     return (
+     
       <TouchableOpacity
         style={styles.postContainer}
         key={item._id}
         onPress={() =>
           navigation.navigate('PostDetails', { id: item._id, status: item.status })
         }>
-        <Image style={styles.postImage} source={{ uri: item.picture }} />
+        <Image style={styles.postImage} source={{ uri: item.images[0] }} />
         <View>
           <Text style={styles.postTitle}>{item.title}</Text>
-          <Text style={styles.postDescription}>{item.description}</Text>
           <Text style={styles.postDate}>{Moment(item.posted_date).format('D MMMM YYYY')}</Text>
-          <Text style={styles.postStatus}>{item.status}</Text>
+          <Text style={styles.postDescription}>{item.description.length > 20 ? item.description.split(' ').slice(0, 8).join(' ') + '......'  : item.description.split(' ').slice(0, 11).join(' ')}</Text>
+          
         </View>
       </TouchableOpacity>
     );
   };
   return (
-    <Box bg="white" height="100%">
+    <Box bg="#F9F8F5" height="100%">
       <View style={styles.searchContainer}>
         <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
         <TextInput
@@ -85,21 +93,41 @@ const MyPosts = ({ route }) => {
           variant={postStatus === 'all' ? 'solid' : 'outline'}
           onPress={() => handleFilter('all')}
           mr={2}
-          mb={2}>
-          All posts
+          mb={2} 
+          width={110}
+          borderWidth={0.5}
+          borderColor={'#074A3F'}
+          style={postStatus === 'all' ?{ backgroundColor: '#0D937D' }:{ backgroundColor: '#F9F8F5' }}
+          >
+            <Text style={postStatus === 'all' ?{ color: '#F9F8F5', }: { color: '#0D937D', }}>
+            All posts
+            </Text>
+          
         </Button>
         <Button
           variant={postStatus === 'ongoing' ? 'solid' : 'outline'}
           onPress={() => handleFilter('ongoing')}
           mr={2}
-          mb={2}>
-          Ongoing
+          mb={2}
+          width={110}
+          borderWidth={0.5}
+          borderColor={'#074A3F'}
+          style={postStatus === 'ongoing' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>
+          <Text style={postStatus === 'ongoing' ?{ color: '#F9F8F5', }: { color: '#0D937D', }}>
+            Ongoing
+            </Text>
         </Button>
         <Button
           variant={postStatus === 'upcoming' ? 'solid' : 'outline'}
           onPress={() => handleFilter('upcoming')}
-          mb={2}>
-          Upcoming
+          mb={2}
+          width={110}
+          borderWidth={0.5}
+          borderColor={'#074A3F'}
+          style={postStatus === 'upcoming' ?{ backgroundColor: '#0D937D', }:{ backgroundColor: '#F9F8F5', }}>
+          <Text style={postStatus === 'upcoming' ?{ color: '#F9F8F5', }: { color: '#0D937D', }}>
+            Upcoming
+            </Text>
         </Button>
       </View>
       <FlatList
@@ -111,25 +139,34 @@ const MyPosts = ({ route }) => {
       />
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => navigation.navigate('CreatePost')}>
-        <AntDesign name="plus" size={24} color="white" />
+        onPress={() => navigation.navigate('Create Post')}>
+        <AntDesign name="plus" size={24} color="#F9F8F5" />
       </TouchableOpacity>
     </Box>
+    
   );
+  
 }
 
 const styles = StyleSheet.create({
+  
   postContainer: {
   flexDirection: 'row',
-  padding: 16,
+  paddingBottom:15,
+  paddingTop:15,
+  paddingLeft:5,
+  paddingRight:5,
   borderBottomWidth: 1,
   borderBottomColor: '#ccc',
+  backgroundColor:'#F9F8F5',
+  marginLeft:15,
+  marginRight:15
   },
   postImage: {
-  width: 80,
-  height: 80,
-  borderRadius: 8,
-  marginRight: 16,
+    width: 150,
+    height: 100,
+    marginRight: 10,
+    borderRadius: 10
   },
   postTitle: {
   fontSize: 18,
@@ -139,6 +176,8 @@ const styles = StyleSheet.create({
   postDescription: {
   fontSize: 16,
   marginBottom: 8,
+  maxWidth:210,
+
   },
   postDate: {
   fontSize: 14,
@@ -151,9 +190,12 @@ const styles = StyleSheet.create({
   searchContainer: {
   flexDirection: 'row',
   alignItems: 'center',
-  backgroundColor: '#f2f2f2',
+  backgroundColor:'white',
   paddingHorizontal: 16,
   paddingVertical: 8,
+  margin:10,
+  borderWidth:0.5,
+  borderColor:'#074A3F'
   },
   searchIcon: {
   marginRight: 8,
@@ -161,18 +203,22 @@ const styles = StyleSheet.create({
   searchInput: {
   flex: 1,
   fontSize: 16,
+  
   },
   filterContainer: {
+    display:'flex',
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
   marginVertical: 8,
+  
+ 
   },
   addButton: {
   position: 'absolute',
   bottom: 32,
   right: 32,
-  backgroundColor: '#2a9d8f',
+  backgroundColor: '#0D937D',
   borderRadius: 50,
   width: 64,
   height: 64,

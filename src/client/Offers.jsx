@@ -1,7 +1,7 @@
 import React, { useEffect, useState , useContext} from 'react'
 import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
 import Moment from 'moment';
-import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
+import { StyleSheet, TouchableOpacity,TextInput, Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getJobsByEmployerId } from '../../services/api';
@@ -31,9 +31,7 @@ const Offers = () => {
 
      const filteredData = data.filter(post => post.status === 'offered' && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
-
-  
-  console.log(data)
+     console.log(filteredData)
 
   return (
     <Box bg="white" height="100%">
@@ -55,11 +53,10 @@ const Offers = () => {
           return (
             <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}>
               <View style={styles.postContainer}>
-              <Image style={styles.postImage} source={{ uri: post.picture }} />
-                <Text style={styles.postTitle}>{post.title}</Text>
+              <Image source={{ uri: post.images[0] }} />
+                <Text style={styles.postTitle}>{post.images[0]}{post.title}</Text>
                 <Text style={styles.postDescription}>{post.description}</Text>
                 <Text style={styles.postDate}>{Moment(post.posted_date).format('D MMMM YYYY')}</Text>
-                <Text style={styles.postDescription}>{post.status}</Text>
               </View>
             </TouchableOpacity>
           );
@@ -127,12 +124,7 @@ const styles = StyleSheet.create({
       fontSize: 16,
       marginBottom: 10,
     },
-    postImage: {
-      width: 50,
-      height: 50,
-      marginRight: 10,
-      borderRadius: 25,
-    },
+  
   })
 
 export default Offers

@@ -42,7 +42,7 @@ export const AppStackClient = () => {
      <Stack.Screen name='Search' component={SearchInput}></Stack.Screen>
      <Stack.Screen name='JobContainer' component={JobContainer}></Stack.Screen>
      <Stack.Screen name='AllOffers' component={AllOffers}></Stack.Screen>
-     <Stack.Screen name='CreatePost' component={CreatePost}></Stack.Screen>
+     <Stack.Screen name='Create Post' component={CreatePost}></Stack.Screen>
      <Stack.Screen name='MyPosts' component={MyPosts}></Stack.Screen>
      <Stack.Screen name='PostDetails' component={PostDetails}></Stack.Screen>
      <Stack.Screen name='Profile' component={TechnicianProfile}></Stack.Screen>
@@ -74,12 +74,13 @@ export const TabStack = () => {
         }
         else if (route.name === 'Chats') {
           return (
+         
             <Ionicons
               name={'chatbox'}
               size={size}
               color={color}
-            />
-          );
+              />
+          )
         }
         else if (route.name === 'Account') {
           return (
@@ -100,7 +101,8 @@ export const TabStack = () => {
           }
       },
       tabBarInactiveTintColor: 'gray',
-      tabBarActiveTintColor: 'tomato',
+      tabBarActiveTintColor: '#0D937D',
+      
     })}
   >
       

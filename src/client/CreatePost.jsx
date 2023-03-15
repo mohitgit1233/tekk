@@ -1,6 +1,8 @@
 import { useState,useContext } from 'react';
+import {Box} from 'native-base'
 import { Button, TextInput, View,StyleSheet,Text,Image,FlatList , ScrollView, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Dropdown } from '@ant-design/react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { CommonActions } from '@react-navigation/native';
@@ -102,26 +104,38 @@ const CreatePost = () => {
 }
       const json3 = await pushToTechnicians(null,obj1)
 
-      navigation.navigate('MyPosts');
+      navigation.goBack();
     };
     return (
+      <ScrollView >
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.form}>
-          <Text style={styles.heading}>Create Job Post</Text>
+
     
           <View style={styles.inputContainer}>
+            <View style={styles.labelinputwrapper}>  
+            
             <TextInput
-              placeholder="Title"
+              placeholder="Job Title"
               value={postTitle}
               style={styles.input}
               onChangeText={setPostTitle}
             />
+            </View>
+          
+            <View style={styles.labelinputwrapper}>  
+        
             <TextInput
               placeholder="Address"
               value={postAddress}
               style={styles.input}
               onChangeText={setPostAddress}
             />
+            </View> 
+
+
+            <View style={styles.labelinputwrapper}>   
+        
             <TextInput
               placeholder="Phone Number"
               value={postPhone}
@@ -129,26 +143,57 @@ const CreatePost = () => {
               onChangeText={setPostPhone}
               keyboardType="numeric"
             />
+          </View>
+
+
+          <View style={styles.labelinputwrapper}>  
+      
             <TextInput
               placeholder="Maximum Cost"
               value={postMaxCost}
               style={styles.input}
               onChangeText={setPostMaxCost}
             />
+
+            </View>
+            <View style={styles.labelinputwrapper}>  
+ 
+          <TextInput
+            placeholder="Description"
+            value={jobDescription}
+            style={styles.description}
+            onChangeText={setJobDescription}
+            multiline={true}
+            numberOfLines={4}
+          />
+          </View>
+            
             <TouchableOpacity
               style={styles.input}
               onPress={() => setShowPicker(true)}
             >
-              <Text style={styles.inputLabel}>Pick a date</Text>
+              <Text style={styles.inputLabel}>Preferred Start Date</Text>
               {showPicker && (
-                <DateTimePicker
-                  style={styles.datePicker}
+                <View style={{display:'flex',justifyContent:'center'}}>
+                  <DateTimePicker
+                  style={{marginRight:100,marginTop:20,marginBottom:20,borderBottomWidth:0}}
                   value={startDate}
                   mode="date"
                   onChange={onDateChange}
                 />
+                </View>
+                
               )}
             </TouchableOpacity>
+
+            
+
+  
+
+            
+            <View style={styles.labelinputwrapper}>  
+
+           
             <DropDownPicker
               style={styles.dropdown}
               open={open}
@@ -159,16 +204,12 @@ const CreatePost = () => {
               setItems={setItems}
               placeholder="Select a requirement"
             />
-            <TextInput
-              placeholder="Description"
-              value={jobDescription}
-              style={styles.input}
-              onChangeText={setJobDescription}
-              multiline={true}
-              numberOfLines={4}
-            />
+            </View>
+          </View>
+        
+          <View style={styles.imageinputwrapper}>  
             <TouchableOpacity style={styles.addImagesButton} onPress={pickImages}>
-              <Text style={styles.addImagesButtonText}>Add Site Images</Text>
+              <Text >Add Site Images</Text>
             </TouchableOpacity>
             <FlatList
               horizontal={true}
@@ -183,20 +224,20 @@ const CreatePost = () => {
               keyExtractor={(item) => item}
               style={styles.imageList}
             />
-          </View>
+            </View>
     
-          <TouchableOpacity style={styles.submitButton} onPress={handleSendOffer}>
-            <Text style={styles.submitButtonText}>Submit Post</Text>
+          <TouchableOpacity style={styles.botton} onPress={handleSendOffer}>
+            <Text style={styles.btntxt}>Submit Post</Text>
           </TouchableOpacity>
         </View>
+      </ScrollView>
       </ScrollView>
     );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    padding: 16,
+    padding: 10,
   },
   formContainer: {
     backgroundColor: '#FFFFFF',
@@ -209,8 +250,18 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#CCCCCC',
+    borderBottomWidth:1,
+    borderColor: '#404040',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginBottom: 16,
+    fontSize: 16,
+  },
+  description: {
+    borderWidth:1,
+    borderColor: '#404040',
+    height:150,
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,
@@ -244,6 +295,39 @@ const styles = StyleSheet.create({
   dropdownContainer: {
     marginBottom: 16,
   },
+  imageinputwrapper:{
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    borderWidth:1,
+    borderStyle:'dashed',
+    borderColor: '#404040',
+    height:150,
+    marginTop: 20,
+    marginBottom: 20,
+    fontSize: 16,
+  }, 
+  botton:{
+    backgroundColor: '#0D937D',
+    paddingVertical: 15,
+    paddingHorizontal: 100,
+    // borderRadius: 30,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  btntxt:{
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  addImagesButton:{
+    backgroundColor:'white',
+    padding:12,
+    borderWidth:1,
+    textAlign:'center',
+    marginTop:50
+  }
 });
 
 

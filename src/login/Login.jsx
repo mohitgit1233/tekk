@@ -217,6 +217,7 @@ const styles = StyleSheet.create({
     // fontSize:'x-large',
     // border: '1% solid black',
     marginBottom:'2%',
+    fontSize:15
    
   },
   botton:{
