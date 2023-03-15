@@ -212,18 +212,13 @@ const CreatePost = () => {
               <Text >Add Site Images</Text>
             </TouchableOpacity>
             <FlatList
-              horizontal={true}
-              data={images}
-              renderItem={({ item }) => (
-                <Image
-                  source={{ uri: item }}
-                  style={styles.imagePreview}
-                  resizeMode="cover"
-                />
-              )}
-              keyExtractor={(item) => item}
-              style={styles.imageList}
-            />
+      horizontal={true}
+  data={images}
+  renderItem={({ item }) => (
+    <Image source={{ uri: item }} style={{ width: 200, height: 200 }} />
+  )}
+  keyExtractor={(item) => item}
+/>
             </View>
     
           <TouchableOpacity style={styles.botton} onPress={handleSendOffer}>
