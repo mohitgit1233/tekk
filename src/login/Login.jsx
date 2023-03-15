@@ -13,7 +13,7 @@ import AppContext from '../../AppContext';
 import { StatusBar } from 'expo-status-bar';
 // import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-ionicons';
+// import Icon from 'react-native-ionicons';
 import { CommonActions } from '@react-navigation/native';
 import {login} from '../../services/api'
 
@@ -128,14 +128,14 @@ export const Login = () => {
       base: "75%",
       md: "25%"
     }}style={styles.field} 
-    InputLeftElement={<Icon  size={5} ml="2" color="red" />} placeholder="Email" onChangeText={(e)=>setText(e)} defaultValue={text} />
+     placeholder="Email" onChangeText={(e)=>setText(e)} defaultValue={text} />
 
       <Input w={{
       base: "75%",
       md: "25%"
     }} style={styles.field} 
     type={show2 ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow2(!show2)}>
-            <Icon  size={5} mr="2" color="red" />
+            {/* <Icon  size={5} mr="2" color="red" /> */}
           </Pressable>} placeholder="Password"   onChangeText={(e)=>setText2(e)} defaultValue={text2} />
 
 
