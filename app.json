@@ -26,7 +26,6 @@
       "bundleIdentifier": "com.anonymous.tekk"
     },
     "android": {
-      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -36,11 +35,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      "ANDROID_KEY": "289621286274-2im7k6dmodfeaketvqtmth3i7s2unlf6.apps.googleusercontent.com",
-      "eas": {
-        "projectId": "058f9075-56bf-425f-ab53-c062dbe3180a"
-      }
-    }
+    "extra": {}
   }
 }

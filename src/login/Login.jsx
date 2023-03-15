@@ -1,17 +1,9 @@
-import { useState, useEffect } from "react";
-//import * as GoogleAuthentication from 'expo-google-app-auth';
+import { useState } from "react";
 import { Box, Text, Heading, VStack, FormControl, Input, Link, Button, HStack, Center, NativeBaseProvider } from "native-base";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserAuth } from "../context/AuthContext";
-//import auth from '@react-native-firebase/auth';
-//import { GoogleSignin } from '@react-native-google-signin/google-signin';
-//import { auth } from "../firebase";
 
 export const Login = ({navigation}) => {
-  /*GoogleSignin.configure({
-    webClientId:
-      '289621286274-cbtdk9v2714kvbed74t94j5oftt8ksbd.apps.googleusercontent.com',
-  }); */
 
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
