@@ -18,6 +18,13 @@ const Offers = () => {
  
 
   useEffect( () => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      const see = async ()=>{
+        const json = await getJobsByEmployerId(loggedInUser.id)
+        setData(json)
+      }
+      see()
+    });
     // fetch(url)
     //   .then((resp) => resp.json())
     //   .then((json) => setData(json))
@@ -27,7 +34,7 @@ const Offers = () => {
       setData(json)
     }
     see()
-  }, []);
+  }, [navigation]);
 
      const filteredData = data.filter(post => post.status === 'offered' && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
