@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect,useContext } from 'react';
-import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView, ScrollView } from 'react-native';
 import io from 'socket.io-client';
-import { getMessages,getUserById } from '../../../services/api';
-import { SOCKET_API } from '../../../services/api_config';
+import { getMessages,getUserById, getCompletionsOpenAI } from '../../../services/api';
+import { SOCKET_API, OPENAI_API_KEY } from '../../../services/api_config';
 // import React, { useState, useEffect, } from 'react';
 import AppContext from '../../../AppContext';
 import Moment from 'moment';
@@ -22,14 +22,47 @@ export const SubChat = ({ navigation, route }) => {
     const [tech_id, setTech_id] = useState(loggedInUser.id);
     const [tech_name, settech] = useState("");
     const [emp_name, setemp] = useState("");
-
+    //aii sugg
+    const [lastMessage, setLastMessage] = useState(null);
+    const [suggestedReplies, setSuggestedReplies] = useState(["hello","okay","thank you", "what's the pay"]);
 
 
     //   const [socket, setSocket] = useState(null);
     const socket = io.connect(SOCKET_API);
 
+    const getSuggestedReplies = async (message) => {
+        console.log("getSuggestedReplies()");
+        // const prompt = `Given the message: "${message}", suggest a possible reply.`;
+        // const completions = await openai.completions.create({
+        //   engine: 'davinci',
+        //   prompt,
+        //   maxTokens: 64,
+        //   n: 5,
+        //   stop: ['\n'],
+        // });
+
+        // console.log("raaaaaaaaaaaaaaaaaaaaaaaaaaaa",completions);
+
+        // const replies = completions.choices.map((c) => c.text.trim());
+
+        try {
+            
+            const data = await getCompletionsOpenAI(null, {
+                message: `What's the best reply to "${message}"?(give a max 4-word answer)`,
+              })
+        console.log("raaaaaaaaaaaaaaaaaaaaaaaaaaaa",data);
+
+            const completions = data.choices.map((choice) => choice.text.trim());
+            setSuggestedReplies(completions);
+          } catch (error) {
+            console.error(error);
+          }
+      };
 
     useEffect(() => {
+        // if (lastMessage) {
+        //     getSuggestedReplies(lastMessage);
+        //   }
         //populate messages using database
         const see = async()=>{
         //     await fetch('http://localhost:5001/api/v1/messages')
@@ -54,6 +87,8 @@ export const SubChat = ({ navigation, route }) => {
         settech(tech_name.name)
         setemp(emp_name.name)
         setMessages(json)
+        setLastMessage(json[json.length-1].message);
+        getSuggestedReplies(json[json.length-1].message);
         }
         see()
 
@@ -138,6 +173,11 @@ export const SubChat = ({ navigation, route }) => {
             //populate
 
             set_tomessage('');
+            setLastMessage(tomessage);
+            // await getSuggestedReplies(lastMessage);
+            await getSuggestedReplies(tomessage);
+
+
 
             //   setMessages(prevMessages => [...prevMessages, { id: Date.now(), message: data1.output.trim(), sender: "Chatgpt" }]);
         } catch (error) {
@@ -185,7 +225,7 @@ export const SubChat = ({ navigation, route }) => {
 
 
 
-                <View style={styles.inputContainer}>
+                {/* <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
                         value={tomessage}
@@ -198,7 +238,39 @@ export const SubChat = ({ navigation, route }) => {
                         title="Send"
                         onPress={handleSend}
                     />
+                </View> */}
+
+
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        value={tomessage}
+                        onChangeText={(text) => set_tomessage(text)}
+                        placeholder="Type a message..."
+                        multiline={true}
+                    />
+                    <Button title="Send" onPress={handleSend} />
                 </View>
+                {suggestedReplies.length > 0 && (
+                    <View style={styles.suggestionList}>
+
+<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+
+
+                        {suggestedReplies.map((reply) => (
+                            <Text
+                            style={styles.suggestion}
+                            onPress={() => set_tomessage(reply)}
+                            key={reply}
+                            >
+                                {reply}
+                            </Text>
+                        ))}
+                        </ScrollView>
+                    </View>
+                )}
+
+
             </View>
         </KeyboardAvoidingView>
     );
@@ -236,6 +308,29 @@ const styles = StyleSheet.create({
     sender: {
         // backgroundColor: "red"
         color: "grey"
-    }
+    },
+    suggestionList: {
+            backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+        // backgroundColor: "#f2f2f2",
+        padding: 15,
+        marginBottom: 10,
+        position: "absolute",
+        bottom: 50,
+        left: 0,
+        right: 0,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      suggestion: {
+        backgroundColor: "#e0e0e0",
+        color: "#333",
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 20,
+        marginHorizontal: 5,
+        marginVertical: 2,
+      },
 });
 

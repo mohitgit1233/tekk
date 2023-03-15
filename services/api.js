@@ -13,7 +13,8 @@ import { OFFERS_BY_JOBID,
     EMPLOYMENT_BY_OFFERID,
     OFFERS_BY_TECHID,
     NOTIFICATIONS_BY_EMPID,
-    API_BASE_URL
+    API_BASE_URL,
+    // OPENAI_API_KEY
 } from './api_config';
 
 
@@ -238,6 +239,23 @@ export const pushToTechnicians = async (id=null,body=null) => {
       return data
 }
 
+
+export const getCompletionsOpenAI = async (id = null, body = null) => {
+
+    // const response = await fetch('https://api.openai.com/v1/completions', {
+    const response = await fetch(`${API_BASE_URL}/openai/completions`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
+    const data = await response.json();
+    console.log("ddddddddd");
+    console.log(data);
+
+    return data
+}
 //usage in components
 // import { getAllOffers } from './api';
 
