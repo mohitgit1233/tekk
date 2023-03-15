@@ -86,7 +86,7 @@ const MyPosts = ({ route }) => {
           <Text style={styles.postTitle}>{item.title}</Text>
           <Text style={styles.postDate}>{Moment(item.posted_date).format('D MMMM YYYY')}</Text>
           <Text style={styles.postDescription}>{item.description.length > 20 ? item.description.split(' ').slice(0, 8).join(' ') + '......'  : item.description.split(' ').slice(0, 11).join(' ')}</Text>
-          
+          {/* <Text style={styles.postStatus}>{item.status}</Text> */}
         </View>
       </TouchableOpacity>
     );
@@ -185,21 +185,22 @@ const styles = StyleSheet.create({
   postTitle: {
   fontSize: 18,
   fontWeight: 'bold',
-  marginBottom: 8,
+
   },
   postDescription: {
   fontSize: 16,
-  marginBottom: 8,
+  marginBottom: 5,
   maxWidth:210,
 
   },
   postDate: {
   fontSize: 14,
-  marginBottom: 8,
+    marginBottom:5
   },
   postStatus: {
   fontSize: 14,
-  fontWeight: 'bold',
+  
+  textTransform:'uppercase'
   },
   searchContainer: {
   flexDirection: 'row',

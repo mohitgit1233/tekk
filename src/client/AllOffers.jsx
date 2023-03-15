@@ -101,7 +101,7 @@ const AllOffers = (props) => {
        <View style={styles.jobPostContainer}>
               
               <Text style={styles.jobPostTitle}>{jobData.title}</Text>
-              <Image style={styles.postImage} source={{ uri: jobData.picture }} />
+              <Image style={styles.postImage} source={jobData.images ? { uri: jobData.images[0] }:{uri:"https://dummyimage.com/600x400/666666/c4c4c4&text=No+Image+found"}} />
               <Text style={styles.postDescription}>{jobData.description}</Text>
               {/* <Text style={styles.postDate}>{Moment(jobData.posted_date).format('D MMMM YYYY')}</Text> */}
     
@@ -221,11 +221,10 @@ const styles = StyleSheet.create({
       marginBottom: 10,
     },
     postImage: {
-      width: 100,
-      height: 100,
-      margin:20,
-     alignItems:'center',
-      borderWidth:1
+      width: 300,
+      height: 200,
+      marginRight: 10,
+      marginBottom:10
     },
   })
 

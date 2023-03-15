@@ -46,11 +46,15 @@ const PostDetails = () => {
     <>
          
             <View style={styles.postContainer}>
-              <Image style={styles.postImage} source={{ uri: data.picture }} />
-              <Text style={styles.postTitle}>{data.title}</Text>
+            <Text style={styles.postDescription}>Job Status: {data.status}</Text>
+            <Text style={styles.postDate}>{Moment(data.posted_date).format('D MMMM YYYY')}</Text>
+            <Text style={styles.postTitle}>{data.title}</Text>
+
+              <Image style={styles.postImage} source={data.images ? { uri: data.images[0] }:{uri:"https://dummyimage.com/600x400/666666/c4c4c4&text=No+Image+found"}} />
+              
               <Text style={styles.postDescription}>{data.description}</Text>
-              <Text style={styles.postDate}>{Moment(data.posted_date).format('D MMMM YYYY')}</Text>
-              <Text style={styles.postDescription}>{data.status}</Text>
+              
+              
             </View>   
 
           
@@ -105,31 +109,28 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    width: '100%', // Set width to stretch to maximum width
+   
 
+  },
+  postDate:{
+    marginBottom:20,
+    borderBottomWidth:1
   },
   postTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
+    borderBottomWidth:1
   },
   postDescription: {
     fontSize: 16,
-    marginBottom: 10,
+    
   },
   postImage: {
-    width: 50,
-    height: 50,
+    width: 300,
+    height: 200,
     marginRight: 10,
-    borderRadius: 25,
+    marginBottom:10
   },
   addButton: {
     backgroundColor: 'blue',
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
   botton:{
     backgroundColor: '#0D937D',
     paddingVertical: 15,
-    paddingHorizontal: 100,
+    paddingHorizontal: 80,
     // borderRadius: 30,
     marginTop: 20,
     marginBottom: 20,
