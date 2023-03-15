@@ -23,7 +23,7 @@ const CreatePost = () => {
       multiple: true, // enable multiple image selection
     });
   
-    if (!results.cancelled) {
+    if (!results.canceled) {
       setImages([...images, ...results.assets.map((asset) => asset.uri)]);
     }
   };
