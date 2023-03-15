@@ -49,7 +49,7 @@ export const Login = () => {
     // Do something with the text value, e.g. send it to a server
     //technician
     // navigation.navigate('technicianHome');
-    body1 = {
+    const body1 = {
       "email": text,
       "password": text2
     }
