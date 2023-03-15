@@ -54,9 +54,9 @@ const PostDetails = () => {
             </View>   
 
           
-                {status == 'upcoming' ? <Button>Cancel Appointment</Button> : <></>}    
+                {status == 'upcoming' ? <TouchableOpacity style={styles.botton} ><Text style={styles.btntxt}>Cancel Appointment</Text></TouchableOpacity> : <></>}    
                 {status == 'new job' ? <Text>No offers yet</Text> : <></>} 
-                {status == 'ongoing' ? <Button>Complete Job</Button> : <></>} 
+                {status == 'ongoing' ? <TouchableOpacity style={styles.botton} ><Text style={styles.btntxt}>Complete Job</Text></TouchableOpacity> : <></>} 
          
       
     </>
@@ -141,6 +141,20 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 30, // Change the value to move the button further to the right
+  },
+  botton:{
+    backgroundColor: '#0D937D',
+    paddingVertical: 15,
+    paddingHorizontal: 100,
+    // borderRadius: 30,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  btntxt:{
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

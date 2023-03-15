@@ -54,9 +54,10 @@ const Offers = () => {
             <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}>
               <View style={styles.postContainer}>
               <Image source={{ uri: post.images[0] }} />
-                <Text style={styles.postTitle}>{post.images[0]}{post.title}</Text>
-                <Text style={styles.postDescription}>{post.description}</Text>
+                <Text style={styles.postTitle}>{post.title}</Text>
                 <Text style={styles.postDate}>{Moment(post.posted_date).format('D MMMM YYYY')}</Text>
+                <Text style={styles.postDescription}>{post.description}</Text>
+                
               </View>
             </TouchableOpacity>
           );
