@@ -101,7 +101,7 @@ export const MyJob = ({ navigation }) => {
               <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
               <View style={styles.postContainer}>
   <View style={styles.postTitleContainer}>
-    <Image style={styles.postImage} source={{ uri: post.jobID.picture }} />
+    <Image style={styles.postImage} source={{ uri: post.jobID.images[0] }} />
     <View style={styles.postContent}>
       <Text style={[styles.postTitle]}>{post.jobID.title}</Text>
       <Text>

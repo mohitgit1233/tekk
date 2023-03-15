@@ -37,13 +37,13 @@ const JobFull = () => {
 //   console.log("data",data[0].employment_status)
 
   return (
-    <Box flex={1} bg="white" p={2}>
+    <Box flex={1} bg="white" p={2} >
       <ScrollView contentContainerStyle={styles.container}>
         {data ? (
           <>
             <VStack space={3} alignItems="center">
-              <Box borderWidth={1} borderRadius={5} overflow="hidden" borderColor="gray.200" bg="white">
-                <Image style={styles.postImage} source={{ uri: data.picture }} />
+              <Box borderWidth={1} borderRadius={5} overflow="hidden" borderColor="gray.200" bg="white" width="100%" >
+                <Image style={styles.postImage} source={{ uri: data[0] && data[0].job.images[0] }} />
                 <VStack space={3} p={4}>
                   <Text style={styles.postTitle}>Job title:</Text>
                   <Text style={styles.postDescription}>{data[0] && data[0].job.title}</Text>
@@ -84,6 +84,7 @@ const JobFull = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    width: '100%',
   },
   postImage: {
     width: '100%',
