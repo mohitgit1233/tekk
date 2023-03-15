@@ -1,7 +1,8 @@
 import React, { useEffect, useState,useContext } from 'react'
 import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
 import Moment from 'moment';
-import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
+import { StyleSheet, TouchableOpacity,TextInput,Image,RefreshControl,
+  SafeAreaView } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getJobsByEmployerId } from '../../services/api';
@@ -15,6 +16,7 @@ const MyPosts = ({ route }) => {
     const [status,SetStatus] = useState('')
   const [searchTerm, setSearchTerm] = useState('');
   const [postStatus, setpostStatus] = useState('all')
+  const [refreshing, setRefreshing] = React.useState(false);
   // const { refreshData } = route.params;
   
   // console.log('yolooo',refreshData)
@@ -23,6 +25,17 @@ const MyPosts = ({ route }) => {
  
 
   useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      const see = async()=>{
+        //  await fetch(url)
+        //     .then((resp) => resp.json())
+        //     .then((json) => setData(json))
+        //     .catch((error) => console.error(error));
+            const json = await getJobsByEmployerId(loggedInUser.id)
+            setData(json)
+          }
+          see()
+    });
     const see = async()=>{
   //  await fetch(url)
   //     .then((resp) => resp.json())
@@ -32,7 +45,8 @@ const MyPosts = ({ route }) => {
       setData(json)
     }
     see()
-  }, []);
+    return unsubscribe;
+  }, [navigation]);
   console.log(data.length)
 
   const handleFilter = (status) => {

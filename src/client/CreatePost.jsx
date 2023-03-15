@@ -2,7 +2,7 @@ import { useState,useContext } from 'react';
 import {Box} from 'native-base'
 import { Button, TextInput, View,StyleSheet,Text,Image,FlatList , ScrollView, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Dropdown } from '@ant-design/react-native';
+
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { CommonActions } from '@react-navigation/native';
