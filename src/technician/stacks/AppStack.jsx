@@ -7,7 +7,7 @@ import { JobPosts } from '../screens/JobPosts';
 import { MyJob } from '../screens/MyJobs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import Icon from 'react-native-ionicons';
+// import Icon from 'react-native-ionicons';
 import SearchInput from '../../../components/SearchInput';
 import JobContainer from '../container/JobContainer';
 import ViewOffer from '../ViewOffer';
