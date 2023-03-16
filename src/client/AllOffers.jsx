@@ -83,6 +83,8 @@ const AllOffers = (props) => {
             navigation.goBack();
     }
     const goToChatRoom = async (jid,tid,eid) =>{
+      console.log("IMPPPPPPPPPMIMPPPPPPPPPPP");
+      console.log(jid,tid,eid);
         const obj = {
           "technician": tid,
           "employer": eid,
@@ -93,7 +95,7 @@ const AllOffers = (props) => {
 
           console.log("asskjdkjldaskdsajlkdasjkldasjklsadjkldas created room");
 
-          navigation.navigate('SubChatClient', {  });
+          navigation.navigate('SubChatClient',   { propValue: json._id, p2: tid , roomid: json._id  });
 
   }
   return (
