@@ -153,15 +153,17 @@ const styles = StyleSheet.create({
     fontSize:18,
     color:'#0D937D',
     fontWeight:'bold'
-  },postText:{
+  },
+  postText:{
       fontSize:17,
-      textAlign:'left'
+      
   },
   labeltextwrap:{
     display:'flex',
     flexDirection:'column',
     marginTop:10,
-  
+    justifyContent:'space-between',
+    width:'100%'
   },
   labeltextout:{
     flexDirection:'row',
