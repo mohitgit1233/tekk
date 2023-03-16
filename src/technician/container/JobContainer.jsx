@@ -104,10 +104,11 @@ const styles = StyleSheet.create({
     // borderRadius: 30,
     marginTop: 10,
     marginBottom: 20,
+    width:'100%'
   },
   sendOfferButtonText: {
     color: '#FFFFFF',
-    fontSize: 24,
+    fontSize: 15,
     fontWeight: 'bold',
     textAlign: 'center',
   },

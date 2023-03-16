@@ -1,5 +1,5 @@
 // import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View,TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 //FIXME
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -47,7 +47,7 @@ const SendOffer = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Send Offer</Text>
+      
       <TextInput
         style={styles.input}
         placeholder="Offer price"
@@ -68,11 +68,14 @@ const SendOffer = ({ route }) => {
           {preferStartDate || 'Select date'}
         </Text>
       </View>
-      <Button
+      {/* <Button
         title="Send Offer"
         onPress={handleSendOffer}
         jobId={jobId}
-      />
+      /> */}
+      <TouchableOpacity style={styles.botton} onPress={handleSendOffer}>
+            <Text style={styles.btntxt}>Send Offer</Text>
+          </TouchableOpacity>
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="datetime"
@@ -90,7 +93,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#F9F8F5',
   },
   header: {
     fontSize: 24,
@@ -98,12 +101,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
+    borderBottomWidth:1,
+    borderColor: '#404040',
     borderRadius: 8,
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 12,
     marginBottom: 16,
+    fontSize: 17,
   },
   dateInputContainer: {
     flexDirection: 'row',
@@ -111,7 +115,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   dateInputLabel: {
-    fontWeight: 'bold',
+    
+    fontSize:20,
+    marginTop:10
   },
   dateInputText: {
     borderWidth: 1,
@@ -119,7 +125,23 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 8,
-  }
+    marginTop:10,
+    marginLeft:20,
+    fontSize:17
+  },botton:{
+    backgroundColor: '#0D937D',
+    paddingVertical: 15,
+    paddingHorizontal: 100,
+    // borderRadius: 30,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  btntxt:{
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 })
 
 export default SendOffer;
