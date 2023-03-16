@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect,useContext } from 'react';
-import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView, ScrollView,Image } from 'react-native';
 import io from 'socket.io-client';
 import { getMessages,getUserById, getCompletionsOpenAI } from '../../../services/api';
 import { SOCKET_API, OPENAI_API_KEY } from '../../../services/api_config';
@@ -52,8 +52,8 @@ export const SubChat = ({ navigation, route }) => {
         const emp_name = await getUserById(p2)
         console.log("=========================");
         console.log(tech_name.name);
-        settech(tech_name.name)
-        setemp(emp_name.name)
+        settech(tech_name)
+        setemp(emp_name)
         setMessages(json)
         setLastMessage(json[json.length-1].message);
         getSuggestedReplies(json[json.length-1].message);
@@ -142,7 +142,7 @@ export const SubChat = ({ navigation, route }) => {
             <View style={styles.message}>
                 {/* <Text style={styles.sender} >{item.sender_id}</Text> */}
                 <Text style={styles.sender}>{Moment(item.date).format('MMMM Do, YYYY,HH:mm A')}</Text>
-                { item.docModel==="technician" ? <Text style={styles.sender} >{tech_name}</Text> : <Text style={styles.sender} >{emp_name}</Text>  }
+                { item.docModel==="technician" ? <Text style={styles.sender} >{tech_name.name}</Text> : <Text style={styles.sender} >{emp_name.name}</Text>  }
                 <Text>{item.message}</Text>
             </View>
         );
@@ -160,10 +160,14 @@ export const SubChat = ({ navigation, route }) => {
                     value={tech_id}
                     onChangeText={(text) => setTech_id(text)}
                 /> */}
-                {/* <Text style={{ textAlign: "center", padding: "3%" }}>Job Id: {propValue}</Text> */}
-                <Text style={{ textAlign: "center", padding: "3%" }}>Employer: {p2}</Text>
-                <Text style={{ textAlign: "center", padding: "3%" }}>Technician Currently logged in: {tech_id}</Text>
+                            <Image
+              source={{ uri: "https://picsum.photos/200" }}
+              style={styles.image}
+            />
                 <Text style={{ textAlign: "center", padding: "3%" }}>ROOM ID: {roomid}</Text>
+                <Text style={{ textAlign: "center", padding: "3%" }}>Employer: {emp_name.name}</Text>
+                {/* <Text style={{ textAlign: "center", padding: "3%" }}>Job: {propValue}</Text> */}
+                {/* <Text style={{ textAlign: "center", padding: "3%" }}>Technician Currently logged in: {tech_id}</Text> */}
 
 
 
@@ -264,6 +268,12 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginHorizontal: 5,
         marginVertical: 2,
+      },
+      image: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        marginRight: 10,
       },
 });
 
