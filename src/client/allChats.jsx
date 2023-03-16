@@ -26,9 +26,9 @@ export const AllChats = ({navigation}) => {
     fetchData()
   }, []);
 
-  const navigateToNotification = (kindof_prop1, p2, roomid ) => {
+  const navigateToNotification = (kindof_prop1, p2, roomid, job_id ) => {
     console.log(kindof_prop1);
-    navigation.navigate('SubChatClient', { propValue: kindof_prop1, p2 , roomid  });
+    navigation.navigate('SubChatClient', { propValue: kindof_prop1, p2 , roomid,  job_id });
   };
 
   return (
@@ -42,7 +42,7 @@ export const AllChats = ({navigation}) => {
           <TouchableOpacity
             style={styles.postContainer}
             onPress={() =>
-              navigateToNotification(item._id, item.technician_id._id, item._id)
+              navigateToNotification(item._id, item.technician_id._id, item._id, item.job_id._id)
             }
           >
             <Image

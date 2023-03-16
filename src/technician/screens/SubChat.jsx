@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect,useContext } from 'react';
-import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView, ScrollView,Image } from 'react-native';
+import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView, ScrollView,Image, TouchableOpacity } from 'react-native';
 import io from 'socket.io-client';
-import { getMessages,getUserById, getCompletionsOpenAI } from '../../../services/api';
+import { getMessages,getUserById, getCompletionsOpenAI, getJobById } from '../../../services/api';
 import { SOCKET_API, OPENAI_API_KEY } from '../../../services/api_config';
 // import React, { useState, useEffect, } from 'react';
 import AppContext from '../../../AppContext';
@@ -10,7 +10,7 @@ import Moment from 'moment';
 
 export const SubChat = ({ navigation, route }) => {
     const { loggedInUser, setLoggedInUser } = useContext(AppContext);
-    const { propValue, p2, roomid } = route.params;
+    const { propValue, p2, roomid, job_id } = route.params;
 
     const [tomessage, set_tomessage] = useState('');
     const [messages, setMessages] = useState([]);
@@ -18,6 +18,7 @@ export const SubChat = ({ navigation, route }) => {
     const [tech_id, setTech_id] = useState(loggedInUser.id);
     const [tech_name, settech] = useState("");
     const [emp_name, setemp] = useState("");
+    const [jobn, setjobn] = useState("");
     //aii sugg
     const [lastMessage, setLastMessage] = useState(null);
     const [suggestedReplies, setSuggestedReplies] = useState(["hello","okay","thank you", "what's the pay"]);
@@ -50,10 +51,15 @@ export const SubChat = ({ navigation, route }) => {
         const json = await getMessages(roomid)
         const tech_name = await getUserById(tech_id)
         const emp_name = await getUserById(p2)
+        console.log("error1");
+        console.log(job_id);
+        const jobi = await  getJobById(job_id)
+        console.log(jobi);
         console.log("=========================");
         console.log(tech_name.name);
         settech(tech_name)
         setemp(emp_name)
+        setjobn(jobi)
         setMessages(json)
         setLastMessage(json[json.length-1].message);
         getSuggestedReplies(json[json.length-1].message);
@@ -158,21 +164,16 @@ export const SubChat = ({ navigation, route }) => {
             keyboardVerticalOffset={120} // adjust this value as needed
         >
             <View style={styles.container}>
-                {/* <TextInput
-                    placeholder="Tsaddsadsdsa..."
-                    value={tech_id}
-                    onChangeText={(text) => setTech_id(text)}
-                /> */}
-                            <Image
+            <View style={styles.header}>
+            <Image
               source={{ uri: "https://picsum.photos/200" }}
               style={styles.image}
             />
-                <Text style={{ textAlign: "center", padding: "3%" }}>ROOM ID: {roomid}</Text>
-                <Text style={{ textAlign: "center", padding: "3%" }}>Employer: {emp_name.name}</Text>
-                {/* <Text style={{ textAlign: "center", padding: "3%" }}>Job: {propValue}</Text> */}
-                {/* <Text style={{ textAlign: "center", padding: "3%" }}>Technician Currently logged in: {tech_id}</Text> */}
-
-
+            <View style={styles.headerText}>
+              <Text style={styles.roomId}>{jobn.title}</Text>
+              <Text style={styles.employer}>Employer: {emp_name.name}</Text>
+            </View>
+          </View>
 
                 <FlatList
                     data={messages}
@@ -189,7 +190,10 @@ export const SubChat = ({ navigation, route }) => {
                         placeholder="Type a message..."
                         multiline={true}
                     />
-                    <Button title="Send" onPress={handleSend} />
+                    {/* <Button title="Send" onPress={handleSend} /> */}
+                    <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+              <Text style={styles.sendButtonText}>Send</Text>
+            </TouchableOpacity>
                 </View>
                 {suggestedReplies.length > 0 && (
                     <View style={styles.suggestionList}>
@@ -217,10 +221,49 @@ export const SubChat = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+    // container: {
+    //     flex: 1,
+    //     backgroundColor: '#fff',
+    //     padding: 10,
+    // },
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        padding: 10,
+      flex: 1,
+      backgroundColor: "#F5F5F5",
+      padding: 10,
+    },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 10,
+      backgroundColor: "#FFFFFF",
+      padding: 10,
+      borderRadius: 10,
+    },
+    headerText: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    image: {
+      width: 60,
+      height: 60,
+      borderRadius: 30,
+      marginRight: 10,
+    },
+    roomId: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 5,
+      alignItems: 'flex-start',
+      alignSelf: 'flex-start'
+    },
+    employer: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 5,
+      alignItems: 'flex-start',
+      alignSelf: 'flex-start'
+      
     },
     message: {
         padding: 10,
@@ -272,11 +315,21 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
         marginVertical: 2,
       },
-      image: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        marginRight: 10,
+      // image: {
+      //   width: 60,
+      //   height: 60,
+      //   borderRadius: 30,
+      //   marginRight: 10,
+      // },
+      sendButton: {
+        backgroundColor: "#0D937D",
+        borderRadius: 5,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+      },
+      sendButtonText: {
+        color: "#FFFFFF",
+        fontWeight: "bold",
       },
 });
 
