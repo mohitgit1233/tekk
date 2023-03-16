@@ -35,8 +35,10 @@ const JobContainer = ({ job, refreshData }) => {
   }
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       <Text style={styles.postTitle}>{post.title}</Text>
+      <Text style={styles.postDate}>Posted: {Moment(post.posted_date).format('d/MM/YYYY')}</Text>
       <ScrollView horizontal={true} style={styles.imageCarousel}>
         {post.images.map((image, index) => (
           <Image key={index} source={{ uri: image }} style={styles.image} />
@@ -44,15 +46,31 @@ const JobContainer = ({ job, refreshData }) => {
       </ScrollView>
       <View style={styles.postDetails}>
         <Text style={styles.postDescription}>{post.description}</Text>
-        <Text style={styles.postDescription}>Posted: {Moment(post.posted_date).format('d/MM/YYYY')}</Text>
-        <Text style={styles.postDescription}>Location: {post.location}</Text>
-        <Text style={styles.postDescription}>Prefered Start: {Moment(post.prefer_start_date).format('d/MM/YYYY')}</Text>
+        
+        <View style={styles.labeltextwrap}>
+                <View style={styles.labeltextout}>
+              <Text style={styles.label}>Location:</Text>
+              <Text style={styles.postText}> {post.location}</Text>
+              </View>
+              
+              <View style={styles.labeltextout}>
+              <Text style={styles.label}>Preferred Start Date:</Text>
+              <Text style={styles.postText}> {Moment(post.prefer_start_date).format('d/MM/YYYY')}</Text>
+              </View>
+
+       
+        </View>
+
+
       </View>
+      
+      
       <TouchableOpacity style={styles.sendOfferButton} onPress={handleSendOffer}>
         <Text style={styles.sendOfferButtonText}>Send a Quote</Text>
       </TouchableOpacity>
       {/* <Button title="Go back" onPress={() => navigation.goBack()} /> */}
     </View>
+    </ScrollView>
   );
   
   
@@ -63,17 +81,18 @@ const styles = StyleSheet.create({
     // flex: 1,
     backgroundColor: '#F9F9F9',
     padding: 30,
-    alignItems: 'center',
+   
   },
-  postSubtitleText: {
-    fontSize: 16,
-    color: '#888888',
+  postDate: {
+    fontSize: 14,
+    textAlign:'left'
+    ,marginBottom:20
   },
   postTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     marginTop: 10,
-    marginBottom: 10,
+   
     width:"100%",
     alignItems: 'flex-start',
     
@@ -95,7 +114,7 @@ const styles = StyleSheet.create({
   },
   postDescription: {
     fontSize: 18,
-    marginBottom: 10,
+  
   },
   sendOfferButton: {
     backgroundColor: '#0D937D',
@@ -111,6 +130,58 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     textAlign: 'center',
+  },labeltextwrap:{
+    display:'flex',
+    flexDirection:'column',
+    marginTop:10,
+    
+   
+  
+  },labeltextout:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'flex-start',
+    borderWidth:1,
+    borderRadius:5,
+    marginTop:10,
+    padding:20,
+    textAlign:'left',
+    
   },
+  label:{
+    width:130,
+    fontSize:18,
+    color:'#0D937D',
+    fontWeight:'bold'
+  },postText:{
+      fontSize:17,
+      textAlign:'left'
+  },
+  labeltextwrap:{
+    display:'flex',
+    flexDirection:'column',
+    marginTop:10,
+  
+  },
+  labeltextout:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'flex-start',
+    borderWidth:1,
+    borderRadius:5,
+    marginTop:10,
+    padding:20,
+    textAlign:'left',
+    
+  },
+  label:{
+    width:130,
+    fontSize:18,
+    color:'#0D937D',
+    fontWeight:'bold'
+  },postText:{
+      fontSize:17,
+  
+  }
 });
 export default JobContainer;
