@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect,useContext } from 'react';
-import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView,TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView,TouchableOpacity, ScrollView,Image } from 'react-native';
 import { SubChat }  from './SubChat'
 import { useNavigation } from '@react-navigation/native';
 import { getRooms } from '../../../services/api';
@@ -25,9 +25,10 @@ export const Chat = ({navigation}) => {
       //    .catch((error) => console.error(error));
 
       const json = await getRooms()
+      console.log("DATA NEEDED");
       console.log(json);
       console.log(loggedInUser.id);
-      const filteredArray = json.filter((item) => item.technician_id === loggedInUser.id);
+      const filteredArray = json.filter((item) => item.technician_id._id === loggedInUser.id);
 
       setData1(filteredArray)
 
@@ -40,49 +41,39 @@ export const Chat = ({navigation}) => {
     navigation.navigate('SubChat', { propValue: kindof_prop1, p2 , roomid  });
   };
 
-  const renderItem = ({ item }) => {
-    return (
-      <View style={styles.message}>
-        <Text style={styles.sender} >{item.sender}</Text>
-        <Text>{item.message}</Text>
-      </View>
-    );
-  };
-
   return (
-
     <View style={styles.container}>
       <Text style={styles.head}>Select Employer To Chat</Text>
-      <View style={styles.postContainer}>
-        <TouchableOpacity >
-          <Text style={styles.postDescription}> Ask AI</Text>
-        </TouchableOpacity>
-      </View>
       <FlatList
-  style={styles.list}
-  data={data1}
-  keyExtractor={(item) => item._id}
-  renderItem={({ item }) => (
-    <View style={styles.postContainer}>
-      <TouchableOpacity onPress={() => navigateToNotification(item._id, item.employer_id, item._id)}>
-        <Text style={styles.postDescription}>Job: {item.job_id} - Employer: {item.employer_id}</Text>
-      </TouchableOpacity>
+        style={styles.list}
+        data={data1}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.postContainer}
+            onPress={() =>
+              navigateToNotification(item._id, item.employer_id._id, item._id)
+            }
+          >
+            <Image
+              source={{ uri: item.job_id.images[0] }}
+              style={styles.image}
+            />
+            <Text style={styles.postDescription}>
+              Job: {item.job_id.title} - Employer: {item.employer_id.name}
+            </Text>
+          </TouchableOpacity>
+        )}
+      />
     </View>
-  )}
-/>
-
-
-      {/* <Button title="adil" onPress={() => navigateToNotification("adilsaju_emp")}  >Adil</Button> */}
-    </View>
-
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 10,
+    backgroundColor: "#fff",
+    padding: 20,
   },
   head: {
     fontSize: 30,
@@ -95,8 +86,16 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     paddingHorizontal: 10,
     paddingVertical: 10,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: "#F2F2F2",
     borderRadius: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  image: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginRight: 10,
   },
   postDescription: {
     fontSize: 18,
