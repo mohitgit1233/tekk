@@ -7,7 +7,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { getJobById } from '../../services/api';
 
 const PostDetails = () => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null);
     const navigation = useNavigation();
     
   const [searchTerm, setSearchTerm] = useState('');
@@ -46,12 +46,16 @@ const PostDetails = () => {
     <>
          
             <View style={styles.postContainer}>
-            <Text style={styles.postDescription}>Job Status: {data.status}</Text>
+            <Text style={styles.postStatus}>Job Status: {data.status}</Text>
             <Text style={styles.postDate}>{Moment(data.posted_date).format('D MMMM YYYY')}</Text>
             <Text style={styles.postTitle}>{data.title}</Text>
 
-              <Image style={styles.postImage} source={data.images ? { uri: data.images[0] }:{uri:"https://dummyimage.com/600x400/666666/c4c4c4&text=No+Image+found"}} />
-              
+              {/* <Image style={styles.postImage} source={data.images ? { uri: data.images[0] }:{uri:"https://dummyimage.com/600x400/666666/c4c4c4&text=No+Image+found"}} /> */}
+              <ScrollView horizontal={true} style={styles.imageCarousel}>
+        {data.images.map((image, index) => (
+          <Image key={index} source={{ uri: image }} style={styles.image} />
+        ))}
+      </ScrollView>
               <Text style={styles.postDescription}>{data.description}</Text>
               
               
@@ -59,14 +63,14 @@ const PostDetails = () => {
 
           
                 {status == 'upcoming' ? <TouchableOpacity style={styles.botton} ><Text style={styles.btntxt}>Cancel Appointment</Text></TouchableOpacity> : <></>}    
-                {status == 'new job' ? <Text>No offers yet</Text> : <></>} 
+                {status == 'new job' ? <Text style={{fontSize:19,fontWeight:'bold'}}>No offers yet</Text> : <></>} 
                 {status == 'ongoing' ? <TouchableOpacity style={styles.botton} ><Text style={styles.btntxt}>Complete Job</Text></TouchableOpacity> : <></>} 
          
       
     </>
   ) : (
     <>
-      <Text>nothing {filteredData.length} found</Text>
+      <Text>nothing found</Text>
     </>
   )}
 </ScrollView>
@@ -119,18 +123,33 @@ const styles = StyleSheet.create({
   postTitle: {
     fontSize: 20,
     fontWeight: 'bold',
+
     marginBottom: 20,
     borderBottomWidth:1
   },
   postDescription: {
     fontSize: 16,
     
+  },postStatus: {
+    fontSize: 17,
+    marginTop:12
   },
   postImage: {
     width: 300,
-    height: 200,
+    
     marginRight: 10,
-    marginBottom:10
+    height: 100,
+  },
+  imageCarousel: {
+    borderRadius: 10,
+    marginTop: 10,
+   marginBottom:0
+  },
+  image: {
+    width: 350,
+    height:190,
+    padding:0,
+    marginRight: 10,
   },
   addButton: {
     backgroundColor: 'blue',
@@ -148,8 +167,8 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 80,
     // borderRadius: 30,
-    marginTop: 20,
-    marginBottom: 20,
+    // marginTop: 20,
+    // marginBottom: 20,
   },
   btntxt:{
     color: '#FFFFFF',
