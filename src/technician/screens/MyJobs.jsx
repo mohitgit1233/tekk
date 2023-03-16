@@ -81,9 +81,12 @@ export const MyJob = ({ navigation }) => {
       </View>
       </View>
       <View style={styles.filterContainer}>
-        <Button variant={jobStatus === 'ongoing' ? 'solid' : 'outline'} onPress={() => setJobStatus('ongoing')} mr={2} mb={2}>Ongoing</Button>
-        <Button variant={jobStatus === 'upcoming' ? 'solid' : 'outline'} onPress={() => setJobStatus('upcoming')} mr={2} mb={2}>Upcoming</Button>
-        <Button variant={jobStatus === 'pending' ? 'solid' : 'outline'} onPress={() => setJobStatus('pending')} mb={2}>Pending</Button>
+        <Button  variant={jobStatus === 'ongoing' ? 'solid' : 'outline'} onPress={() => setJobStatus('ongoing')} mr={2} mb={2}
+        style={jobStatus === 'ongoing' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>Ongoing</Button>
+        <Button variant={jobStatus === 'upcoming' ? 'solid' : 'outline'} onPress={() => setJobStatus('upcoming')} mr={2} mb={2}
+        style={jobStatus === 'upcoming' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>Upcoming</Button>
+        <Button variant={jobStatus === 'pending' ? 'solid' : 'outline'} onPress={() => setJobStatus('pending')} mb={2}
+        style={jobStatus === 'pending' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>Pending</Button>
       </View>
       <ScrollView contentContainerStyle={styles.container}>
        {filteredData.length > 0 ?  
