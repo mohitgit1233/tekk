@@ -18,7 +18,7 @@ const JobFull = () => {
   let filteredData = []
     
   
-  const url = `http://localhost:5001/api/v1/offer/${id}/employment`;
+  // const url = `http://localhost:5001/api/v1/offer/${id}/employment`;
     
   useEffect(() => {
     const see = async()=>{
