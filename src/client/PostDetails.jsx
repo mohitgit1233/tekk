@@ -33,10 +33,10 @@ const PostDetails = () => {
 
         filteredData = data
         
-  
+  console.log(data)
 
   return (
-    <Box bg="white" height="100%">
+    <Box bg="white" height="100%" >
       <View style={styles.searchContainer}>
    
       </View>
@@ -46,10 +46,11 @@ const PostDetails = () => {
     <>
          
             <View style={styles.postContainer}>
-            <Text style={styles.postStatus}>Job Status: {data.status}</Text>
-            <Text style={styles.postDate}>{Moment(data.posted_date).format('D MMMM YYYY')}</Text>
+            
             <Text style={styles.postTitle}>{data.title}</Text>
-
+            <Text style={styles.postDate}>Post Date: {Moment(data.posted_date).format('D MMMM YYYY')}</Text>
+            
+            
               {/* <Image style={styles.postImage} source={data.images ? { uri: data.images[0] }:{uri:"https://dummyimage.com/600x400/666666/c4c4c4&text=No+Image+found"}} /> */}
               <ScrollView horizontal={true} style={styles.imageCarousel}>
         {data.images.map((image, index) => (
@@ -58,14 +59,46 @@ const PostDetails = () => {
       </ScrollView>
               <Text style={styles.postDescription}>{data.description}</Text>
               
+              <View style={styles.labeltextwrap}>
+                <View style={styles.labeltextout}>
+              <Text style={styles.label}>Status:</Text>
+              <Text style={styles.postText}> {data.status}</Text>
+              </View>
               
+              <View style={styles.labeltextout}>
+              <Text style={styles.label}>Preferred Start Date:</Text>
+              <Text style={styles.postText}> {Moment(data.preferred_start_date).format('D MMMM YYYY')}</Text>
+              </View>
+
+              <View style={styles.labeltextout}>
+              <Text style={styles.label}>Budget:</Text>
+              <Text style={styles.postText}> ${(data.max_cost)}</Text>
+              </View>
+
+              
+
+           
+              
+
+              {status == 'new job' ? <></> :
+
+              <View style={styles.labeltextout}>
+              <Text style={styles.label}>Start Date:</Text>
+              <Text style={styles.postText}>{data.start_date == null ? <Text>NA</Text> : Moment(data.start_date).format('D MMMM YYYY')}</Text>
+              </View>}
+
+</View>
+            
+              {status == 'upcoming' ? <TouchableOpacity style={styles.botton} ><Text style={styles.btntxt}>Cancel Appointment</Text></TouchableOpacity> : <></>}    
+                {status == 'new job' ? <Text style={{fontSize:19,textAlign:'center',fontWeight:'bold',marginTop: 20,}}>No offers yet</Text> : <></>} 
+                {status == 'ongoing' ? <TouchableOpacity style={styles.botton} ><Text style={styles.btntxt}>Complete Job</Text></TouchableOpacity> : <></>} 
+         
+            
+            
             </View>   
 
           
-                {status == 'upcoming' ? <TouchableOpacity style={styles.botton} ><Text style={styles.btntxt}>Cancel Appointment</Text></TouchableOpacity> : <></>}    
-                {status == 'new job' ? <Text style={{fontSize:19,fontWeight:'bold'}}>No offers yet</Text> : <></>} 
-                {status == 'ongoing' ? <TouchableOpacity style={styles.botton} ><Text style={styles.btntxt}>Complete Job</Text></TouchableOpacity> : <></>} 
-         
+
       
     </>
   ) : (
@@ -117,22 +150,22 @@ const styles = StyleSheet.create({
 
   },
   postDate:{
-    marginBottom:20,
+
     borderBottomWidth:1
   },
   postTitle: {
     fontSize: 20,
     fontWeight: 'bold',
 
-    marginBottom: 20,
+
     borderBottomWidth:1
   },
   postDescription: {
     fontSize: 16,
-    
+    marginTop:10
   },postStatus: {
-    fontSize: 17,
-    marginTop:12
+    fontSize: 14,
+
   },
   postImage: {
     width: 300,
@@ -164,10 +197,11 @@ const styles = StyleSheet.create({
   },
   botton:{
     backgroundColor: '#0D937D',
+    paddingHorizontal:80,
     paddingVertical: 15,
-    paddingHorizontal: 80,
+    
     // borderRadius: 30,
-    // marginTop: 20,
+    marginTop: 20,
     // marginBottom: 20,
   },
   btntxt:{
@@ -176,6 +210,34 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  labeltextwrap:{
+    display:'flex',
+    flexDirection:'column',
+    marginTop:10,
+    
+   
+  
+  },labeltextout:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'flex-start',
+    borderWidth:1,
+    borderRadius:5,
+    marginTop:10,
+    padding:20,
+    textAlign:'left',
+    
+  },
+  label:{
+    width:130,
+    fontSize:18,
+    color:'#0D937D',
+    fontWeight:'bold'
+  },postText:{
+      fontSize:17,
+      textAlign:'left'
+  }
+ 
 });
 
 export default PostDetails;

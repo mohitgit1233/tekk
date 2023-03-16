@@ -81,12 +81,14 @@ const MyPosts = ({ route }) => {
         onPress={() =>
           navigation.navigate('PostDetails', { id: item._id, status: item.status })
         }>
+          
         <Image style={styles.postImage} source={{ uri: item.images[0] }} />
         <View>
           <Text style={styles.postTitle}>{item.title}</Text>
           <Text style={styles.postDate}>{Moment(item.posted_date).format('D MMMM YYYY')}</Text>
-          <Text style={styles.postDescription}>{item.description.length > 20 ? item.description.split(' ').slice(0, 8).join(' ') + '......'  : item.description.split(' ').slice(0, 11).join(' ')}</Text>
           {/* <Text style={styles.postStatus}>{item.status}</Text> */}
+          <Text style={styles.postDescription}>{item.description.length > 20 ? item.description.split(' ').slice(0, 10).join(' ') + '......'  : item.description.split(' ').slice(0, 11).join(' ')}</Text>
+          
         </View>
       </TouchableOpacity>
     );
@@ -191,7 +193,7 @@ const styles = StyleSheet.create({
   fontSize: 16,
   marginBottom: 5,
   maxWidth:190,
-
+  marginTop:5
   },
   postDate: {
   fontSize: 14,
