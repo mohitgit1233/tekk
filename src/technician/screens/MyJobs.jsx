@@ -68,7 +68,7 @@ export const MyJob = ({ navigation }) => {
   console.log('ddddd',filteredData.length)
   
   return (
-    <Box bg="white" height="100%">
+    <Box bg="#F9F9F9" height="100%">
       <View style={styles.header}>
       <View style={styles.searchContainer}>
         <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
@@ -81,12 +81,22 @@ export const MyJob = ({ navigation }) => {
       </View>
       </View>
       <View style={styles.filterContainer}>
-        <Button  variant={jobStatus === 'ongoing' ? 'solid' : 'outline'} onPress={() => setJobStatus('ongoing')} mr={2} mb={2}
-        style={jobStatus === 'ongoing' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>Ongoing</Button>
-        <Button variant={jobStatus === 'upcoming' ? 'solid' : 'outline'} onPress={() => setJobStatus('upcoming')} mr={2} mb={2}
-        style={jobStatus === 'upcoming' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>Upcoming</Button>
-        <Button variant={jobStatus === 'pending' ? 'solid' : 'outline'} onPress={() => setJobStatus('pending')} mb={2}
-        style={jobStatus === 'pending' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>Pending</Button>
+        <Button width={110}  variant={jobStatus === 'ongoing' ? 'solid' : 'outline'} onPress={() => setJobStatus('ongoing')} mr={2} mb={2}
+        style={jobStatus === 'ongoing' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>
+          <Text style={jobStatus === 'ongoing' ?{ color: '#F9F8F5', }: { color: '#0D937D', }}>
+            Ongoing
+            </Text>
+          </Button>
+        <Button width={110} variant={jobStatus === 'upcoming' ? 'solid' : 'outline'} onPress={() => setJobStatus('upcoming')} mr={2} mb={2}
+        style={jobStatus === 'upcoming' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>
+          <Text style={jobStatus === 'upcoming' ?{ color: '#F9F8F5', }: { color: '#0D937D', }}>
+        Upcoming
+        </Text></Button>
+        <Button width={110} variant={jobStatus === 'pending' ? 'solid' : 'outline'} onPress={() => setJobStatus('pending')} mb={2}
+        style={jobStatus === 'pending' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>
+          <Text style={jobStatus === 'pending' ?{ color: '#F9F8F5', }: { color: '#0D937D', }}>
+        Pending
+        </Text></Button>
       </View>
       <ScrollView contentContainerStyle={styles.container}>
        {filteredData.length > 0 ?  
@@ -128,7 +138,7 @@ export const MyJob = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F9F9F9',
     padding: 10,
   },
   header: {
@@ -148,12 +158,12 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 5,
-    height: 40,
-    flex: 1,
-    marginRight: 10,
+    backgroundColor:'white',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    margin:10,
+    borderWidth:0.5,
+    borderColor:'#074A3F'
   },
   searchIcon: {
     marginRight: 10,
