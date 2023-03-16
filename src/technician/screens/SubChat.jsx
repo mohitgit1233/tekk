@@ -7,10 +7,6 @@ import { SOCKET_API, OPENAI_API_KEY } from '../../../services/api_config';
 // import React, { useState, useEffect, } from 'react';
 import AppContext from '../../../AppContext';
 import Moment from 'moment';
-// const connection_api = 'http://192.168.5.131:3000/connection';
-// const message_api = 'http://192.168.5.131:3000/message';
-
-// const socket_api = 'http://localhost:5001'
 
 export const SubChat = ({ navigation, route }) => {
     const { loggedInUser, setLoggedInUser } = useContext(AppContext);
@@ -32,18 +28,6 @@ export const SubChat = ({ navigation, route }) => {
 
     const getSuggestedReplies = async (message) => {
         console.log("getSuggestedReplies()");
-        // const prompt = `Given the message: "${message}", suggest a possible reply.`;
-        // const completions = await openai.completions.create({
-        //   engine: 'davinci',
-        //   prompt,
-        //   maxTokens: 64,
-        //   n: 5,
-        //   stop: ['\n'],
-        // });
-
-        // console.log("raaaaaaaaaaaaaaaaaaaaaaaaaaaa",completions);
-
-        // const replies = completions.choices.map((c) => c.text.trim());
 
         try {
             
@@ -60,25 +44,9 @@ export const SubChat = ({ navigation, route }) => {
       };
 
     useEffect(() => {
-        // if (lastMessage) {
-        //     getSuggestedReplies(lastMessage);
-        //   }
-        //populate messages using database
-        const see = async()=>{
-        //     await fetch('http://localhost:5001/api/v1/messages')
-        //   .then((resp) => resp.json())
-        //   .then((json) => {
-            
 
-        //     // setData(json)
-        //     setMessages(json)
-        //     // setMessages(messages => [...messages, json[0]  ]);
-        
-        //     console.log("speciallllll===============================l");
-        //     console.log(json);
-        
-        // })
-        //   .catch((error) => console.error(error));
+        const see = async()=>{
+
         const json = await getMessages(roomid)
         const tech_name = await getUserById(tech_id)
         const emp_name = await getUserById(p2)
@@ -126,22 +94,6 @@ export const SubChat = ({ navigation, route }) => {
 
     }, []);
 
-    // const connectApi = async () => {
-    //     try {
-
-    //         const response0 = await fetch(connection_api, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             }
-    //         });
-    //         const data0 = await response0.json();
-    //         console.log("init success");
-
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
 
     function joinRoom() {
         console.log("guy joining");
@@ -220,25 +172,6 @@ export const SubChat = ({ navigation, route }) => {
                     renderItem={renderItem}
                     keyExtractor={(item, index) => index.toString()}
                 />
-
-
-
-
-
-                {/* <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.input}
-                        value={tomessage}
-                        onChangeText={(text) => set_tomessage(text)}
-                        placeholder="Type a message..."
-                        multiline={true}
-                    // onSubmitEditing={handleSend}
-                    />
-                    <Button
-                        title="Send"
-                        onPress={handleSend}
-                    />
-                </View> */}
 
 
                 <View style={styles.inputContainer}>
