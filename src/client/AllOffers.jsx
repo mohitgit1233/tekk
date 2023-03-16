@@ -112,7 +112,21 @@ const AllOffers = (props) => {
               <Image style={styles.postImage} source={jobData.images ? { uri: jobData.images[0] }:{uri:"https://dummyimage.com/600x400/666666/c4c4c4&text=No+Image+found"}} />
               <Text style={styles.postDescription}>{jobData.description}</Text>
               {/* <Text style={styles.postDate}>{Moment(jobData.posted_date).format('D MMMM YYYY')}</Text> */}
-    
+              
+              <View style={styles.labeltextwrap}>
+
+              <View style={styles.labeltextout}>
+              <Text style={styles.label}>Prefer date :</Text>
+              <Text style={styles.postText}> {Moment(jobData.prefer_start_date).format('D MMMM YYYY')}</Text>
+              </View>
+
+              <View style={styles.labeltextout}>
+              <Text style={styles.label}>Budget :</Text>
+              <Text style={styles.postText}> ${(jobData.max_cost)}</Text>
+              </View>
+
+              </View>
+
             </View>
             <ScrollView >
     {filteredData.map((post) => {
@@ -237,6 +251,34 @@ const styles = StyleSheet.create({
       marginRight: 10,
       marginBottom:10
     },
+    labeltextwrap:{
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'space-between',
+    marginTop:10,
+    marginBottom:10
+
+  },labeltextout:{
+    flexDirection:'column',
+    justifyContent:'space-between',
+   borderWidth:1,
+    borderRadius:5,
+    margin:5
+  },
+  label:{
+    width:150,
+    fontSize:15,
+    color:'#0D937D',
+    fontWeight:'bold',
+    textAlign:'center',
+    textTransform:'uppercase',
+    marginBottom:10,
+    marginTop:10
+  },postText:{
+      fontSize:15,
+      textAlign:'center',
+      marginBottom:10,
+  }
   })
 
 export default AllOffers
