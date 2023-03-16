@@ -261,7 +261,7 @@ export const SubChat = ({ navigation, route }) => {
                             <Text
                             style={styles.suggestion}
                             onPress={() => set_tomessage(reply)}
-                            key={reply}
+                            
                             >
                                 {reply}
                             </Text>
