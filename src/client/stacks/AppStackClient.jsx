@@ -90,7 +90,7 @@ export const TabStack = () => {
               color={color}
             />
           );
-        }else if (route.name === 'Requests') {
+        }else if (route.name === 'Offers') {
             return (
               <Ionicons
                 name={'briefcase'}
@@ -110,7 +110,7 @@ export const TabStack = () => {
           headerRight: () => <NotificationBell />, 
         }} />
       
-      <Tab.Screen name="Requests" component={Offers} options={{
+      <Tab.Screen name="Offers" component={Offers} options={{
           headerRight: () => <NotificationBell />, 
         }} />
       

@@ -34,9 +34,10 @@ const Offers = () => {
       setData(json)
     }
     see()
+    return unsubscribe;
   }, [navigation]);
 
-     const filteredData = data.filter(post => post.status === 'offered' && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
+     const filteredData = data.filter(post => post.status === 'offered' && post.title.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date));
 
      console.log(filteredData)
 
@@ -60,11 +61,13 @@ const Offers = () => {
           return (
             <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}>
               <View style={styles.postContainer}>
-              <Image source={{ uri: post.images[0] }} />
+              <Image source={{ uri:  post.images[0] }} style={{  width: 150,height: 100,marginRight: 10,borderRadius: 10 }} />
+                <View>
                 <Text style={styles.postTitle}>{post.title}</Text>
                 <Text style={styles.postDate}>{Moment(post.posted_date).format('D MMMM YYYY')}</Text>
-                <Text style={styles.postDescription}>{post.description}</Text>
-                
+                <Text style={styles.postDescription}>{post.description.length > 20 ? post.description.split(' ').slice(0, 8).join(' ') + '......'  : post.description.split(' ').slice(0, 8).join(' ')}</Text>
+                <Text style={styles.OfferCount}>{post.countOffer} offers</Text>
+                </View>
               </View>
             </TouchableOpacity>
           );
@@ -91,34 +94,43 @@ const styles = StyleSheet.create({
         gap:20,
         padding: 10,
       },
+      OfferCount:{
+        color:'#0D937D',
+        fontSize:16,
+        borderWidth:1,
+        borderRadius:5,
+        maxWidth:80,
+        textAlign:'center',
+        borderColor:'#0D937D'
+      },
     searchContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginVertical: 10,
-      paddingHorizontal: 10,
-      backgroundColor: '#FFFFFF',
-      borderRadius: 5,
+      backgroundColor:'white',
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      margin:10,
+      borderWidth:0.5,
+      borderColor:'#074A3F'
     },
     searchIcon: {
       marginRight: 10,
     },
     searchInput: {
       flex: 1,
-      height: 40,
+      fontSize: 16,
     },
     postContainer: {
-      backgroundColor: '#FFFFFF',
-      borderRadius: 10,
-      padding: 20,
-      marginBottom: 20,
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
+      flexDirection: 'row',
+  paddingBottom:15,
+  paddingTop:15,
+  paddingLeft:5,
+  paddingRight:5,
+  borderBottomWidth: 1,
+  borderBottomColor: '#ccc',
+  backgroundColor:'#F9F8F5',
+ 
+   
     },
     postContainerP: {
       width: '100%'
@@ -126,11 +138,12 @@ const styles = StyleSheet.create({
     postTitle: {
       fontSize: 20,
       fontWeight: 'bold',
-      marginBottom: 10,
+     
     },
     postDescription: {
       fontSize: 16,
       marginBottom: 10,
+      maxWidth:190
     },
   
   })

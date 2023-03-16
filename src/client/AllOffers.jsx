@@ -97,7 +97,13 @@ const AllOffers = (props) => {
 
   }
   return (
+    <ScrollView
+   style={{ flex: 1 }}
+   contentContainerStyle={{ flexGrow: 1 }}
+>
+
     <View>
+      
        <View style={styles.jobPostContainer}>
               
               <Text style={styles.jobPostTitle}>{jobData.title}</Text>
@@ -106,6 +112,7 @@ const AllOffers = (props) => {
               {/* <Text style={styles.postDate}>{Moment(jobData.posted_date).format('D MMMM YYYY')}</Text> */}
     
             </View>
+            <ScrollView >
     {filteredData.map((post) => {
         Moment.locale('en');
         return (
@@ -141,10 +148,12 @@ const AllOffers = (props) => {
             </View>
             
         </View>
-
+      
         );
       })}
+      </ScrollView>
       </View>
+      </ScrollView>
   )
 }
 const styles = StyleSheet.create({

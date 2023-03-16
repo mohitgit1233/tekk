@@ -23,24 +23,33 @@ export const JobPosts = () => {
     //   .then((resp) => resp.json())
     //   .then((json) => setData(json))
     //   .catch((error) => console.error(error));
+    const unsubscribe = navigation.addListener('focus', () => {
+      const see =  async () => {
+        const json = await getJobs()
+        setData(json)
+      }
+      see()
+    });
+    console.log('here')
     const see =  async () => {
       const json = await getJobs()
       setData(json)
     }
     see()
-  }, []);
+    return unsubscribe;
+  }, [navigation]);
 
   const filteredData = data.filter(
     (post) =>
       (post.status === 'new job') &&
       post.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  ).sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date));
 
   const navigation = useNavigation();
 
   return (
     <>
-      <Box bg="white" height="100%">
+      <Box bg="#F9F8F5" height="100%">
         <View style={styles.header}>
           <View style={styles.searchContainer}>
             <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
@@ -72,7 +81,7 @@ export const JobPosts = () => {
 
 
                       </View>
-                      <Text style={styles.postDescription}>{post.description}</Text>
+                      <Text style={styles.postDescription}>{post.description.length > 20 ? post.description.split(' ').slice(0, 8).join(' ') + '......'  : post.description.split(' ').slice(0, 8).join(' ')}</Text>
                     </View>
                   </View>
                 </View>
@@ -88,7 +97,7 @@ export const JobPosts = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F9F8F5',
     padding: 10,
   },
   header: {
@@ -102,13 +111,13 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 5,
-    height: 40,
-    flex: 1,
-    marginRight: 10,
+  alignItems: 'center',
+  backgroundColor:'white',
+  paddingHorizontal: 16,
+  paddingVertical: 8,
+  margin:10,
+  borderWidth:0.5,
+  borderColor:'#074A3F'
   },
   searchIcon: {
     marginRight: 10,
@@ -118,7 +127,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   postContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'white',
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
@@ -151,8 +160,8 @@ const styles = StyleSheet.create({
   },
   postDescription: {
     fontSize: 16,
-    marginBottom: 10,
-    flex: 1
+  marginBottom: 5,
+  maxWidth:190,
   },
   postDate: {
     fontSize: 14,

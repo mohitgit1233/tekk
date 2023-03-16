@@ -183,14 +183,14 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   postTitle: {
-  fontSize: 18,
+  fontSize: 20,
   fontWeight: 'bold',
 
   },
   postDescription: {
   fontSize: 16,
   marginBottom: 5,
-  maxWidth:210,
+  maxWidth:190,
 
   },
   postDate: {
@@ -198,7 +198,16 @@ const styles = StyleSheet.create({
     marginBottom:5
   },
   postStatus: {
-  fontSize: 14,
+   
+      color:'#0D937D',
+      fontSize:14,
+      borderWidth:1,
+      borderRadius:5,
+      maxWidth:100,
+     
+      textAlign:'center',
+      borderColor:'#0D937D',
+    
   
   textTransform:'uppercase'
   },
