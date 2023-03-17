@@ -73,9 +73,7 @@ export const Registration = () => {
                     </HStack>
                   </Radio.Group>
               </FormControl>
-              <Button onPress={handleSignUp} mt="2" colorScheme="indigo">
-                Sign Up
-              </Button>
+              <Button onPress={handleSignUp} mt="2" colorScheme="indigo" title="Sign Up"></Button>
               <HStack mt="6" justifyContent="center">
               <Text fontSize="sm" color="coolGray.600" _dark={{
               color: "warmGray.200"

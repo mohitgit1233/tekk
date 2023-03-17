@@ -4,7 +4,8 @@ import React from 'react'
 const Splash = () => {
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/tekklogo.jpeg')} style={styles.logo} />
+      <Image source={require('../assets/spl.gif')} style={styles.logo} />
+      {/* <Image source={require('../assets/teklogo.png')} style={styles.logo} /> */}
       {/* <Text style={styles.title}>Tekk</Text> */}
     </View>
   )
@@ -20,12 +21,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   logo: {
-    width: 100,
-    height: 100,
+    margin: 200,
+   padding:200,
+   width:400
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginTop: 20,
   },
+  
 });

@@ -72,6 +72,7 @@ export const AuthContextProvider = ({ children }) => {
         createUser,
         user,
         setUser,
+        setgoogleAuthentication,
         logout,
         signIn,
         setToken,

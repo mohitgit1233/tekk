@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
 import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import { getOffersByJobId,getJobById,acceptOffer, createRoom } from '../../services/api';
+import { UserAuth } from '../context/AuthContext';
 
-const AllOffers = () => {
 
-    const emp_id = '63f1b9adcf55c1d5b65f58ad'
+const AllOffers = (props) => {
+  const { user } = UserAuth();
+    // const emp_id = '63f1b9adcf55c1d5b65f58ad'
+  const [jobData,setJobData] = useState([])
     const [data, setData] = useState([]);
     const[accept_id,SetAcceptID] = useState('')
   const [searchTerm, setSearchTerm] = useState('');
@@ -17,14 +21,28 @@ const AllOffers = () => {
   const { id } = params;
     const navigation = useNavigation()
  
-  const url = `http://localhost:5001/api/v1/job/${id}/offers`;
+  // const url = `http://localhost:5001/api/v1/job/${id}/offers`;
 
   useEffect(() => {
-    fetch(url)
-      .then((resp) => resp.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error));
-      
+    // fetch(url)
+    //   .then((resp) => resp.json())
+    //   .then((json) => setData(json))
+    //   .catch((error) => console.error(error));
+    const fetchDataJob = async () => {
+      const JobData = await getJobById(id);
+      setJobData(JobData);
+      };
+      fetchDataJob();
+
+    const fetchData = async () => {
+    const offersData = await getOffersByJobId(id);
+    console.log("chekkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    
+    setData(offersData);
+    };
+    fetchData();
+    
+    
   }, []);
 
 //   const showToast = () => {
@@ -37,64 +55,118 @@ const AllOffers = () => {
      const filteredData = data
     console.log(data)
 
-    const handleClick = (pid,teid) =>{
+    const handleClick = async (pid,teid) =>{
         console.log(pid)
             const offer = {
                 technician_id:teid,
-                employer_id:emp_id,
+                employer_id:user._id,
                 offer_id: pid,
                 jobID:id       
             };
 
-            fetch(`http://localhost:5001/api/v1/offers/${pid}/accept`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(offer)
-            })
-            .then((response) => {response.json()
-            console.log(response)
-            useEffect
-            })
-            .catch(error => console.error(error));
+            // fetch(`http://localhost:5001/api/v1/offers/${pid}/accept`, {
+            //   method: 'POST',
+            //   headers: { 'Content-Type': 'application/json' },
+            //   body: JSON.stringify(offer)
+            // })
+            // .then((response) => {response.json()
+            // console.log(response)
+            // useEffect
+            // })
+            // .catch(error => console.error(error));
+
+            const data1 = await acceptOffer(id,offer);
+
             navigation.goBack();
     }
+    const goToChatRoom = async (jid,tid,eid) =>{
+      console.log("IMPPPPPPPPPMIMPPPPPPPPPPP");
+      console.log(jid,tid,eid);
+        const obj = {
+          "technician": tid,
+          "employer": eid,
+          "job": jid
+      }
+     
+          const json = await createRoom(null,obj);
+
+          console.log("asskjdkjldaskdsajlkdasjkldasjklsadjkldas created room");
+
+          navigation.navigate('SubChatClient',   { propValue: json._id, p2: tid , roomid: json._id , job_id: jid });
+
+  }
   return (
-    <>
-    {filteredData.map((post) => {
-        Moment.locale('en');
+    <ScrollView
+   style={{ flex: 1 }}
+   contentContainerStyle={{ flexGrow: 1 }}
+>
+
+    <View>
+      
+       <View style={styles.jobPostContainer}>
+              
+              <Text style={styles.jobPostTitle}>{jobData.title}</Text>
+              <Image style={styles.postImage} source={jobData.images ? { uri: jobData.images[0] }:{uri:"https://dummyimage.com/600x400/666666/c4c4c4&text=No+Image+found"}} />
+              <Text style={styles.postDescription}>{jobData.description}</Text>
+              {/* <Text style={styles.postDate}>{Moment(jobData.posted_date).format('D MMMM YYYY')}</Text> */}
+              
+              <View style={styles.labeltextwrap}>
+
+              <View style={styles.labeltextout}>
+              <Text style={styles.label}>Prefer date :</Text>
+              <Text style={styles.postText}> {Moment(jobData.prefer_start_date).format('D MMMM YYYY')}</Text>
+              </View>
+
+              <View style={styles.labeltextout}>
+              <Text style={styles.label}>Budget :</Text>
+              <Text style={styles.postText}> ${(jobData.max_cost)}</Text>
+              </View>
+
+              </View>
+
+            </View>
+            <ScrollView >
+    { filteredData.length > 0 && filteredData.map((post) => {
+        //Moment.locale('en');
         return (
          
             <View key={post._id} style={styles.postContainer}>
+              <View>
+
+              
                 <View style={styles.postTitle}>
-                  <Text style={styles.postTitle}>Name :{post.technician_who_offered.name}</Text>
+                  <Text style={styles.postTitle}>{post.technician_who_offered.name}</Text>
                   <Text style={styles.postSubtitleText}>Estimated Hours:{post.offerHours}</Text>
                   <Text style={styles.postSubtitleText}>Estimated Price:{post.offerPrice}</Text>
                   <Text style={styles.postSubtitleText}>Start date:{Moment(post.prefer_start_date).format('D MMMM YYYY')}</Text>
-                </View>
-
-            <View style={{display:'flex',flexDirection:'row', justifyContent:'center'}}>
-             <Button style={{margin:10}}
-                title="Accept"
-                onPress={() => {handleClick(post._id,post.technician_who_offered._id)}}
+                  <TouchableOpacity style={{marginTop:10}}
+                title="Chat"
+                onPress={() => {goToChatRoom(id,post.technician_who_offered._id, user._id)}}
                 //   jobId={jobId}
-                >Accept</Button>
-                <Button style={{margin:10}}
+                ><Text style={{textDecorationLine:'underline',textAlign:'left',color:'#0D937D'}}>Start Negotiation</Text></TouchableOpacity>
+                </View>
+                </View>
+            <View style={{display:'flex',flexDirection:'row', justifyContent:'center'}}>
+             
+                <TouchableOpacity style={{margin:10}}
                 title="Decline"
                 // onPress={() => {handleClick(post._id,post.technician_who_offered._id)}}
                 //   jobId={jobId}
-                >Decline</Button>
-                <Button style={{margin:10}}
-                title="Chat"
-                // onPress={() => {handleClick(post._id,post.technician_who_offered._id)}}
+                ><AntDesign name="closecircle" size={44} color="#FF0C0C" /></TouchableOpacity>
+              <TouchableOpacity style={{margin:10}}
+                title="Accept"
+                onPress={() => {handleClick(post._id,post.technician_who_offered._id)}}
                 //   jobId={jobId}
-                >Chat</Button>
+                ><AntDesign name="checkcircle" size={44} color="#0D937D" /></TouchableOpacity>
             </View>
-        
+            
         </View>
-
+      
         );
       })}
-      </>
+      </ScrollView>
+      </View>
+      </ScrollView>
   )
 }
 const styles = StyleSheet.create({
@@ -102,7 +174,17 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       padding: 10,
-    },filterContainer: {
+    },jobPostContainer:{
+      display:'flex',
+      flexDirection:'column',
+      justifyContent:'center',
+      alignItems:'center',
+      margin:20,
+      borderBottomWidth:1,
+      paddingBottom:10,
+      paddingTop:5
+    }
+    ,filterContainer: {
         justifyContent: 'center',
         alignItems: 'center',
         display:'flex',
@@ -128,6 +210,7 @@ const styles = StyleSheet.create({
     postContainer: {
       backgroundColor: '#FFFFFF',
       borderRadius: 10,
+      margin:20,
       padding: 20,
       marginBottom: 20,
       shadowColor: "#000",
@@ -138,22 +221,61 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
       elevation: 5,
+      display:'flex',
+      flexDirection:'row',
+      justifyContent:'space-between',
+      alignItems:'center'
+
+    },
+    jobPostTitle:{
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginBottom: 10,
     },
     postTitle: {
       fontSize: 20,
       fontWeight: 'bold',
       marginBottom: 10,
+      color:'#0D937D'
     },
     postDescription: {
       fontSize: 16,
       marginBottom: 10,
     },
     postImage: {
-      width: 50,
-      height: 50,
+      width: 300,
+      height: 200,
       marginRight: 10,
-      borderRadius: 25,
+      marginBottom:10
     },
+    labeltextwrap:{
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'space-between',
+    marginTop:10,
+    marginBottom:10
+
+  },labeltextout:{
+    flexDirection:'column',
+    justifyContent:'space-between',
+   borderWidth:1,
+    borderRadius:5,
+    margin:5
+  },
+  label:{
+    width:150,
+    fontSize:15,
+    color:'#0D937D',
+    fontWeight:'bold',
+    textAlign:'center',
+    textTransform:'uppercase',
+    marginBottom:10,
+    marginTop:10
+  },postText:{
+      fontSize:15,
+      textAlign:'center',
+      marginBottom:10,
+  }
   })
 
 export default AllOffers

@@ -4,6 +4,8 @@ import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { clockIn, clockOut } from '../../../services/api';
+import Toast from 'react-native-toast-message';
 
 const ClockInOut = (props) => {
     const [data, setData] = useState([]);
@@ -15,15 +17,15 @@ const ClockInOut = (props) => {
   let filteredData = []
  
   
-  const url = `http://localhost:5001/api/v1/jobs/${props.emp_id}/clockin`;
+  // const url = `http://localhost:5001/api/v1/jobs/${props.emp_id}/clockin`;
    
-  const url2 = `http://localhost:5001/api/v1/jobs/${props.emp_id}/clockout`;
+  // const url2 = `http://localhost:5001/api/v1/jobs/${props.emp_id}/clockout`;
 //   useEffect(() => {
 
    
 //   }, []);
 
-const handleClick = () =>{
+const handleClick = async () =>{
    
         const offer = {
           id:props.emp_id ,
@@ -32,48 +34,67 @@ const handleClick = () =>{
 
         };
 
-        fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(offer)
-        })
-        .then((response) => {response.json()
-        console.log(response)
+        // fetch(url, {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify(offer)
+        // })
+        // .then((response) => {response.json()
+        // console.log(response)
+        // setClockStatus('Clocked in')
+        // })
+        // .catch(error => console.error(error));
+        const json = await clockIn(props.emp_id, offer)
         setClockStatus('Clocked in')
-        })
-        .catch(error => console.error(error));
-      
+        Toast.show({
+          type: 'success',
+          text1: 'Clock in successfully!',
+          visibilityTime: 1000,
+          position:'bottom',
+          autoHide: true,
+        });
 }
 
-const handleClick2 = () =>{
+const handleClick2 = async () =>{
    
     const offer = {
       id:props.emp_id      
     };
 
-    fetch(url2, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(offer)
-    })
-    .then((response) => {response.json()
-    console.log(response)
+    // fetch(url2, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(offer)
+    // })
+    // .then((response) => {response.json()
+    // console.log(response)
+    // setClockStatus('Clocked out')
+    // })
+    // .catch(error => console.error(error));
+    const json = await clockOut(props.emp_id, offer)
     setClockStatus('Clocked out')
-    })
-    .catch(error => console.error(error));
+    Toast.show({
+      type: 'success',
+      text1: 'Clock out successfully!',
+      visibilityTime: 1000,
+      position:'bottom',
+      autoHide: true,
+    });
    
 }
 
   return (
     <Box  >
-  <Button mb={'5'}
+  <Button mb={'5'} bgColor={'#0D937D'} width='300'
   onPress={() => {handleClick()}}
-  >Clock in</Button>
+  title='Clock in'
+  ></Button>
 
-  <Button
-  onPress={() => {handleClick2()}}>Clock out</Button>
+  <Button mb={'5'} bgColor={'#0D937D'}
+  onPress={() => {handleClick2()}} title="Clock out"></Button>
 
   <Text>{clockStatus}</Text>
+  <Toast ref={(ref) => Toast.setRef(ref)} />
     </Box>
   )
 }

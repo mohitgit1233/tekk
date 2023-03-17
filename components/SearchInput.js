@@ -16,7 +16,7 @@ const SearchInput = ({ onChangeTextAction }) => {
             as={<MaterialIcons name="search" />}
             size={5}
             ml="2"
-            color="muted.400"
+            color="red"
           />
         }
         onChangeText={(text) => onChangeAction(text)}

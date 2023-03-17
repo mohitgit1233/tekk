@@ -1,32 +1,45 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState , useContext} from 'react'
 import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
 import Moment from 'moment';
-import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
+import { StyleSheet, TouchableOpacity,TextInput, Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { getJobsByEmployerId } from '../../services/api';
+import { UserAuth } from '../context/AuthContext';
+
 //Requests
 const Offers = () => {
-    const [data, setData] = useState([]);
+  const { user } = UserAuth();
+  const [data, setData] = useState([]);
     const navigation = useNavigation();
   const [searchTerm, setSearchTerm] = useState('');
   // const [postStatus, setpostStatus] = useState('all')
   
  
-  const url = 'http://localhost:5001/api/v1/employer/63f1b9adcf55c1d5b65f58ad/jobs';
 
-  useEffect(() => {
-    fetch(url)
-      .then((resp) => resp.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error));
-      
-  }, []);
+  useEffect( () => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      const see = async ()=>{
+        const json = await getJobsByEmployerId(user._id)
+        setData(json)
+      }
+      see()
+    });
+    // fetch(url)
+    //   .then((resp) => resp.json())
+    //   .then((json) => setData(json))
+    //   .catch((error) => console.error(error));
+    const see = async ()=>{
+      const json = await getJobsByEmployerId(user.id)
+      setData(json)
+    }
+    see()
+    return unsubscribe;
+  }, [navigation]);
+    // changed here
+     const filteredData = !data && data.filter(post => post.status === 'offered' && post.title.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date));
 
-     const filteredData = data.filter(post => post.status === 'offered' && post.title.toLowerCase().includes(searchTerm.toLowerCase()));
-
-
-  
-  console.log(data)
+     console.log(filteredData)
 
   return (
     <Box bg="white" height="100%">
@@ -43,16 +56,18 @@ const Offers = () => {
       <ScrollView contentContainerStyle={styles.container}>
         {
         filteredData.length > 0 ? <>
-        {filteredData.map((post) => {
+        { filteredData.map((post) => {
           Moment.locale('en');
           return (
             <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('AllOffers', {id: post._id})}>
               <View style={styles.postContainer}>
-              <Image style={styles.postImage} source={{ uri: post.picture }} />
+              <Image source={{ uri:  post.images[0] }} style={{  width: 150,height: 100,marginRight: 10,borderRadius: 10 }} />
+                <View>
                 <Text style={styles.postTitle}>{post.title}</Text>
-                <Text style={styles.postDescription}>{post.description}</Text>
                 <Text style={styles.postDate}>{Moment(post.posted_date).format('D MMMM YYYY')}</Text>
-                <Text style={styles.postDescription}>{post.status}</Text>
+                <Text style={styles.postDescription}>{post.description.length > 20 ? post.description.split(' ').slice(0, 8).join(' ') + '......'  : post.description.split(' ').slice(0, 8).join(' ')}</Text>
+                <Text style={styles.OfferCount}>{post.countOffer} offers</Text>
+                </View>
               </View>
             </TouchableOpacity>
           );
@@ -79,34 +94,43 @@ const styles = StyleSheet.create({
         gap:20,
         padding: 10,
       },
+      OfferCount:{
+        color:'#0D937D',
+        fontSize:16,
+        borderWidth:1,
+        borderRadius:5,
+        maxWidth:80,
+        textAlign:'center',
+        borderColor:'#0D937D'
+      },
     searchContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginVertical: 10,
-      paddingHorizontal: 10,
-      backgroundColor: '#FFFFFF',
-      borderRadius: 5,
+      backgroundColor:'white',
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      margin:10,
+      borderWidth:0.5,
+      borderColor:'#074A3F'
     },
     searchIcon: {
       marginRight: 10,
     },
     searchInput: {
       flex: 1,
-      height: 40,
+      fontSize: 16,
     },
     postContainer: {
-      backgroundColor: '#FFFFFF',
-      borderRadius: 10,
-      padding: 20,
-      marginBottom: 20,
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
+      flexDirection: 'row',
+  paddingBottom:15,
+  paddingTop:15,
+  paddingLeft:5,
+  paddingRight:5,
+  borderBottomWidth: 1,
+  borderBottomColor: '#ccc',
+  backgroundColor:'#F9F8F5',
+ 
+   
     },
     postContainerP: {
       width: '100%'
@@ -114,18 +138,14 @@ const styles = StyleSheet.create({
     postTitle: {
       fontSize: 20,
       fontWeight: 'bold',
-      marginBottom: 10,
+     
     },
     postDescription: {
       fontSize: 16,
       marginBottom: 10,
+      maxWidth:190
     },
-    postImage: {
-      width: 50,
-      height: 50,
-      marginRight: 10,
-      borderRadius: 25,
-    },
+  
   })
 
 export default Offers

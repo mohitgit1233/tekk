@@ -3,13 +3,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {AspectRatio,Box,Button,HStack,Image,Text,VStack} from 'native-base';
-import SearchFilter from '../../../components/SearchFilter';
+// import SearchFilter from '../../../components/SearchFilter';
 import SearchInput from '../../../components/SearchInput';
 import JobContainer from '../../technician/container/JobContainer';
 import MyPosts from '../myPosts';
 import Offers from '../Offers';
 
-import AllChats from '../allChats';
+import {AllChats} from '../allChats';
 //client account actually (pass a prop) (reusing technician screen)
 import { Account } from '../../technician/screens/Account'
 import AllOffers from '../AllOffers';
@@ -18,6 +18,10 @@ import PostDetails from '../PostDetails';
 import TechnicianProfile  from '../TechnicianProfile';
 import { Login } from '../../login/Login'
 import NotificationPage from '../../reusable screens/NotificationPage';
+import NotificationBell from '../../reusable screens/NotificationBell';
+
+import  { SubChatClient } from '../SubChatClient'
+// import NotificationBell from '../../reusable screens/NotificationBell';
 
 
 const Stack = createNativeStackNavigator();
@@ -38,11 +42,13 @@ export const AppStackClient = ({navigation}) => {
      <Stack.Screen name='Search' component={SearchInput}></Stack.Screen>
      <Stack.Screen name='JobContainer' component={JobContainer}></Stack.Screen>
      <Stack.Screen name='AllOffers' component={AllOffers}></Stack.Screen>
-     <Stack.Screen name='CreatePost' component={CreatePost}></Stack.Screen>
+     <Stack.Screen name='Create Post' component={CreatePost}></Stack.Screen>
      <Stack.Screen name='MyPosts' component={MyPosts}></Stack.Screen>
      <Stack.Screen name='PostDetails' component={PostDetails}></Stack.Screen>
      <Stack.Screen name='Profile' component={TechnicianProfile}></Stack.Screen>
      <Stack.Screen name='Notifications' component={NotificationPage}></Stack.Screen>
+     <Stack.Screen name='SubChatClient' component={SubChatClient}  ></Stack.Screen>
+
 
      {/* <Stack.Screen name='Logout' component={Login}></Stack.Screen> */}
 
@@ -68,12 +74,13 @@ export const TabStack = () => {
         }
         else if (route.name === 'Chats') {
           return (
+         
             <Ionicons
               name={'chatbox'}
               size={size}
               color={color}
-            />
-          );
+              />
+          )
         }
         else if (route.name === 'Account') {
           return (
@@ -83,7 +90,7 @@ export const TabStack = () => {
               color={color}
             />
           );
-        }else if (route.name === 'Requests') {
+        }else if (route.name === 'Offers') {
             return (
               <Ionicons
                 name={'briefcase'}
@@ -94,15 +101,22 @@ export const TabStack = () => {
           }
       },
       tabBarInactiveTintColor: 'gray',
-      tabBarActiveTintColor: 'tomato',
+      tabBarActiveTintColor: '#0D937D',
+      
     })}
   >
       
-      <Tab.Screen name="Job Posts" component={MyPosts} />
+      <Tab.Screen name="Job Posts" component={MyPosts} options={{
+          headerRight: () => <NotificationBell />, 
+        }} />
       
-      <Tab.Screen name="Requests" component={Offers} />
+      <Tab.Screen name="Offers" component={Offers} options={{
+          headerRight: () => <NotificationBell />, 
+        }} />
       
-      <Tab.Screen name="Chats" component={AllChats} />
+      <Tab.Screen name="Chats" component={AllChats} options={{
+          headerRight: () => <NotificationBell />, 
+        }} />
       
       <Tab.Screen name="Account" component={Account} />
     

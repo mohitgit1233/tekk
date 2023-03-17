@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, Button,ScrollView,FlatList, TouchableOpacity,Linking } from 'react-native';
 import Moment from 'moment';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { getJobById } from '../../../services/api';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const JobContainer = ({ job, refreshData }) => {
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
   const navigation = useNavigation();
   const [post, setPost] = useState(null);
   const { params } = useRoute();
@@ -11,10 +16,15 @@ const JobContainer = ({ job, refreshData }) => {
 
   console.log('in container',tech_id)
   useEffect(() => {
-    fetch(`http://localhost:5001/api/v1/jobs/${id}`)
-      .then((resp) => resp.json())
-      .then((json) => setPost(json))
-      .catch((error) => console.error(error));
+    // fetch(`http://localhost:5001/api/v1/jobs/${id}`)
+    //   .then((resp) => resp.json())
+    //   .then((json) => setPost(json))
+    //   .catch((error) => console.error(error));
+    const see = async () => {
+      const json = await getJobById(id)
+      setPost(json)
+    }
+    see()
   }, [id]);
 
   const handleSendOffer = () => {
@@ -26,35 +36,166 @@ const JobContainer = ({ job, refreshData }) => {
   }
 
   return (
+    <ScrollView>
     <View style={styles.container}>
-      <Image style={styles.postImage} source={{ uri: post.picture }} />
-      <Text style={styles.postDescription}>{post.title}</Text>
-      <Text style={styles.postDescription}>{post.description}</Text>
-      <Text style={styles.postDescription}>Posted: {Moment(post.posted_date).format('d/MM/YYYY')}</Text>
-      <Text style={styles.postDescription}>Prefered Start: {Moment(post.prefer_start_date).format('d/MM/YYYY')}</Text>
-      <Button title="Send Offer" onPress={handleSendOffer} />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
+      <Text style={styles.postTitle}>{post.title}</Text>
+      <Text style={styles.postDate}>Posted: {Moment(post.posted_date).format('D/MM/YYYY')}</Text>
+      <ScrollView horizontal={true} style={styles.imageCarousel}>
+        {post.images.map((image, index) => (
+          <Image key={index} source={{ uri: image }} style={styles.image} />
+        ))}
+      </ScrollView>
+      <View style={styles.postDetails}>
+        <Text style={styles.postDescription}>{post.description}</Text>
+        
+        <View style={styles.labeltextwrap}>
+  <View style={styles.labeltextout}>
+    <Text style={styles.label}>Location:</Text>
+
+    <View style={{maxWidth:100, display:'flex',flexDirection:'row'}}>
+    <Text style={styles.postText}> {post.location}</Text>
+    <TouchableOpacity onPress={() => {
+        // use Linking from react-native to open map app with the given location
+        Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${post.location}`)
+      }}>
+      <MaterialIcons name="directions" size={24} color="black" />
+    </TouchableOpacity>
     </View>
+  </View>
+
+              
+              <View style={styles.labeltextout}>
+              <Text style={styles.label}>Preferred Start Date:</Text>
+              <Text style={styles.postText}> {Moment(post.prefer_start_date).format('D/MM/YYYY')}
+</Text>
+              </View>
+
+       
+        </View>
+
+
+      </View>
+      
+      
+      <TouchableOpacity style={styles.sendOfferButton} onPress={handleSendOffer}>
+        <Text style={styles.sendOfferButtonText}>Send a Quote</Text>
+      </TouchableOpacity>
+      {/* <Button title="Go back" onPress={() => navigation.goBack()} /> */}
+    </View>
+    </ScrollView>
   );
+  
+  
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    padding: 10,
+    // flex: 1,
+    backgroundColor: '#F9F9F9',
+    padding: 30,
+   
+  },
+  postDate: {
+    fontSize: 14,
+    textAlign:'left'
+    ,marginBottom:20
+  },
+  postTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginTop: 10,
+   
+    width:"100%",
+    alignItems: 'flex-start',
+    
+  },
+  imageCarousel: {
+    borderRadius: 10,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  image: {
+    width: 350,
+    height: 200,
+    marginRight: 10,
+  },
+  postDetails: {
+    width: '100%',
+    alignItems: 'flex-start',
+    marginBottom: 10,
   },
   postDescription: {
     fontSize: 18,
-    marginBottom: 10,
+  
   },
-  postImage: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-    borderRadius: 25,
+  sendOfferButton: {
+    backgroundColor: '#0D937D',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    // borderRadius: 30,
+    marginTop: 10,
+    marginBottom: 20,
+    width:'100%'
   },
+  sendOfferButtonText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },labeltextwrap:{
+    display:'flex',
+    flexDirection:'column',
+    marginTop:10,
+    
+   
+  
+  },labeltextout:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'flex-start',
+    borderWidth:1,
+    borderRadius:5,
+    marginTop:10,
+    padding:20,
+    textAlign:'left',
+    
+  },
+  label:{
+    width:130,
+    fontSize:18,
+    color:'#0D937D',
+    fontWeight:'bold'
+  },
+  postText:{
+      fontSize:17,
+      
+  },
+  labeltextwrap:{
+    display:'flex',
+    flexDirection:'column',
+    marginTop:10,
+    justifyContent:'space-between',
+    width:'100%'
+  },
+  labeltextout:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'flex-start',
+    borderWidth:1,
+    borderRadius:5,
+    marginTop:10,
+    padding:20,
+    textAlign:'left',
+    
+  },
+  label:{
+    width:130,
+    fontSize:18,
+    color:'#0D937D',
+    fontWeight:'bold'
+  },postText:{
+      fontSize:17,
+  
+  }
 });
-
 export default JobContainer;

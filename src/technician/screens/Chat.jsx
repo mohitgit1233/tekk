@@ -1,138 +1,159 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView } from 'react-native';
 
-const connection_api = 'http://192.168.5.131:3000/connection';
-const message_api = 'http://192.168.5.131:3000/message';
+import React, { useState, useEffect,useContext } from 'react';
+import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView,TouchableOpacity, ScrollView,Image } from 'react-native';
+import { SubChat }  from './SubChat'
+import { useNavigation } from '@react-navigation/native';
+import { getRooms } from '../../../services/api';
+import { Box, Center, NativeBaseProvider } from "native-base";
+import { AntDesign } from '@expo/vector-icons';
+import { UserAuth } from '../../context/AuthContext';
+// const connection_api = 'http://192.168.5.131:3000/connection';
+// const message_api = 'http://192.168.5.131:3000/message';
 
 export const Chat = ({navigation}) => {
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
-  const [sender, setSender] = useState("User");
+  const { user } = UserAuth();
+
+  const [data1, setData1] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
 
   useEffect(() => {
-    connectApi();
+    const getJobs = async()=>{
+      // await fetch("http://localhost:5001/api/v1/jobs")
+      // await fetch("http://localhost:5001/api/v1/rooms")
+      //    .then((resp) => resp.json())
+      //    .then((json) => {
+      //     console.log(json);
+      //     setData1(json)
+      //   })
+      //    .catch((error) => console.error(error));
+
+      const json = await getRooms()
+      console.log("DATA NEEDED");
+      console.log(json);
+      console.log(user._id);
+      const filteredArray = json != undefined && json.filter((item) => item.technician_id._id === user._id);
+
+      setData1(filteredArray)
+
+       }
+       getJobs()
   }, []);
 
-  const connectApi = async () => {
-    try {
-
-      const response0 = await fetch(connection_api,{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      const data0 = await response0.json();
-      console.log("init success");
-
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  const handleSend = async () => {
-    setMessages(prevMessages => [...prevMessages, { id: Date.now(), message: message, sender: sender }]);
-    try {
-      const response = await fetch(message_api, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ input: message }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      // Message sent successfully
-      console.log('Message sent successfully!');
-
-      // Clear the message input
-      setMessage('');
-      //set messages including chatgpt resp
-      const data1 = await response.json();
-      console.log(data1);
-      // setMessages([...messages, { id: Date.now(), message: data1.output, sender: "Chatgpt" }])
-      setMessages(prevMessages => [...prevMessages, { id: Date.now(), message: data1.output.trim(), sender: "Chatgpt" }]);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  const renderItem = ({ item }) => {
-    return (
-      <View style={styles.message}>
-        <Text style={styles.sender} >{item.sender}</Text>
-        <Text>{item.message}</Text>
-      </View>
-    );
+  const navigateToNotification = (kindof_prop1, p2, roomid , job_id) => {
+    console.log(kindof_prop1);
+    navigation.navigate('SubChat', { propValue: kindof_prop1, p2 , roomid, job_id  });
   };
 
   return (
-    <KeyboardAvoidingView
-    style={{ flex: 1 }}
-    behavior="padding"
-    keyboardVerticalOffset={64} // adjust this value as needed
-  >
-    <View style={styles.container}>
-      {/* <Text style={{ textAlign: "center", padding: "10%" }}>Ask Anything!</Text> */}
-      <FlatList
-        data={messages}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+    <Box bg="white" height="100%">
+    <View style={styles.searchContainer}>
+      <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search Chat"
+        onChangeText={(text) => setSearchTerm(text)}
+        value={searchTerm}
       />
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          value={message}
-          onChangeText={(text) => setMessage(text)}
-          placeholder="Type a message..."
-          multiline={true}
-          // onSubmitEditing={handleSend}
-        />
-        <Button
-          title="Send"
-          onPress={handleSend}
-        />
-      </View>
     </View>
-    </KeyboardAvoidingView>
+
+    <View style={styles.container}>
+      <Text style={styles.head}>Select Employer To Chat</Text>
+      {/* AI button */}
+      <TouchableOpacity
+            style={styles.postContainer}
+          >
+            <Image
+              source={{ uri: "https://fastly.picsum.photos/id/1/200/300.jpg?hmac=jH5bDkLr6Tgy3oAg5khKCHeunZMHq0ehBZr6vGifPLY" }}
+              style={styles.image}
+            />
+            <Text style={styles.postDescription}>
+              Ask AI
+            </Text>
+          </TouchableOpacity>
+      <FlatList
+        style={styles.list}
+        data={data1}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => (
+
+
+
+          <TouchableOpacity
+            style={styles.postContainer}
+            onPress={() =>
+              navigateToNotification(item._id, item.employer_id._id, item._id, item.job_id._id)
+            }
+          >
+            <Image
+              source={{ uri: item.job_id.images[0] }}
+              style={styles.image}
+            />
+            <View>
+              <Text style={styles.postDescription}>{item.job_id.title}</Text>
+              <Text style={styles.employerName}>Employer: {item.employer_id.name}</Text>
+            </View>
+          </TouchableOpacity>
+
+        )}
+      />
+    </View>
+  </Box>
+
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 10,
-  },
-  message: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    marginBottom: 5,
-  },
-  inputContainer: {
+  searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderTopWidth: 1,
-    borderColor: '#ccc',
-    paddingVertical: 10,
+    backgroundColor:'white',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    margin:10,
+    borderWidth:0.5,
+    borderColor:'#074A3F'
   },
-  input: {
-    flex: 1,
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    paddingHorizontal: 10,
+  searchIcon: {
     marginRight: 10,
   },
-  sender: {
-    // backgroundColor: "red"
-    color: "grey"
-  }
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    padding: 20,
+  },
+  head: {
+    fontSize: 30,
+    marginVertical: 10,
+  },
+  list: {
+    flex: 1,
+  },
+  postContainer: {
+    marginVertical: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    backgroundColor: "#F2F2F2",
+    borderRadius: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  image: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginRight: 10,
+  },
+  postDescription: {
+    fontSize: 18,
+  },
+  employerName: {
+    fontSize: 14,
+    marginTop: 5,
+  },
 });
 

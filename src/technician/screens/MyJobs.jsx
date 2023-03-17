@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
 import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
 import Moment from 'moment';
 import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
+import { getOffersByTechId } from '../../../services/api';
+import React, { useState, useEffect,useContext } from 'react';
 
-const tech_id = '63f17ce257353e03afc8f124'
+// const tech_id = '63f17ce257353e03afc8f124'
+import { UserAuth } from "../../context/AuthContext";
 
 export const MyJob = ({ navigation }) => {
-
+  const { user } = UserAuth();
   const data2 = [];
   const [data, setData] = useState([]);
   const [Offers,setOffers] = useState([]);
@@ -15,7 +18,7 @@ export const MyJob = ({ navigation }) => {
   const [searchTerm, setSearchTerm] = useState('');
   // const url = "http://localhost:5001/api/v1/jobs";
 
-  const urlOffer = `http://localhost:5001/api/v1/technician/${tech_id}/offers`
+  // const urlOffer = `http://localhost:5001/api/v1/technician/${tech_id}/offers`
 
   useEffect(() => {
     // const fetchData = async() =>{
@@ -31,14 +34,16 @@ export const MyJob = ({ navigation }) => {
     // fetchData()
 
     const fetchOfferData = async() =>{
-      try {
-        const response = await fetch(urlOffer);
-        const json = await response.json();
-        setOffers(json);
+      // try {
+      //   const response = await fetch(urlOffer);
+      //   const json = await response.json();
+      //   setOffers(json);
       
-      } catch (error) {
-        console.error(error);
-      }
+      // } catch (error) {
+      //   console.error(error);
+      // }
+      const json = await getOffersByTechId(user._id)
+      setOffers(json);
     }
     fetchOfferData()
   }, []);
@@ -58,12 +63,13 @@ export const MyJob = ({ navigation }) => {
   console.log(data2)
 
 
-  const filteredData = Offers.filter((post) => post.offerStatus === jobStatus  );
+  const filteredData = Offers !== undefined && Offers.filter((post) => post.offerStatus === jobStatus  ).sort((a, b) => new Date(b.prefer_start_date) - new Date(a.prefer_start_date));
 
   console.log('ddddd',filteredData.length)
   
   return (
-    <Box bg="white" height="100%">
+    <Box bg="#F9F9F9" height="100%">
+      <View style={styles.header}>
       <View style={styles.searchContainer}>
         <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
         <TextInput
@@ -73,31 +79,54 @@ export const MyJob = ({ navigation }) => {
           value={searchTerm}
         />
       </View>
+      </View>
       <View style={styles.filterContainer}>
-        <Button variant={jobStatus === 'ongoing' ? 'solid' : 'outline'} onPress={() => setJobStatus('ongoing')} mr={2} mb={2}>Ongoing</Button>
-        <Button variant={jobStatus === 'upcoming' ? 'solid' : 'outline'} onPress={() => setJobStatus('upcoming')} mr={2} mb={2}>Upcoming</Button>
-        <Button variant={jobStatus === 'pending' ? 'solid' : 'outline'} onPress={() => setJobStatus('pending')} mb={2}>Pending</Button>
+        <Button width={110}  variant={jobStatus === 'ongoing' ? 'solid' : 'outline'} onPress={() => setJobStatus('ongoing')} mr={2} mb={2}
+        style={jobStatus === 'ongoing' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>
+          <Text style={jobStatus === 'ongoing' ?{ color: '#F9F8F5', }: { color: '#0D937D', }}>
+            Ongoing
+            </Text>
+          </Button>
+        <Button width={110} variant={jobStatus === 'upcoming' ? 'solid' : 'outline'} onPress={() => setJobStatus('upcoming')} mr={2} mb={2}
+        style={jobStatus === 'upcoming' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>
+          <Text style={jobStatus === 'upcoming' ?{ color: '#F9F8F5', }: { color: '#0D937D', }}>
+        Upcoming
+        </Text></Button>
+        <Button width={110} variant={jobStatus === 'pending' ? 'solid' : 'outline'} onPress={() => setJobStatus('pending')} mb={2}
+        style={jobStatus === 'pending' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>
+          <Text style={jobStatus === 'pending' ?{ color: '#F9F8F5', }: { color: '#0D937D', }}>
+        Pending
+        </Text></Button>
       </View>
       <ScrollView contentContainerStyle={styles.container}>
        {filteredData.length > 0 ?  
         <>
-        {filteredData.map((post) => {
+        {filteredData.length > 0 && filteredData.map((post) => {
           Moment.locale('en');
           return (
             post.jobID === null ? (
-              <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
+              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
                 <View style={styles.postContainer}>
                   <Text>job id null. check backend</Text>
                 </View>
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity style={styles.postContainerP} key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
-                <View style={styles.postContainer}>
-                  <Image style={styles.postImage} source={{ uri: post.jobID.picture }} />
-                  <Text style={styles.postTitle}>{post.jobID.title}</Text>
-                  <Text style={styles.postDescription}>{post.jobID.description}</Text>
-                  <Text style={styles.postDate}>{Moment(post.jobID.posted_date).format('D MMMM YYYY')}</Text>
-                </View>
+              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
+              <View style={styles.postContainer}>
+  <View style={styles.postTitleContainer}>
+    <Image style={styles.postImage} source={{ uri: post.jobID.images[0] }} />
+    <View style={styles.postContent}>
+      <Text style={[styles.postTitle]}>{post.jobID.title}</Text>
+      <Text>
+        <Text style={{ fontWeight: 'bold' }}></Text>{' '}
+        {Moment(post.jobID.posted_date).format('M/DD/YYYY')}
+      </Text>
+      <Text style={styles.postDescription}>{post.jobID.description > 20 ? post.jobID.description.split(' ').slice(0, 9).join(' ') + '......'  : post.jobID.description.split(' ').slice(0, 11).join(' ')}</Text>
+    </View>
+  </View>
+</View>
+
+
               </TouchableOpacity>
             )
           );
@@ -109,9 +138,14 @@ export const MyJob = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#F9F9F9',
     padding: 10,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
   },
   filterContainer: {
     justifyContent: 'center',
@@ -124,48 +158,65 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 5,
+    backgroundColor:'white',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    margin:10,
+    borderWidth:0.5,
+    borderColor:'#074A3F'
   },
   searchIcon: {
     marginRight: 10,
   },
   searchInput: {
     flex: 1,
-    height: 40,
+    fontSize: 16,
   },
-  postContainer: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    padding: 20,
-    marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+  postTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
   },
-  postContainerP: {
-    width: '100%'
+  postImage: {
+    width: 150,
+    height: 100,
+    marginRight: 10,
+    borderRadius: 10
+  },
+  postContent: {
+    flex: 1
   },
   postTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   postDescription: {
     fontSize: 16,
     marginBottom: 10,
   },
-  postImage: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-    borderRadius: 25,
+  postDate: {
+    fontSize: 14,
+    color: '#888888',
   },
-})
+  postContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    elevation: 2,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+  },
+  
+  postTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  postTitleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+});
