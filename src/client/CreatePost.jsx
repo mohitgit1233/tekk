@@ -1,4 +1,4 @@
-import { useState,useContext } from 'react';
+import { useState,useContext,useEffect } from 'react';
 import {Box} from 'native-base'
 import { Button, TextInput, View,StyleSheet,Text,Image,FlatList , ScrollView, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -10,10 +10,43 @@ import { postJobs,pushToTechnicians } from '../../services/api';
 import AppContext from '../../AppContext';
 import * as ImagePicker from 'expo-image-picker';
 import { updateTechnicianImage, patchJobImages } from '../../services/api';
-import Toast from 'react-native-toast-message';
+// import Toast from 'react-native-toast-message';
+import { getMessages,getUserById, getCompletionsOpenAI, getJobById } from '../../services/api';
+
 // import { Picker } from '@react-native-picker/picker';
 const CreatePost = () => {
   // const [image, setImage] = useState(null);
+  // const [suggestedReplies, setSuggestedReplies] = useState("empty");
+
+
+  const getGeneratedAd = async (message="") => {
+    console.log("getGeneratedAd()");
+
+    try {
+        
+        const data = await getCompletionsOpenAI(null, {
+            message: `Create a 500-word ad description to help me hire a technician based on this: job: painting, address: richmond, payment: 1000, start-date: 23rd Oct`,
+          })
+    console.log("raaaaaaaaaaaaaaaaaaaaaaaaaaaa",data);
+
+        const completions = data.choices.map((choice) => choice.text.trim());
+        // setSuggestedReplies(completions[0]);
+        setJobDescription(completions[0])
+      } catch (error) {
+        console.error(error);
+      }
+  };
+
+  useEffect(() => {
+
+      const see = async () => {
+          await getGeneratedAd();
+      }
+
+      see()
+
+}, []);
+
 
   const pickImages = async () => {
     let results = await ImagePicker.launchImageLibraryAsync({
@@ -176,7 +209,7 @@ const CreatePost = () => {
               {showPicker && (
                 <View style={{display:'flex',justifyContent:'center'}}>
                   <DateTimePicker
-                  style={{marginRight:100,marginTop:20,marginBottom:20,borderBottomWidth:0}}
+                  style={{marginRight:100,marginTop:6,marginBottom:6,borderBottomWidth:0}}
                   value={startDate}
                   mode="date"
                   onChange={onDateChange}
@@ -256,7 +289,7 @@ const styles = StyleSheet.create({
   description: {
     borderWidth:1,
     borderColor: '#404040',
-    height:150,
+    height:120,
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,
