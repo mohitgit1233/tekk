@@ -121,7 +121,7 @@ export const MyJob = ({ navigation }) => {
         <Text style={{ fontWeight: 'bold' }}></Text>{' '}
         {Moment(post.jobID.posted_date).format('M/DD/YYYY')}
       </Text>
-      <Text style={styles.postDescription}>{post.jobID.description}</Text>
+      <Text style={styles.postDescription}>{post.jobID.description > 20 ? post.jobID.description.split(' ').slice(0, 9).join(' ') + '......'  : post.jobID.description.split(' ').slice(0, 11).join(' ')}</Text>
     </View>
   </View>
 </View>

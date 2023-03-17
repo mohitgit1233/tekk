@@ -54,7 +54,7 @@ console.log('submit',data)
               {status === 'pending'? <>
               <Text style={styles.postTitle}>{data.jobID && data.jobID.title}</Text>
               <Image style={styles.postImage} source={{ uri: data.jobID && data.jobID.images[0] }} />
-
+              <Text style={styles.postDescription}>{data.jobID && data.jobID.description}</Text>
               <View style={styles.labeltextwrap}>
 
                 <View style={styles.labeltextout}>
@@ -82,7 +82,7 @@ console.log('submit',data)
                 <>
                   <Text style={styles.postTitle}>{data[0] && data[0].job.title}</Text>
                 <Image style={styles.postImage} source={{ uri: data[0] && data[0].job.images[0] }} />
-               
+                <Text style={styles.postDescription}> {data[0] && data[0].job.description}</Text>
                 <View style={styles.labeltextwrap}>
 
                     <View style={styles.labeltextout}>
@@ -90,10 +90,7 @@ console.log('submit',data)
                     <Text style={styles.postText}> {data[0] && data[0].offer_id.offerPrice}</Text>
                     </View>
 
-                    <View style={styles.labeltextout}>
-                    <Text style={styles.label}>Job Description:</Text>
-                    <Text style={styles.postText}> {data[0] && data[0].job.description}</Text>
-                    </View>
+                    
 
 
                     <View style={styles.labeltextout}>
@@ -157,6 +154,7 @@ const styles = StyleSheet.create({
   postDescription: {
     fontSize: 16,
     marginBottom: 10,
+    marginTop: 10,
   },
   button: {
     marginTop: 10,
