@@ -24,7 +24,8 @@ const NotificationPage = () => {
     //   .catch((error) => console.error(error));
      const see = async () => {
       const json  = await getNotificationsByTechId(loggedInUser.id)
-      setData(json)
+      const json2 =   json.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setData(json2)
      }
      see()
   }, []);
