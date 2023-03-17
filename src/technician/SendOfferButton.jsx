@@ -7,7 +7,7 @@ import { postOffer } from '../../services/api';
 import React, { useState, useEffect,useContext } from 'react';
 import AppContext from '../../AppContext';
 import Toast from 'react-native-toast-message';
-
+import Moment from 'moment';
 
 const SendOffer = ({ route }) => {
   const { loggedInUser, setLoggedInUser } = useContext(AppContext);
@@ -78,7 +78,7 @@ const SendOffer = ({ route }) => {
       <View style={styles.dateInputContainer}>
         <Text style={styles.dateInputLabel}>Preferred start date: </Text>
         <Text style={styles.dateInputText} onPress={() => setDatePickerVisibility(true)}>
-          {preferStartDate || 'Select date'}
+          {Moment(preferStartDate).format('D/MM/YYYY') || 'Select date'}
         </Text>
       </View>
       {/* <Button

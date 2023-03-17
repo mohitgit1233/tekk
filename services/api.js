@@ -49,6 +49,9 @@ try {
 export const getOffersByJobId = async (id=null) => {
     return await generic(OFFERS_BY_JOBID,id)
 }
+export const getOffersById = async (id=null) => {
+    return await generic(`${API_BASE_URL}/offers/${id}`)
+}
 export const getRooms = async (id=null) => {
     return await generic(ROOMS)
 }
