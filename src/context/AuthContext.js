@@ -16,8 +16,11 @@ const UserContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState('');
+  const [googleAuthentication, setgoogleAuthentication] = useState(false);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
+    responseType: 'id_token',
+    // use offline access to get a refresh token and perform silent refresh in background
     androidClientId:
       '289621286274-5romp3io67ppa6nguuusb3b6fq25upif.apps.googleusercontent.com',
     iosClientId:
@@ -28,13 +31,12 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (response?.type === 'success') {
-      console.log(response.authentication.accessToken);
-      setToken(response.authentication.accessToken);
-
+      setToken(response.params.id_token);
+      setgoogleAuthentication(true);
       const persistAuth = async () => {
         await AsyncStorage.setItem(
           'token',
-          JSON.stringify(response.authentication.accessToken)
+          JSON.stringify(response.params.id_token)
         );
       };
       persistAuth();
@@ -73,7 +75,9 @@ export const AuthContextProvider = ({ children }) => {
         logout,
         signIn,
         setToken,
+        token,
         promptAsync,
+        googleAuthentication,
       }}
     >
       {children}
