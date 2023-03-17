@@ -57,7 +57,7 @@ const SendOffer = ({ route }) => {
     Toast.show({
       type: 'success',
       text1: 'Offer sent successfully!',
-      visibilityTime: 300,
+      visibilityTime: 500,
       position:'bottom',
       autoHide: true,
       onHide: () => {

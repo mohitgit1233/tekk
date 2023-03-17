@@ -63,7 +63,7 @@ export const MyJob = ({ navigation }) => {
   console.log(data2)
 
 
-  const filteredData = Offers.filter((post) => post.offerStatus === jobStatus  );
+  const filteredData = Offers.filter((post) => post.offerStatus === jobStatus  ).sort((a, b) => new Date(b.prefer_start_date) - new Date(a.prefer_start_date));
 
   console.log('ddddd',filteredData.length)
   
