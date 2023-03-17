@@ -12,20 +12,23 @@ export const Activities = ({ navigation }) => {
   const [hours, setHours] = useState(0);
   const [showChart, setShowChart] = useState(false);
   const [chartData, setChartData] = useState([]);
+  const [chartTitle, setChartTitle] = useState('Income History');
 
   const handleIncomePress = () => {
     setShowChart(!showChart);
+    setChartTitle('Income Generated');
   };
 
   const handleHoursPress = () => {
     setShowChart(!showChart);
+    setChartTitle('Hours Worked');
   };
 
   useEffect(() => {
     const fetchData = async () => {
       const json = await getIncomeHours(loggedInUser.id);
       setIncome(json.income);
-      setHours(json.hours);
+      setHours(json.hours/ 3600);
     };
     fetchData();
 
@@ -50,7 +53,6 @@ export const Activities = ({ navigation }) => {
   ];
   setChartData(chartData);
 }, []);
-  
 
   return (
     <View style={styles.container}>
@@ -62,13 +64,13 @@ export const Activities = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity onPress={handleHoursPress}>
         <View style={styles.infoContainer}>
-          <Text style={styles.hoursText}>{hours.toFixed(1)} Hours</Text>
+          <Text style={styles.hoursText}>{hours.toFixed(2)} Hours</Text>
           <Text style={styles.labelText}>Hours Worked</Text>
         </View>
       </TouchableOpacity>
       {showChart && (
         <View style={styles.chartContainer}>
-          <Text style={styles.chartTitle}>Income History</Text>
+          <Text style={styles.chartTitle}>{chartTitle}</Text>
           <LineChart
             data={{
               labels: chartData.map((item) => item.date),
@@ -84,11 +86,11 @@ export const Activities = ({ navigation }) => {
             height={220}
             yAxisSuffix="$"
             chartConfig={{
-              backgroundColor: '#F2F2F2',
-              backgroundGradientFrom: '#F2F2F2',
-              backgroundGradientTo: '#F2F2F2',
-              decimalPlaces: 2,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              backgroundColor: '#EAEAEA',
+              backgroundGradientFrom: '#FFFFFF',
+              backgroundGradientTo: '#FFFFFF',
+              decimalPlaces: 3,
+              color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
               style: {
                 borderRadius: 16,
               },
