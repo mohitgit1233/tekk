@@ -148,12 +148,23 @@ export const SubChat = ({ navigation, route }) => {
 
     const renderItem = ({ item }) => {
         return (
-            <View style={styles.message}>
-                {/* <Text style={styles.sender} >{item.sender_id}</Text> */}
-                <Text style={styles.sender}>{Moment(item.date).format('MMMM Do, YYYY,HH:mm A')}</Text>
-                { item.docModel==="technician" ? <Text style={styles.sender} >{tech_name.name}</Text> : <Text style={styles.sender} >{emp_name.name}</Text>  }
-                <Text>{item.message}</Text>
-            </View>
+
+            item.docModel==="technician" ?            ( <View style={styles.message2}>
+            {/* <Text style={styles.sender} >{item.sender_id}</Text> */}
+            <Text style={styles.sender}>{Moment(item.date).format('MMMM Do, YYYY,HH:mm A')}</Text>
+           {/* <Text style={styles.sender} >{tech_name.name}</Text>  */}
+            <Text>{item.message}</Text>
+        </View>) :          (   <View style={styles.message1}>
+        {/* <Text style={styles.sender} >{item.sender_id}</Text> */}
+        <Text style={styles.sender}>{Moment(item.date).format('MMMM Do, YYYY,HH:mm A')}</Text>
+       {/* <Text style={styles.sender} >{emp_name.name}</Text>  */}
+        <Text>{item.message}</Text>
+    </View>)  
+
+
+
+
+
         );
     };
 
@@ -266,13 +277,33 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-start'
       
     },
-    message: {
+    message1: {
         padding: 10,
+        maxWidth: "70%",
+        alignSelf: "flex-start",
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
+        borderColor: "#ccc",
+        borderRadius: 10,
         marginBottom: 5,
+        borderTopLeftRadius: 2,
+        backgroundColor: "#EBEBEB",
     },
+    message2: {
+          backgroundColor: "#DCF8C5",
+        padding: 10,
+        maxWidth: "70%",
+        alignSelf: "flex-end",
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 10,
+        marginBottom: 5,
+        borderTopRightRadius: 2,
+      },
+      sender: {
+        fontSize: 12,
+        color: "grey",
+        marginTop: 5,
+      },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -288,10 +319,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 10,
         marginRight: 10,
-    },
-    sender: {
-        // backgroundColor: "red"
-        color: "grey"
     },
     suggestionList: {
             backgroundColor: 'rgba(255, 255, 255, 0.8)', 
