@@ -25,7 +25,7 @@ const CreatePost = () => {
     try {
         
         const data = await getCompletionsOpenAI(null, {
-            message: `Create a 500-word ad description to help me hire a technician based on this: job: painting, address: richmond, payment: 1000, start-date: 23rd Oct`,
+            message: message,
           })
     console.log("raaaaaaaaaaaaaaaaaaaaaaaaaaaa",data);
 
@@ -40,7 +40,7 @@ const CreatePost = () => {
   useEffect(() => {
 
       const see = async () => {
-          await getGeneratedAd();
+          // await getGeneratedAd(`Create a 500-word ad description to help me hire a technician based on this: job: painting, address: richmond, payment: 1000, start-date: 23rd Oct`);
       }
 
       see()
@@ -191,14 +191,23 @@ const CreatePost = () => {
             </View>
             <View style={styles.labelinputwrapper}>  
  
-          <TextInput
-            placeholder="Description"
-            value={jobDescription}
-            style={styles.description}
-            onChangeText={setJobDescription}
-            multiline={true}
-            numberOfLines={4}
-          />
+            <View style={styles.container1}>
+      <TextInput
+        placeholder="Description"
+        value={jobDescription}
+        style={styles.description}
+        onChangeText={setJobDescription}
+        multiline={true}
+        numberOfLines={4}
+      />
+      <TouchableOpacity style={styles.fillButton} onPress={()=>{getGeneratedAd(`Create a 500-word ad description to help me hire a technician based on this: title: ${postTitle}, job: ${requirement}, address: ${postAddress}, payment: ${postMaxCost}, start-date: ${startDate}`)}}>
+        <Text style={{ color: 'white' }}>Auto Generate</Text>
+      </TouchableOpacity>
+    </View>
+
+
+
+
           </View>
             
             <TouchableOpacity
@@ -368,6 +377,27 @@ const styles = StyleSheet.create({
   //   backgroundColor:"#0D937D",
   //   color: '#FFFFFF',
   // }
+
+  container1: {
+    position: 'relative',
+  },
+  description: {
+    height: 100,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+  },
+  fillButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: 'gray',
+    borderRadius: 5,
+    padding: 5,
+    backgroundColor: "#56565661"
+  },
+
+  
 });
 
 
