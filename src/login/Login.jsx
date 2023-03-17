@@ -178,7 +178,7 @@ export const Login = () => {
     <Text style={{ marginTop:20}}> Sign in using: </Text>
     <View style ={styles.iccons}>
     <TouchableOpacity style={{borderWidth:1,borderRadius:50,padding:15,margin:15,borderColor:'#0D937D'}} ><Fontisto name="google" size={35}  color={'#0D937D'}/></TouchableOpacity>
-    <TouchableOpacity style={{borderWidth:1,borderRadius:50,padding:15,margin:15,borderColor:'#0D937D'}} ><Fontisto name="facebook" size={30}  color={'#0D937D'}/></TouchableOpacity>
+    {/* <TouchableOpacity style={{borderWidth:1,borderRadius:50,padding:15,margin:15,borderColor:'#0D937D'}} ><Fontisto name="facebook" size={30}  color={'#0D937D'}/></TouchableOpacity> */}
     <TouchableOpacity style={{borderWidth:1,borderRadius:50,padding:15,margin:15,borderColor:'#0D937D'}} ><Fontisto name="apple" size={35} color={'#0D937D'}/></TouchableOpacity>
     </View>
     
