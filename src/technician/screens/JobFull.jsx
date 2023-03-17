@@ -50,35 +50,65 @@ console.log('submit',data)
         {data ? (
           <>
             <VStack space={3} alignItems="center">
-              <Box borderWidth={1} borderRadius={5} overflow="hidden" borderColor="gray.200" bg="white" width="100%" >
+              <Box borderWidth={0} borderRadius={5} overflow="hidden"  bg="white" width="100%" >
               {status === 'pending'? <>
+              <Text style={styles.postTitle}>{data.jobID && data.jobID.title}</Text>
               <Image style={styles.postImage} source={{ uri: data.jobID && data.jobID.images[0] }} />
-              <VStack space={3} p={4}>
-                  <Text style={styles.postTitle}>Job title:</Text>
-                  <Text style={styles.postDescription}>{data.jobID && data.jobID.title}</Text>
-                  <Text style={styles.postTitle}>Offer Price:</Text>
-                  <Text style={styles.postDescription}>{data && data.offerPrice}</Text>
-                  <Text style={styles.postTitle}>Offer Hours:</Text>
-                  <Text style={styles.postDescription}>{data && data.offerHours}</Text>
-                  <Text style={styles.postTitle}>Start date:</Text>
-                  <Text style={styles.postDescription}>{data && Moment(data.prefer_start_date).format('D/MM/YYYY')}</Text>
-                  </VStack>
+
+              <View style={styles.labeltextwrap}>
+
+                <View style={styles.labeltextout}>
+              <Text style={styles.label}>Offer Price:</Text>
+              <Text style={styles.postText}> {data && data.offerPrice}</Text>
+              </View>
+              
+              <View style={styles.labeltextout}>
+              <Text style={styles.label}>Offer Hours:</Text>
+              <Text style={styles.postText}> {data && data.offerHours}</Text>
+              </View>
+
+
+              <View style={styles.labeltextout}>
+              <Text style={styles.label}>Start date:</Text>
+              <Text style={styles.postText}> ${data && Moment(data.prefer_start_date).format('D/MM/YYYY')}</Text>
+              </View>
+
+              </View>
+
+                
+                  
               </>:
               
                 <>
+                  <Text style={styles.postTitle}>{data[0] && data[0].job.title}</Text>
                 <Image style={styles.postImage} source={{ uri: data[0] && data[0].job.images[0] }} />
-                <VStack space={3} p={4}>
-                  <Text style={styles.postTitle}>Job title:</Text>
-                  <Text style={styles.postDescription}>{data[0] && data[0].job.title}</Text>
-                  <Text style={styles.postTitle}>Offer Price:</Text>
-                  <Text style={styles.postDescription}>{data[0] && data[0].offer_id.offerPrice}</Text>
-                  <Text style={styles.postTitle}>Job Description:</Text>
-                  <Text style={styles.postDescription}>{data[0] && data[0].job.description}</Text>
-                  <Text style={styles.postTitle}>Hours spent (seconds):</Text>
-                  <Text style={styles.postDescription}>{data[0] && data[0].total_hours.toFixed(2)}</Text>
-                  <Text style={styles.postTitle}>Total income:</Text>
-                  <Text style={styles.postDescription}>{data[0] && data[0].total_income.toFixed(2)}</Text>
-                </VStack>
+               
+                <View style={styles.labeltextwrap}>
+
+                    <View style={styles.labeltextout}>
+                    <Text style={styles.label}>Offer Price:</Text>
+                    <Text style={styles.postText}> {data[0] && data[0].offer_id.offerPrice}</Text>
+                    </View>
+
+                    <View style={styles.labeltextout}>
+                    <Text style={styles.label}>Job Description:</Text>
+                    <Text style={styles.postText}> {data[0] && data[0].job.description}</Text>
+                    </View>
+
+
+                    <View style={styles.labeltextout}>
+                    <Text style={styles.label}>Hours spent (seconds):</Text>
+                    <Text style={styles.postText}> ${data[0] && data[0].total_hours.toFixed(2)}</Text>
+                    </View>
+
+                    <View style={styles.labeltextout}>
+                    <Text style={styles.label}>Total income:</Text>
+                    <Text style={styles.postText}> ${data[0] && data[0].total_income.toFixed(2)}</Text>
+                    </View>
+
+                </View>
+              
+               
                 </>
                  }
               </Box>
@@ -88,7 +118,9 @@ console.log('submit',data)
               ) : null}
 
               {status === 'pending' ? (
-                <Button style={styles.button}>Delete offer</Button>
+                <TouchableOpacity style={styles.botton} >
+                <Text style={styles.btntxt}>Delete Offer</Text>
+              </TouchableOpacity>
               ) : null}
 
               {status === 'ongoing' ? (
@@ -116,8 +148,11 @@ const styles = StyleSheet.create({
     height: 200,
   },
   postTitle: {
-    fontSize: 18,
+    fontSize: 25,
     fontWeight: 'bold',
+    margin:10,
+    textAlign:'center',
+    paddingTop:20
   },
   postDescription: {
     fontSize: 16,
@@ -127,15 +162,56 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignSelf: 'center',
     backgroundColor: '#e91e63',
-    borderRadius: 5,
+    borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 20,
     elevation: 2,
+    
   },
   nothingText: {
     fontSize: 18,
     color: 'gray',
+  },botton:{
+    backgroundColor: '#0D937D',
+    paddingVertical: 15,
+    paddingHorizontal: 100,
+    // borderRadius: 30,
+    marginTop: 20,
+    marginBottom: 20,
   },
+  labeltextwrap:{
+    display:'flex',
+    flexDirection:'column',
+    marginTop:10,
+    
+   
+  
+  },labeltextout:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'flex-start',
+    borderWidth:1,
+    width:'100%',
+    borderRadius:5,
+    marginTop:10,
+    padding:20,
+    textAlign:'left',
+    
+  },
+  label:{
+    width:130,
+    fontSize:18,
+    color:'#0D937D',
+    fontWeight:'bold'
+  },postText:{
+      fontSize:17,
+      textAlign:'left'
+  }, btntxt:{
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  }
 });
 
 

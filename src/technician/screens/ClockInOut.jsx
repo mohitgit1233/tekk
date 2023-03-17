@@ -85,11 +85,11 @@ const handleClick2 = async () =>{
 
   return (
     <Box  >
-  <Button mb={'5'}
+  <Button mb={'5'} bgColor={'#0D937D'} width='300'
   onPress={() => {handleClick()}}
   >Clock in</Button>
 
-  <Button
+  <Button mb={'5'} bgColor={'#0D937D'}
   onPress={() => {handleClick2()}}>Clock out</Button>
 
   <Text>{clockStatus}</Text>
