@@ -176,6 +176,7 @@ export const SubChat = ({ navigation, route }) => {
           </View>
 
                 <FlatList
+                    style={{marginBottom:50}}
                     data={messages}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => index.toString()}
