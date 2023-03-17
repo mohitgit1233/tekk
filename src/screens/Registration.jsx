@@ -1,16 +1,16 @@
 import { useState } from "react";
 import {  Box, Radio, Text, Heading, VStack, FormControl, Input, Link, Button, HStack, Center, NativeBaseProvider } from "native-base";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import {AsyncStorage} from 'react-native';
+import {createUserWithEmailAndPassword , updateProfile } from 'firebase/auth'
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-export const Registration = ({navigation}) => {
+export const Registration = () => {
   const [email,setEmail] = useState('');
   const [name,setName] = useState('');
   const [phone,setPhone] = useState('');
   const [password,setPassword] = useState('');
   const [userType,setUserType] = useState([]);
-
+  const navigation = useNavigation();
 
   const handleSignUp = async () => {
     await createUserWithEmailAndPassword(auth,email,password).then(async (userCredentails) => {
@@ -18,7 +18,23 @@ export const Registration = ({navigation}) => {
       await updateProfile(user, {
         displayName: name,
       })
-      await AsyncStorage.setItem('@userData', user)
+         await fetch('http://10.0.0.99:5001/api/v1/register',{
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            name: name,
+            phone: phone,
+            firebase_uid: user.uid,
+            role_type: userType
+          })
+        }).then((resp) => resp.json())
+        .then((userData) => {
+          if(userData.message == "user added success") {
+            navigation.navigate("Login");
+          }
+        })
+        .catch((error) => alert(error));
     }).catch(error => alert(error.message))
   }
 

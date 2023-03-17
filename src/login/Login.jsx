@@ -7,19 +7,32 @@ export const Login = ({navigation}) => {
 
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
-  const { signIn,setUser, promptAsync } = UserAuth();
-
-
+  const { signIn,setUser, setToken, promptAsync } = UserAuth();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     await signIn(email,password).then(async (userCredentails) => {
-      setUser(userCredentails.user);
-      await AsyncStorage.setItem('@userData', JSON.stringify(userCredentails.user));
-      if(userCredentails.user){
-        navigation.navigate("clientHome")
-      }
-      
+      await userCredentails.user.getIdToken().then(async token=>{
+          await fetch('http://10.0.0.99:5001/api/v1/login',{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'authorization': `Bearer ${token}` },
+            body: JSON.stringify({})
+          }).then((resp) => resp.json())
+          .then(async (userData) => {
+            if(userData.data.user.role_type == "client") {
+              setToken(token)
+              setUser(userData.data.user)
+              await AsyncStorage.setItem('@userData', JSON.stringify(userData.data.user));
+              navigation.navigate("clientHome");
+            } else if(userData.data.user.role_type == "technician"){
+              setToken(token)
+              setUser(userData.data.user)
+              await AsyncStorage.setItem('@userData', JSON.stringify(userData.data.user));
+              navigation.navigate("technicianHome");
+            }
+          })
+          .catch((error) => alert(error));
+      }) 
     })
     .catch((error) => alert(error.message));
   }

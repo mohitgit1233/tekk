@@ -28,6 +28,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (response?.type === 'success') {
+      console.log(response.authentication.accessToken);
       setToken(response.authentication.accessToken);
 
       const persistAuth = async () => {
@@ -54,30 +55,6 @@ export const AuthContextProvider = ({ children }) => {
     return await signOut(auth).then(setUser(''));
   };
 
-  /*const onGoogleButtonPress = async () => {
-    GoogleSignin.configure({
-      webClientId:
-        '289621286274-cbtdk9v2714kvbed74t94j5oftt8ksbd.apps.googleusercontent.com',
-    });
-    // Check if your device supports Google Play
-    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-    // Sign-in the user with the credential
-    const user_sign_in = auth().signInWithCredential(googleCredential);
-    user_sign_in
-      .then((user) => {
-        console.log(user);
-        setUser(user.user);
-        navigation.navigate('clientHome');
-      })
-      .catch((error) => console.log(error));
-  }; */
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -89,7 +66,15 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ createUser, user, setUser, logout, signIn, promptAsync }}
+      value={{
+        createUser,
+        user,
+        setUser,
+        logout,
+        signIn,
+        setToken,
+        promptAsync,
+      }}
     >
       {children}
     </UserContext.Provider>
