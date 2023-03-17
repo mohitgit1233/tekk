@@ -6,6 +6,9 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { postOffer } from '../../services/api';
 import React, { useState, useEffect,useContext } from 'react';
 import AppContext from '../../AppContext';
+import Toast from 'react-native-toast-message';
+
+
 const SendOffer = ({ route }) => {
   const { loggedInUser, setLoggedInUser } = useContext(AppContext);
   const { jobId, refreshData,tech_id } = route.params;
@@ -41,13 +44,23 @@ const SendOffer = ({ route }) => {
     //   navigation.navigate('ViewOffer', { offer: data, refreshData: refreshData });
     // })
     // .catch(error => console.error(error));
-    const json = await postOffer(null, offer)
-    navigation.navigate('ViewOffer', { offer: json, refreshData: refreshData });
+    const json = await postOffer(null, offer);
+    // navigation.navigate('ViewOffer', { offer: json, refreshData: refreshData });
+    Toast.show({
+      type: 'success',
+      text1: 'Offer sent successfully!',
+      visibilityTime: 300,
+      position:'bottom',
+      autoHide: true,
+      onHide: () => {
+        navigation.navigate('My Jobs',{ offer: json, refreshData: refreshData });
+      },
+    });
   };
 
   return (
     <View style={styles.container}>
-      
+      <Toast ref={(ref) => Toast.setRef(ref)} />
       <TextInput
         style={styles.input}
         placeholder="Offer price"

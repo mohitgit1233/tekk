@@ -10,6 +10,7 @@ import { postJobs,pushToTechnicians } from '../../services/api';
 import AppContext from '../../AppContext';
 import * as ImagePicker from 'expo-image-picker';
 import { updateTechnicianImage, patchJobImages } from '../../services/api';
+import Toast from 'react-native-toast-message';
 // import { Picker } from '@react-native-picker/picker';
 const CreatePost = () => {
   // const [image, setImage] = useState(null);
@@ -51,7 +52,6 @@ const CreatePost = () => {
   const navigation = useNavigation();
     const [chosenDate, setChosenDate] = useState(new Date());
     const [showPicker, setShowPicker] = useState(true);
-  
     const onDateChange = (event, newDate) => {
     //   setShowPicker(false);
       if (newDate !== undefined) {
