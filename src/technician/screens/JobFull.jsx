@@ -70,7 +70,7 @@ console.log('submit',data)
 
               <View style={styles.labeltextout}>
               <Text style={styles.label}>Start date:</Text>
-              <Text style={styles.postText}> ${data && Moment(data.prefer_start_date).format('D/MM/YYYY')}</Text>
+              <Text style={styles.postText}> {data && Moment(data.prefer_start_date).format('D/MM/YYYY')}</Text>
               </View>
 
               </View>
@@ -95,7 +95,7 @@ console.log('submit',data)
 
                     <View style={styles.labeltextout}>
                     <Text style={styles.label}>Hours spent (seconds):</Text>
-                    <Text style={styles.postText}> ${data[0] && data[0].total_hours.toFixed(2)}</Text>
+                    <Text style={styles.postText}> {data[0] && data[0].total_hours.toFixed(2)}</Text>
                     </View>
 
                     <View style={styles.labeltextout}>
