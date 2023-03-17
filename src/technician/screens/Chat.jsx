@@ -5,6 +5,8 @@ import { SubChat }  from './SubChat'
 import { useNavigation } from '@react-navigation/native';
 import { getRooms } from '../../../services/api';
 import AppContext from '../../../AppContext';
+import { Box, Center, NativeBaseProvider } from "native-base";
+import { AntDesign } from '@expo/vector-icons';
 // const connection_api = 'http://192.168.5.131:3000/connection';
 // const message_api = 'http://192.168.5.131:3000/message';
 
@@ -12,6 +14,8 @@ export const Chat = ({navigation}) => {
   const { loggedInUser, setLoggedInUser } = useContext(AppContext);
 
   const [data1, setData1] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
 
   useEffect(() => {
     const getJobs = async()=>{
@@ -42,6 +46,17 @@ export const Chat = ({navigation}) => {
   };
 
   return (
+    <Box bg="white" height="100%">
+    <View style={styles.searchContainer}>
+      <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search Jobs"
+        onChangeText={(text) => setSearchTerm(text)}
+        value={searchTerm}
+      />
+    </View>
+
     <View style={styles.container}>
       <Text style={styles.head}>Select Employer To Chat</Text>
       {/* AI button */}
@@ -83,10 +98,29 @@ export const Chat = ({navigation}) => {
         )}
       />
     </View>
+  </Box>
+
   );
 };
 
 const styles = StyleSheet.create({
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor:'white',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    margin:10,
+    borderWidth:0.5,
+    borderColor:'#074A3F'
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",

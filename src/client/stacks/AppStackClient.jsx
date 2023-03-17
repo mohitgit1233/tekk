@@ -114,7 +114,9 @@ export const TabStack = () => {
           headerRight: () => <NotificationBell />, 
         }} />
       
-      <Tab.Screen name="Chats" component={AllChats} />
+      <Tab.Screen name="Chats" component={AllChats} options={{
+          headerRight: () => <NotificationBell />, 
+        }} />
       
       <Tab.Screen name="Account" component={Account} />
     
