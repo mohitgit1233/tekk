@@ -207,9 +207,9 @@ const CreatePost = () => {
             </View>
           </View>
         
-          <View style={styles.imageinputwrapper}>  
+          {/* <View style={styles.imageinputwrapper}>   */}
             <TouchableOpacity style={styles.addImagesButton} onPress={pickImages}>
-              <Text >Add Site Images</Text>
+              <Text style={{color:'white',textAlign:'center'}} >Add Site Images</Text>
             </TouchableOpacity>
             <FlatList
       horizontal={true}
@@ -219,7 +219,7 @@ const CreatePost = () => {
   )}
   keyExtractor={(item) => item}
 />
-            </View>
+            {/* </View> */}
     
           <TouchableOpacity style={styles.botton} onPress={handleSendOffer}>
             <Text style={styles.btntxt}>Submit Post</Text>
@@ -317,12 +317,24 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   addImagesButton:{
-    backgroundColor:'white',
+   
+    backgroundColor: '#0D937D',
+    // paddingVertical: 15,
+    // paddingHorizontal: 100,
+    // borderRadius: 30,
+    marginTop: 10,
+    marginBottom: 10,
     padding:12,
-    borderWidth:1,
+
+    width:"50%",
     textAlign:'center',
-    marginTop:50
-  }
+    alignSelf: 'center',
+    // marginTop:50
+  },
+  // dropdown: {
+  //   backgroundColor:"#0D937D",
+  //   color: '#FFFFFF',
+  // }
 });
 
 
