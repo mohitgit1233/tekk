@@ -33,7 +33,7 @@ export const AllChats = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.head}>Select Employer To Chat</Text>
+      <Text style={styles.head}>Select Technician To Chat</Text>
             {/* AI button */}
             <TouchableOpacity
             style={styles.postContainer}
@@ -51,20 +51,21 @@ export const AllChats = ({navigation}) => {
         data={data1}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.postContainer}
-            onPress={() =>
-              navigateToNotification(item._id, item.technician_id._id, item._id, item.job_id._id)
-            }
-          >
-            <Image
-              source={{ uri: item.job_id.images[0] }}
-              style={styles.image}
-            />
-            <Text style={styles.postDescription}>
-              Job: {item.job_id.title} - Technician: {item.technician_id.name}
-            </Text>
-          </TouchableOpacity>
+<TouchableOpacity
+  style={styles.postContainer}
+  onPress={() =>
+    navigateToNotification(item._id, item.technician_id._id, item._id, item.job_id._id)
+  }
+>
+  <Image
+    source={{ uri: item.job_id.images[0] }}
+    style={styles.image}
+  />
+  <View>
+    <Text style={styles.postDescription}>{item.job_id.title}</Text>
+    <Text style={styles.employerName}>Technician: {item.technician_id.name}</Text>
+  </View>
+</TouchableOpacity>
         )}
       />
     </View>
@@ -102,4 +103,9 @@ const styles = StyleSheet.create({
   postDescription: {
     fontSize: 18,
   },
+  employerName: {
+    fontSize: 14,
+    marginTop: 5,
+  },
 });
+

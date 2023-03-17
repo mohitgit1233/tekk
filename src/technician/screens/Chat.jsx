@@ -61,20 +61,25 @@ export const Chat = ({navigation}) => {
         data={data1}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
+
+
+
           <TouchableOpacity
             style={styles.postContainer}
             onPress={() =>
-              navigateToNotification(item._id, item.employer_id._id, item._id,  item.job_id._id )
+              navigateToNotification(item._id, item.employer_id._id, item._id, item.job_id._id)
             }
           >
             <Image
               source={{ uri: item.job_id.images[0] }}
               style={styles.image}
             />
-            <Text style={styles.postDescription}>
-              Job: {item.job_id.title} - Employer: {item.employer_id.name}
-            </Text>
+            <View>
+              <Text style={styles.postDescription}>{item.job_id.title}</Text>
+              <Text style={styles.employerName}>Employer: {item.employer_id.name}</Text>
+            </View>
           </TouchableOpacity>
+
         )}
       />
     </View>
@@ -112,4 +117,9 @@ const styles = StyleSheet.create({
   postDescription: {
     fontSize: 18,
   },
+  employerName: {
+    fontSize: 14,
+    marginTop: 5,
+  },
 });
+
