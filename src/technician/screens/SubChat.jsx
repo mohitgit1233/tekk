@@ -61,8 +61,8 @@ export const SubChat = ({ navigation, route }) => {
         setemp(emp_name)
         setjobn(jobi)
         setMessages(json)
-        setLastMessage(json[json.length-1].message);
-        getSuggestedReplies(json[json.length-1].message);
+        setLastMessage(json[json.length-1]&& json[json.length-1].message);
+        getSuggestedReplies(json[json.length-1]&&json[json.length-1].message);
         }
         see()
 
