@@ -32,7 +32,7 @@ export const Chat = ({navigation}) => {
       console.log("DATA NEEDED");
       console.log(json);
       console.log(loggedInUser.id);
-      const filteredArray = json.filter((item) => item.technician_id._id === loggedInUser.id);
+      const filteredArray = json.filter((item) => item.technician_id._id === loggedInUser.id).sort((a, b) => new Date(b.room_created) - new Date(a.room_created));
 
       setData1(filteredArray)
 

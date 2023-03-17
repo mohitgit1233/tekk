@@ -21,7 +21,7 @@ export const AllChats = ({navigation}) => {
       // const json =  await getJobs()
       const json =  await getRooms()
       console.log(loggedInUser.id);
-      const filteredArray = json.filter((item) => item.employer_id._id === loggedInUser.id);
+      const filteredArray = json.filter((item) => item.employer_id._id === loggedInUser.id).sort((a, b) => new Date(b.room_created) - new Date(a.room_created));
 
       setData1(filteredArray)
       // setData1(json)
