@@ -91,7 +91,7 @@ export const SubChat = ({ navigation, route }) => {
             console.log(messages);
             
             //recieve bubble fix
-            getSuggestedReplies(messages[messages.length-1].message);
+            getSuggestedReplies(messages[messages.length-1]&&messages[messages.length-1].message);
 
             //populate (auto in react)
             // update();
