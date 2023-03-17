@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, Button,ScrollView,FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, Button,ScrollView,FlatList, TouchableOpacity,Linking } from 'react-native';
 import Moment from 'moment';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { getJobById } from '../../../services/api';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const JobContainer = ({ job, refreshData }) => {
 
@@ -38,7 +39,7 @@ const JobContainer = ({ job, refreshData }) => {
     <ScrollView>
     <View style={styles.container}>
       <Text style={styles.postTitle}>{post.title}</Text>
-      <Text style={styles.postDate}>Posted: {Moment(post.posted_date).format('d/MM/YYYY')}</Text>
+      <Text style={styles.postDate}>Posted: {Moment(post.posted_date).format('D/MM/YYYY')}</Text>
       <ScrollView horizontal={true} style={styles.imageCarousel}>
         {post.images.map((image, index) => (
           <Image key={index} source={{ uri: image }} style={styles.image} />
@@ -48,14 +49,25 @@ const JobContainer = ({ job, refreshData }) => {
         <Text style={styles.postDescription}>{post.description}</Text>
         
         <View style={styles.labeltextwrap}>
-                <View style={styles.labeltextout}>
-              <Text style={styles.label}>Location:</Text>
-              <Text style={styles.postText}> {post.location}</Text>
-              </View>
+  <View style={styles.labeltextout}>
+    <Text style={styles.label}>Location:</Text>
+
+    <View style={{maxWidth:100, display:'flex',flexDirection:'row'}}>
+    <Text style={styles.postText}> {post.location}</Text>
+    <TouchableOpacity onPress={() => {
+        // use Linking from react-native to open map app with the given location
+        Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${post.location}`)
+      }}>
+      <MaterialIcons name="directions" size={24} color="black" />
+    </TouchableOpacity>
+    </View>
+  </View>
+
               
               <View style={styles.labeltextout}>
               <Text style={styles.label}>Preferred Start Date:</Text>
-              <Text style={styles.postText}> {Moment(post.prefer_start_date).format('d/MM/YYYY')}</Text>
+              <Text style={styles.postText}> {Moment(post.prefer_start_date).format('D/MM/YYYY')}
+</Text>
               </View>
 
        
