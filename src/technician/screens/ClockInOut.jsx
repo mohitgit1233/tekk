@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { clockIn, clockOut } from '../../../services/api';
-
+import Toast from 'react-native-toast-message';
 
 const ClockInOut = (props) => {
     const [data, setData] = useState([]);
@@ -46,7 +46,13 @@ const handleClick = async () =>{
         // .catch(error => console.error(error));
         const json = await clockIn(props.emp_id, offer)
         setClockStatus('Clocked in')
-      
+        Toast.show({
+          type: 'success',
+          text1: 'Clock in successfully!',
+          visibilityTime: 1000,
+          position:'bottom',
+          autoHide: true,
+        });
 }
 
 const handleClick2 = async () =>{
@@ -67,6 +73,13 @@ const handleClick2 = async () =>{
     // .catch(error => console.error(error));
     const json = await clockOut(props.emp_id, offer)
     setClockStatus('Clocked out')
+    Toast.show({
+      type: 'success',
+      text1: 'Clock out successfully!',
+      visibilityTime: 1000,
+      position:'bottom',
+      autoHide: true,
+    });
    
 }
 
@@ -80,6 +93,7 @@ const handleClick2 = async () =>{
   onPress={() => {handleClick2()}}>Clock out</Button>
 
   <Text>{clockStatus}</Text>
+  <Toast ref={(ref) => Toast.setRef(ref)} />
     </Box>
   )
 }
