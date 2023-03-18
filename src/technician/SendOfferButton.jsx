@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, TextInput, View,TouchableOpacity } from 'reac
 import { useNavigation } from '@react-navigation/native';
 //FIXME
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { postOffer } from '../../services/api';
+import { postOffer,pushToEmployerById, getJobById } from '../../services/api';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useState, useEffect,useContext } from 'react';
 import AppContext from '../../AppContext';
@@ -42,18 +42,19 @@ const SendOffer = ({ route }) => {
       
     };
 
-    // fetch('http://localhost:5001/api/v1/offers', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(offer)
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   navigation.navigate('ViewOffer', { offer: data, refreshData: refreshData });
-    // })
-    // .catch(error => console.error(error));
-    const json = await postOffer(null, offer);
-    // navigation.navigate('ViewOffer', { offer: json, refreshData: refreshData });
+      const json = await postOffer(null, offer);
+      const job1 = await getJobById(jobId)
+
+
+      //push notification to all the technicianssssssssssss
+      const obj1 = {
+        "heading": `New quote recieved on your job post`,
+        "text": `Technician ${loggedInUser.name} added a quote on ${job1.title}`
+      }
+
+      const json3 = await pushToEmployerById(job1.employer,obj1)
+
+
     Toast.show({
       type: 'success',
       text1: 'Offer sent successfully!',
@@ -102,30 +103,10 @@ const SendOffer = ({ route }) => {
               )}
             </TouchableOpacity>
 
-
-      {/* <View style={styles.dateInputContainer}>
-        <Text style={styles.dateInputLabel}>Preferred start date: </Text>
-        <Text style={styles.dateInputText} onPress={() => setDatePickerVisibility(true)}>
-          {preferStartDate || 'Select date'}
-        </Text>
-      </View> */}
-      {/* <Button
-        title="Send Offer"
-        onPress={handleSendOffer}
-        jobId={jobId}
-      /> */}
       <TouchableOpacity style={styles.botton} onPress={handleSendOffer}>
             <Text style={styles.btntxt}>Send Offer</Text>
           </TouchableOpacity>
-      {/* <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="datetime"
-        onConfirm={(date) => {
-          setPreferStartDate(date.toISOString());
-          setDatePickerVisibility(false);
-        }}
-        onCancel={() => setDatePickerVisibility(false)}
-      /> */}
+
     </View>
   );
 };
