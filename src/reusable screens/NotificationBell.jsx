@@ -24,19 +24,20 @@ const NotificationBell = ({ hasNotifications }) => {
     //   .catch((error) => console.error(error));
     const see = async ()=> {
       const json = await getNotificationsByTechId(loggedInUser.id)
-      setNotificationCount(json)
+      setNotificationCount(json.length)
     }
     see()
   }, []);
   return (
     <TouchableOpacity onPress={navigateToNotification}>
       <View style={styles.headerRight}>
+
         <MaterialCommunityIcons name="bell-outline" size={24} color="#0D937D" />
         {notificationCount > 0 && (
           <View style={styles.notificationCount}>
             <Text style={styles.notificationCountText}>{notificationCount}</Text>
           </View>
-        )}
+         )} 
       </View>
     </TouchableOpacity>
   );
