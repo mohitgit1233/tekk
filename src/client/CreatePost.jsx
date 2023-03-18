@@ -74,7 +74,6 @@ const CreatePost = () => {
     const [postPhone, setPostPhone] = useState('');
     const [postMaxCost, setPostMaxCost] = useState('');
     const [startDate,setStartDate] = useState(new Date())
-    const [requirement,setRequirement] = useState(null)
     const [jobDescription,setJobDescription] = useState('')
     const [loading, setLoading] = useState(false);
 
@@ -82,11 +81,13 @@ const CreatePost = () => {
     const [open, setOpen] = useState(false);
 
   const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    {label: 'Carpenter', value: 'carpenter'},
+  const skills = [
     {label: 'Electrician', value: 'electrician'},
+    {label: 'Carpenter', value: 'carpenter'},
     {label: 'Plumber', value: 'plumber'}
-  ]);
+  ]
+  const [items, setItems] = useState(skills);
+  const [requirement,setRequirement] = useState(skills[0].value)
   const navigation = useNavigation();
     const [chosenDate, setChosenDate] = useState(new Date());
     const [showPicker, setShowPicker] = useState(true);
