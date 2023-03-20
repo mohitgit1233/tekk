@@ -187,6 +187,7 @@ const CreatePost = () => {
                   value={postMaxCost}
                   style={styles.input}
                   onChangeText={setPostMaxCost}
+                  keyboardType="numeric"
                 />
               </View>
       
