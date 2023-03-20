@@ -5,7 +5,7 @@ import { Input, NativeBaseProvider } from 'native-base';
 // import { AppStack } from '../technician/stacks/AppStack';
 import { Chat } from '../technician/screens/Chat';
 // import { AppStackClient } from '../client/stacks/AppStackClient';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+// import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { View, TextInput, Button,Image,TouchableOpacity } from 'react-native';
 import React, { useState, useContext } from 'react';
 import AppContext from '../../AppContext';
@@ -21,7 +21,7 @@ import {login} from '../../services/api'
 import Toast from 'react-native-toast-message';
 
 
-const Tab = createMaterialTopTabNavigator();
+// const Tab = createMaterialTopTabNavigator();
 
 // import jobFeed from './technician/JobPosts';
 const Stack = createNativeStackNavigator();

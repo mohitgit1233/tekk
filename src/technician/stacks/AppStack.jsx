@@ -1,4 +1,4 @@
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+// import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Account } from '../screens/Account';
 import { Activities } from '../screens/Activities';
