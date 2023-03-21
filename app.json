@@ -2,18 +2,25 @@
   "expo": {
     "name": "tekk",
     "slug": "tekk",
+    "scheme": "com.anonymous.tekk",
     "version": "1.0.0",
-    
-      "plugins": [
-        [
-          "expo-image-picker",
-          {
-            "photosPermission": "The app accesses your photos to let you share them with your friends."
-          }
-        ]
+    "sourceExts": [
+      "js",
+      "json",
+      "ts",
+      "tsx",
+      "jsx",
+      "vue"
+    ],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
       ]
-    
-    ,"orientation": "portrait",
+    ],
+    "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {

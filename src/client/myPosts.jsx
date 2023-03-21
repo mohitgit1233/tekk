@@ -6,14 +6,14 @@ import { StyleSheet, TouchableOpacity,TextInput,Image,RefreshControl,
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getJobsByEmployerId } from '../../services/api';
+import { UserAuth } from '../context/AuthContext';
 import AppContext from '../../AppContext';
 
 const MyPosts = ({ route }) => {
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
-
-    const [data, setData] = useState([]);
-    const navigation = useNavigation();
-    const [status,SetStatus] = useState('')
+  const { user } = UserAuth();
+  const [data, setData] = useState([]);
+  const navigation = useNavigation();
+  const [status,SetStatus] = useState('')
   const [searchTerm, setSearchTerm] = useState('');
   const [postStatus, setpostStatus] = useState('all')
   const [refreshing, setRefreshing] = React.useState(false);
@@ -31,7 +31,7 @@ const MyPosts = ({ route }) => {
         //     .then((resp) => resp.json())
         //     .then((json) => setData(json))
         //     .catch((error) => console.error(error));
-            const json = await getJobsByEmployerId(loggedInUser.id)
+            const json = await getJobsByEmployerId(user._id)
             setData(json)
           }
           see()
@@ -41,7 +41,7 @@ const MyPosts = ({ route }) => {
   //     .then((resp) => resp.json())
   //     .then((json) => setData(json))
   //     .catch((error) => console.error(error));
-      const json = await getJobsByEmployerId(loggedInUser.id)
+      const json = await getJobsByEmployerId(user._id)
       setData(json)
     }
     see()

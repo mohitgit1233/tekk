@@ -9,9 +9,10 @@ import React, { useState, useEffect,useContext } from 'react';
 import AppContext from '../../AppContext';
 import Toast from 'react-native-toast-message';
 import Moment from 'moment';
+import { UserAuth } from '../context/AuthContext';
 
 const SendOffer = ({ route }) => {
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+  const { user } = UserAuth();
   const { jobId, refreshData,tech_id } = route.params;
   const [offerPrice, setOfferPrice] = useState('');
   const [offerHours, setOfferHours] = useState('');
@@ -37,7 +38,7 @@ const SendOffer = ({ route }) => {
       jobID: jobId,
       offerPrice: parseInt(offerPrice),
       offerHours: parseInt(offerHours),
-      technicianId: loggedInUser.id,
+      technicianId: user._id,
       prefer_start_date: preferStartDate,
       
     };
@@ -49,7 +50,7 @@ const SendOffer = ({ route }) => {
       //push notification to all the technicianssssssssssss
       const obj1 = {
         "heading": `New quote recieved on your job post`,
-        "text": `Technician ${loggedInUser.name} added a quote on ${job1.title}`
+        "text": `Technician ${user.name} added a quote on ${job1.title}`
       }
 
       const json3 = await pushToEmployerById(job1.employer,obj1)

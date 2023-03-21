@@ -6,12 +6,12 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { getOffersByJobId,getJobById,acceptOffer, createRoom } from '../../services/api';
+import { UserAuth } from "../context/AuthContext";
 
 import AppContext from '../../AppContext';
 
 const AllOffers = (props) => {
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
-
+  const { user } = UserAuth();
 
     // const emp_id = '63f1b9adcf55c1d5b65f58ad'
     const [jobData,setJobData] = useState([])
@@ -62,7 +62,7 @@ const AllOffers = (props) => {
         console.log(pid)
             const offer = {
                 technician_id:teid,
-                employer_id:loggedInUser.id,
+                employer_id:user._id,
                 offer_id: pid,
                 jobID:id       
             };
@@ -144,7 +144,7 @@ const AllOffers = (props) => {
                   <Text style={styles.postSubtitleText}>Start date:{Moment(post.prefer_start_date).format('D MMMM YYYY')}</Text>
                   <TouchableOpacity style={{marginTop:10}}
                 title="Chat"
-                onPress={() => {goToChatRoom(id,post.technician_who_offered._id, loggedInUser.id)}}
+                onPress={() => {goToChatRoom(id,post.technician_who_offered._id, user._id)}}
                 //   jobId={jobId}
                 ><Text style={{textDecorationLine:'underline',textAlign:'left',color:'#0D937D'}}>Start Negotiation</Text></TouchableOpacity>
                 </View>

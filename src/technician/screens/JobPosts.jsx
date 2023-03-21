@@ -7,8 +7,10 @@ import NotificationBell from '../../reusable screens/NotificationBell';
 import { Box, FlatList, Center, NativeBaseProvider, Text, Button, ScrollView, View } from "native-base";
 import { getJobs } from '../../../services/api';
 import AppContext from '../../../AppContext';
+import { UserAuth } from "../../context/AuthContext";
+
 export const JobPosts = () => {
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+  const { user } = UserAuth();
 
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -65,7 +67,7 @@ export const JobPosts = () => {
           {filteredData.map((post) => {
             Moment.locale('en');
             return (
-              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id, tech_id: loggedInUser.id })}>
+              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id, tech_id: user._id })}>
                 <View style={styles.postContainer}>
                   <View style={styles.postTitleContainer}>
                     <Image style={styles.postImage} source={{ uri: post.images[0] }} />

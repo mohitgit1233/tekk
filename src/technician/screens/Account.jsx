@@ -4,11 +4,10 @@ import { TouchableOpacity } from 'react-native';
 // import { Reload } from 'react-native/Libraries/Reload/Reload';
 import { CommonActions } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
-
-
-
+import { UserAuth } from '../../context/AuthContext';
 
 export const Account = ({ navigation }) => {
+  const { logout,setgoogleAuthentication, setToken } = UserAuth();
 
   const handleProfilePress = () => {
     navigation.navigate('Profile');
@@ -26,12 +25,11 @@ export const Account = ({ navigation }) => {
     // Handle logout logic here
     // navigation.navigate('Logout');
     // Reload.reload();
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: 'Login' }],
-      })
-    );
+    setToken('')
+    setgoogleAuthentication(false)
+    logout().then(()=>{
+      navigation.replace("Login");
+    }).catch(error => alert(error.message));
 
     
     // navigation.navigate('Logout', { refreshTimeStamp: new 

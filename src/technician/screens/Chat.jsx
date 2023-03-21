@@ -7,11 +7,14 @@ import { getRooms } from '../../../services/api';
 import AppContext from '../../../AppContext';
 import { Box, Center, NativeBaseProvider } from "native-base";
 import { AntDesign } from '@expo/vector-icons';
+import { UserAuth } from "../../context/AuthContext";
+
 // const connection_api = 'http://192.168.5.131:3000/connection';
 // const message_api = 'http://192.168.5.131:3000/message';
 
 export const Chat = ({navigation}) => {
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+  const { user } = UserAuth();
+
 
   const [data1, setData1] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,8 +34,8 @@ export const Chat = ({navigation}) => {
       const json = await getRooms()
       console.log("DATA NEEDED");
       console.log(json);
-      console.log(loggedInUser.id);
-      const filteredArray = json.filter((item) => item.technician_id._id === loggedInUser.id).sort((a, b) => new Date(b.room_created) - new Date(a.room_created));
+      console.log(user._id);
+      const filteredArray = json.filter((item) => item.technician_id._id === user._id).sort((a, b) => new Date(b.room_created) - new Date(a.room_created));
 
       setData1(filteredArray)
 

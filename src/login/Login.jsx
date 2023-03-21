@@ -1,33 +1,25 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Pressable, StyleSheet, Text } from 'react-native';
-import { Input, NativeBaseProvider } from 'native-base';
-// import { AppStack } from '../technician/stacks/AppStack';
-import { Chat } from '../technician/screens/Chat';
-// import { AppStackClient } from '../client/stacks/AppStackClient';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { View, TextInput, Button,Image,TouchableOpacity } from 'react-native';
-import React, { useState, useContext } from 'react';
-import AppContext from '../../AppContext';
+import { useState, useEffect, useRef } from "react";
+import { Box, Radio, Heading, VStack, FormControl, Input, Link, HStack, NativeBaseProvider, Modal, Center } from "native-base";
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Fontisto } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { StatusBar } from 'expo-status-bar';
-// import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
-// import Icon from 'react-native-ionicons';
-import { CommonActions } from '@react-navigation/native';
-import {login} from '../../services/api'
-
 import Toast from 'react-native-toast-message';
+import { Pressable, StyleSheet, Text } from 'react-native';
+import { View, TextInput, Button,Image,TouchableOpacity } from 'react-native';
+import React, {  useContext } from 'react';
+import { UserAuth } from "../context/AuthContext";
 
+import { StatusBar } from 'expo-status-bar';
 
-const Tab = createMaterialTopTabNavigator();
+export const Login = ({navigation}) => {
 
-// import jobFeed from './technician/JobPosts';
-const Stack = createNativeStackNavigator();
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [userType, setUserType] = useState('');
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
+  const { signIn,setUser, user,setToken, token, googleAuthentication,promptAsync } = UserAuth();
 
-export const Login = () => {
-  // const { show } = SuccessToast();
 
   const handlePress = () => {
     Toast.show({
@@ -38,154 +30,188 @@ export const Login = () => {
       position: 'bottom'
     });
   };
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
 
-  const navigation = useNavigation();
-  const [show2, setShow2] = React.useState(false);
-  const [text, setText] = useState("a@gmail.com");
-  const [text2, setText2] = useState("12345678");
 
-  const handleSubmit = async () => {
-    // Do something with the text value, e.g. send it to a server
-    //technician
-    // navigation.navigate('technicianHome');
-    const body1 = {
-      "email": text,
-      "password": text2
-    }
-    const json1 = await login(null, body1);
-    console.log(json1);
-    if ( json1.error === false){
-      console.log("4444444444444444");
-      console.log(json1.data.name);
-      if (json1.isTechnician===true){
-        setLoggedInUser({
-          id: json1.data._id,
-          name: json1.data.name,
-          isTechnician: json1.data.isTechnician
-        })
-      // Reset the navigation stack and navigate to the technician portal
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'technicianHome',params: {
-            refreshData: 'example value',
-           
-          }, }],
-        })
-      );
-      }else{
-        setLoggedInUser({
-          id: json1.data._id,
-          name: json1.data.name,
-          isTechnician: json1.data.isTechnician
-        })
+  useEffect(() =>{
 
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: 'clientHome' }],
+    if(userType != '') {
+      const user_Google_Login = async () => {
+        await fetch('http://10.0.0.99:5001/api/v1/google-user-login',{
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'authorization': `Bearer ${token}` },
+          body: JSON.stringify({
+            role_type: userType
           })
-        );
+        }).then((resp) => resp.json())
+        .then(async (userData) => {
+          console.log(userData)
+          if(userData.data.role_type == "client") {
+            setUser(userData.data)
+            //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
+            navigation.navigate("clientHome");
+          } else if(userData.data.role_type == "technician"){
+            setToken(token)
+            setUser(userData.data)
+            //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
+            navigation.navigate("technicianHome");
+          }
+        })
+        .catch((error) => alert(error));
       }
-    }else {
-      console.log("login failed");
+
+      user_Google_Login()
     }
 
 
+  },[userType]);
 
+  
+  useEffect(() => {
 
-
-    console.log(text);
-  };
-  const handleSubmit2 = () => {
-    // Do something with the text value, e.g. send it to a server
-    //client
-    // navigation.navigate('clientHome');
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: 'clientHome' }],
-      })
-    );
-  };
-  const handleSubmit3 = () => {
-    // Do something with the text value, e.g. send it to a server
-    //client
-    navigation.navigate('imageUpload');
+    if(googleAuthentication){
+      const googleLogin = async () => {
+        await fetch('http://10.0.0.99:5001/api/v1/google-login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({}),
+        })
+          .then((resp) => resp.json())
+          .then(async (userData) => {
+              console.log(userData.data.user)
+            if(userData.message == "usernotindb") {
+              setModalVisible(true)
+            }
+            else if (userData.data.user.role_type == 'client') {
+              setUser(userData.data.user);
+              /*await AsyncStorage.setItem(
+                '@userData',
+                JSON.stringify(userData.data.user)
+              );*/
+              navigation.navigate('clientHome');
+            } else if (userData.data.user.role_type == 'technician') {
+              setUser(userData.data.user);
+             /* await AsyncStorage.setItem(
+                '@userData',
+                JSON.stringify(userData.data.user)
+              );*/
+              navigation.navigate('technicianHome');
+            }
+          })
+          .catch((error) => alert(error));        
+      }
+      googleLogin();
+    }
     
-  };
+  },[googleAuthentication]);
 
-
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    await signIn(email,password).then(async (userCredentails) => {
+      await userCredentails.user.getIdToken().then(async token=>{
+          await fetch('http://10.0.0.99:5001/api/v1/login',{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'authorization': `Bearer ${token}` },
+            body: JSON.stringify({})
+          }).then((resp) => resp.json())
+          .then(async (userData) => {
+            console.log(userData)
+            if(userData.data.user.role_type == "client") {
+              setToken(token)
+              setUser(userData.data.user)
+              //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
+              navigation.navigate("clientHome");
+            } else if(userData.data.user.role_type == "technician"){
+              setToken(token)
+              setUser(userData.data.user)
+              //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
+              navigation.navigate("technicianHome");
+            }
+          })
+          .catch((error) => alert(error));
+      }) 
+    })
+    .catch((error) => alert(error.message));
+  }
 
   return (
-
-    <View style={styles.container}>
-     
-      <Image source={require('../../assets/loginLogog.png')} style={styles.imagee}/>
-
-      <StatusBar style="auto" />
-      
-      
-      {/* <Text>Use email: as@gmail.com for client login</Text> */}
-
-
-      <View>
-      <Text style={styles.label}>Email</Text>
-      
-      <Input w={{
-      base: "75%",
-      md: "25%"
-    }}style={styles.field} 
-     placeholder="Email" onChangeText={(e)=>setText(e)} defaultValue={text} />
-
+    <>
+      <Center flex={1}>
+        <Center w="100%">
+          <Heading size="lg" fontWeight="600" color="coolGray.800" _dark={{ color: "warmGray.50"}}>
+            Tekk
+          </Heading>
+          <Box safeArea p="2" py="8" w="90%" maxW="290">
+            <VStack space={3} mt="5">
+              <FormControl>
+                <FormControl.Label>Email ID</FormControl.Label>
+                  <Input value={email} onChangeText={text => setEmail(text)} variant="underlined" placeholder="Enter you Email" />
+              </FormControl>
+              <FormControl>
+                <FormControl.Label>Password</FormControl.Label>
+                <Input variant="underlined" value={password} onChangeText={text => setPassword(text)} type="password" secureTextEntry placeholder="Enter you Password"  />
+                <Link _text={{
+                fontSize: "xs",
+                fontWeight: "500",
+                color: "indigo.500"
+              }} alignSelf="flex-end" mt="1">
+                  Forget Password?
+                </Link>
+              </FormControl>
+              <Button onPress={handleSignIn} mt="2" colorScheme="indigo" title="Sign in">
+              </Button>
     
-    <Text style={styles.label}>Password</Text>
+              <Button onPress={() => { promptAsync() }} mt="2" colorScheme="indigo" title="Sign in using Google"> 
+              </Button>
+              <HStack mt="6" justifyContent="center">
+              <Text fontSize="sm" color="coolGray.600" _dark={{
+              color: "warmGray.200"
+            }}>
+                I'm a new user.{" "}
+              </Text>
+              <Link _text={{
+              color: "indigo.500",
+              fontWeight: "medium",
+              fontSize: "sm"
+            }} onPress={() => navigation.navigate('Registration')}>
+                Sign Up
+              </Link>
+            </HStack>
+            </VStack>
+          </Box>
+        </Center>
+      </Center>
+      <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)} initialFocusRef={initialRef} finalFocusRef={finalRef}>
+      <Modal.Content>
+          <Modal.CloseButton />
+          <Modal.Header>Please choose your role</Modal.Header>
+          <Modal.Body>
+            <FormControl>
+                  <FormControl.Label>Would you like to be:</FormControl.Label>
+                    <Radio.Group name="exampleGroup" defaultValue="client" onChange={setUserType} value={userType}>
+                      <HStack space={6}>
+                        <Radio value="client" size="md" my={2}>
+                          Client
+                        </Radio>
+                        <Radio value="technician" size="md" my={2}>Technician</Radio>
+                      </HStack>
+                    </Radio.Group>
+              </FormControl>
+          </Modal.Body>
+          <Modal.Footer>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
 
-      <Input w={{
-      base: "75%",
-      md: "25%"
-    }} style={styles.field} 
-    type={show2 ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow2(!show2)}>
-            {/* <Icon  size={5} mr="2" color="red" /> */}
-          </Pressable>} placeholder="Password"   onChangeText={(e)=>setText2(e)} defaultValue={text2} />
 
-  </View>
-      {/* <Button style={styles.botton}
-        title="Login"
-        onPress={handleSubmit}
-      /> */}
-      <TouchableOpacity style={styles.botton} onPress={handleSubmit}>
-        <Text style={styles.btntxt}>Login</Text>
-      </TouchableOpacity>
-       {/* <Button title="Show Toast" onPress={handlePress} />
-       <Toast ref={(ref) => Toast.setRef(ref)} /> */}
-
-      {/* <Button style={styles.botton}
-        title="Login as Client"
-        onPress={handleSubmit2}
-      /> */}
-      {/* <Button style={styles.botton}
-        title="Upload image bro"
-        onPress={handleSubmit3}
-      /> */}
-
-    <View style= {{display:'flex',flexDirection:'row',alignItems:'center'}}>
-    <Text style={{marginRight:5}} >New User?</Text><TouchableOpacity ><Text style={{textDecorationLine:'underline'}}>Sign up here.</Text></TouchableOpacity>
-    </View>
-
-    <Text style={{fontSize: 20, marginTop:30}}> - OR - </Text>
-    <Text style={{ marginTop:20}}> Sign in using: </Text>
-    <View style ={styles.iccons}>
-    <TouchableOpacity style={{borderWidth:1,borderRadius:50,padding:15,margin:15,borderColor:'#0D937D'}} ><Fontisto name="google" size={35}  color={'#0D937D'}/></TouchableOpacity>
-    {/* <TouchableOpacity style={{borderWidth:1,borderRadius:50,padding:15,margin:15,borderColor:'#0D937D'}} ><Fontisto name="facebook" size={30}  color={'#0D937D'}/></TouchableOpacity> */}
-    <TouchableOpacity style={{borderWidth:1,borderRadius:50,padding:15,margin:15,borderColor:'#0D937D'}} ><Fontisto name="apple" size={35} color={'#0D937D'}/></TouchableOpacity>
-    </View>
-    
-    </View>
-
+      </>
   );
-}
+}    
+
+
 
 const styles = StyleSheet.create({
   container: {

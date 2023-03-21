@@ -6,10 +6,12 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getJobsByEmployerId } from '../../services/api';
 import AppContext from '../../AppContext';
+import { UserAuth } from '../context/AuthContext';
+
 
 //Requests
 const Offers = () => {
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+  const { user } = UserAuth();
     const [data, setData] = useState([]);
     const navigation = useNavigation();
   const [searchTerm, setSearchTerm] = useState('');
@@ -20,7 +22,7 @@ const Offers = () => {
   useEffect( () => {
     const unsubscribe = navigation.addListener('focus', () => {
       const see = async ()=>{
-        const json = await getJobsByEmployerId(loggedInUser.id)
+        const json = await getJobsByEmployerId(user._id)
         setData(json)
       }
       see()
@@ -30,7 +32,7 @@ const Offers = () => {
     //   .then((json) => setData(json))
     //   .catch((error) => console.error(error));
     const see = async ()=>{
-      const json = await getJobsByEmployerId(loggedInUser.id)
+      const json = await getJobsByEmployerId(user._id)
       setData(json)
     }
     see()

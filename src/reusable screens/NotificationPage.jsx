@@ -6,10 +6,11 @@ import { ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
 import { getNotificationsByTechId } from '../../services/api';
 import React, { useState, useEffect,useContext } from 'react';
 import AppContext from '../../AppContext';
+import { UserAuth } from '../context/AuthContext';
+
 import Moment from 'moment';
 const NotificationPage = () => {
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
-
+  const { user } = UserAuth();
   const [data, setData] = useState([]);
 
   // const tech_id = '63f17ce257353e03afc8f124'// to be replaced 
@@ -23,7 +24,7 @@ const NotificationPage = () => {
     //   .then((json) => setData(json))
     //   .catch((error) => console.error(error));
      const see = async () => {
-      const json  = await getNotificationsByTechId(loggedInUser.id)
+      const json  = await getNotificationsByTechId(user._id)
       const json2 =   json.sort((a, b) => new Date(b.date) - new Date(a.date));
       setData(json2)
      }

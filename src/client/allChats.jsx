@@ -6,11 +6,12 @@ import { AntDesign } from '@expo/vector-icons';
 import { SubChatClient }  from './SubChatClient'
 import { useNavigation } from '@react-navigation/native';
 import { getJobs, getRooms } from '../../services/api';
+import { UserAuth } from "../context/AuthContext";
 import AppContext from '../../AppContext';
 
 
 export const AllChats = ({navigation}) => {
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+  const { user } = UserAuth();
 
   const [data1, setData1] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -20,8 +21,7 @@ export const AllChats = ({navigation}) => {
       // await fetch("http://localhost:5001/api/v1/jobs")
       // const json =  await getJobs()
       const json =  await getRooms()
-      console.log(loggedInUser.id);
-      const filteredArray = json.filter((item) => item.employer_id._id === loggedInUser.id).sort((a, b) => new Date(b.room_created) - new Date(a.room_created));
+      const filteredArray = json.filter((item) => item.employer_id._id === user._id).sort((a, b) => new Date(b.room_created) - new Date(a.room_created));
 
       setData1(filteredArray)
       // setData1(json)

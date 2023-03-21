@@ -5,17 +5,18 @@ import io from 'socket.io-client';
 import { getMessages,getUserById, getCompletionsOpenAI, getJobById } from '../../services/api';
 import { SOCKET_API } from '../../services/api_config';
 import AppContext from '../../AppContext';
+import { UserAuth } from '../context/AuthContext';
 import Moment from 'moment';
 
 export const SubChatClient = ({ navigation, route }) => {
-    const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+    const { user } = UserAuth();
     const { propValue, p2, roomid, job_id } = route.params;
 
     const [tomessage, set_tomessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [sender, setSender] = useState("User");
     //actually client id 😉
-    const [tech_id, setTech_id] = useState(loggedInUser.id);
+    const [tech_id, setTech_id] = useState(user._id);
     const [tech_name, settech] = useState("");
     const [emp_name, setemp] = useState("");
     const [jobn, setjobn] = useState("");

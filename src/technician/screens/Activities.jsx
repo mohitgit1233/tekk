@@ -5,9 +5,10 @@ import Moment from 'moment';
 import { Box, Center, FlatList, NativeBaseProvider, ScrollView } from 'native-base';
 import AppContext from '../../../AppContext';
 import { getOffersByTechId, getIncomeHours } from '../../../services/api';
+import { UserAuth } from '../../context/AuthContext';
 
 export const Activities = ({ navigation }) => {
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+  const { user } = UserAuth();
   const [income, setIncome] = useState(0);
   const [hours, setHours] = useState(0);
   const [showChart, setShowChart] = useState(false);
@@ -26,14 +27,14 @@ export const Activities = ({ navigation }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const json = await getIncomeHours(loggedInUser.id);
+      const json = await getIncomeHours(user._id);
       setIncome(json.income);
       setHours(json.hours/ 3600);
     };
     fetchData();
 
   //   const fetchChartData = async () => {
-  //     const data = await getOffersByTechId(loggedInUser.id);
+  //     const data = await getOffersByTechId(user._id);
   //     const chartData = data.map((item) => ({
   //       date: Moment(item.date).format('MMM DD'),
   //       value: item.amount,

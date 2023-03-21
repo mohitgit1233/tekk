@@ -6,10 +6,12 @@ import { AntDesign } from '@expo/vector-icons';
 import { getOffersByTechId } from '../../../services/api';
 import React, { useState, useEffect,useContext } from 'react';
 import AppContext from '../../../AppContext';
+import { UserAuth } from "../../context/AuthContext";
+
 // const tech_id = '63f17ce257353e03afc8f124'
 
 export const MyJob = ({ navigation }) => {
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+  const { user } = UserAuth();
 
   const data2 = [];
   const [data, setData] = useState([]);
@@ -42,7 +44,7 @@ export const MyJob = ({ navigation }) => {
       // } catch (error) {
       //   console.error(error);
       // }
-      const json = await getOffersByTechId(loggedInUser.id)
+      const json = await getOffersByTechId(user._id)
       setOffers(json);
     }
     fetchOfferData()

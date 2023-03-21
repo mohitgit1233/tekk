@@ -5,8 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { getNotificationsByTechId } from '../../services/api';
 import AppContext from '../../AppContext';
+import { UserAuth } from '../context/AuthContext';
+
+
 const NotificationBell = ({ hasNotifications }) => {
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+  const { user } = UserAuth();
   const [notificationCount, setNotificationCount] = useState(0);
 
   // const tech_id = '63f17ce257353e03afc8f124' // to be replaced
@@ -23,7 +26,7 @@ const NotificationBell = ({ hasNotifications }) => {
     //   .then((json) => setNotificationCount(json))
     //   .catch((error) => console.error(error));
     const see = async ()=> {
-      const json = await getNotificationsByTechId(loggedInUser.id)
+      const json = await getNotificationsByTechId(user._id)
       setNotificationCount(json.length)
     }
     see()

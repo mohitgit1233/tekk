@@ -10,6 +10,7 @@ import { postJobs,pushToTechnicians } from '../../services/api';
 import AppContext from '../../AppContext';
 import * as ImagePicker from 'expo-image-picker';
 import { updateTechnicianImage, patchJobImages } from '../../services/api';
+import { UserAuth } from '../context/AuthContext';
 // import Toast from 'react-native-toast-message';
 import { getMessages,getUserById, getCompletionsOpenAI, getJobById } from '../../services/api';
 
@@ -17,7 +18,7 @@ import { getMessages,getUserById, getCompletionsOpenAI, getJobById } from '../..
 const CreatePost = () => {
   // const [image, setImage] = useState(null);
   // const [suggestedReplies, setSuggestedReplies] = useState("empty");
-
+  const { user } = UserAuth();
 
   const getGeneratedAd = async (message="") => {
     console.log("getGeneratedAd()");
@@ -65,9 +66,8 @@ const CreatePost = () => {
     }
   };
 
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
 
-    const [clientId,setClientId] = useState(loggedInUser.id)
+    const [clientId,setClientId] = useState(user._id)
     // const { refreshData} = route.params;
     const [postTitle, setPostTitle] = useState('');
     const [postAddress, setPostAddress] = useState('');
@@ -139,7 +139,7 @@ const CreatePost = () => {
       //push notification to all the technicianssssssssssss
       const obj1 = {
         "heading": "New Job Added",
-    "text": `employer ${loggedInUser.name} looking for a ${requirement}`
+    "text": `employer ${user.name} looking for a ${requirement}`
 }
       const json3 = await pushToTechnicians(null,obj1)
 

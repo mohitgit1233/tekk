@@ -53,9 +53,11 @@ import { updateTechnicianImage } from '../../../services/api';
 import { SOCKET_API } from '../../../services/api_config';
 import React, { useState, useEffect,useContext } from 'react';
 import AppContext from '../../../AppContext';
+import { UserAuth } from "../../context/AuthContext";
+
 
 export const Profile = () => {
-  const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+  const { user } = UserAuth();
   const [image, setImage] = useState(null);
   // const tech_id = '63f17ce257353e03afc8f124';
 
@@ -84,7 +86,7 @@ export const Profile = () => {
     });
     console.log("r1 calledddd");
 
-    const data = await updateTechnicianImage(loggedInUser.id, formData)
+    const data = await updateTechnicianImage(user._id, formData)
     console.log(data);
     console.log("success upload");
   };
@@ -93,7 +95,7 @@ export const Profile = () => {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Button title="Pick an image from camera roll" onPress={pickImage} />
       {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-      {image && <Button title="Submit" onPress={() => updateProfileImage(loggedInUser.id, image)} />}
+      {image && <Button title="Submit" onPress={() => updateProfileImage(user._id, image)} />}
     </View>
   );
 };

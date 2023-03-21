@@ -7,15 +7,17 @@ import { SOCKET_API, OPENAI_API_KEY } from '../../../services/api_config';
 // import React, { useState, useEffect, } from 'react';
 import AppContext from '../../../AppContext';
 import Moment from 'moment';
+import { UserAuth } from "../../context/AuthContext";
+
 
 export const SubChat = ({ navigation, route }) => {
-    const { loggedInUser, setLoggedInUser } = useContext(AppContext);
+  const { user } = UserAuth();
     const { propValue, p2, roomid, job_id } = route.params;
 
     const [tomessage, set_tomessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [sender, setSender] = useState("User");
-    const [tech_id, setTech_id] = useState(loggedInUser.id);
+    const [tech_id, setTech_id] = useState(user._id);
     const [tech_name, settech] = useState("");
     const [emp_name, setemp] = useState("");
     const [jobn, setjobn] = useState("");
