@@ -1,6 +1,6 @@
 import { useState,useContext,useEffect } from 'react';
 import {Box} from 'native-base'
-import { Button, TextInput, View,StyleSheet,Text,Image,FlatList , ScrollView, TouchableOpacity, ActivityIndicator} from 'react-native';
+import { Button, TextInput,Keyboard, View,StyleSheet,Text,Image,FlatList , ScrollView, TouchableOpacity, ActivityIndicator} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -182,14 +182,26 @@ const CreatePost = () => {
               </View>
       
               <View style={styles.labelinputwrapper}>
-                <TextInput
-                  placeholder="Maximum Cost"
-                  value={postMaxCost}
-                  style={styles.input}
-                  onChangeText={setPostMaxCost}
-                  keyboardType="numeric"
-                />
-              </View>
+  <TextInput
+    placeholder="Maximum Cost"
+    value={postMaxCost}
+    style={styles.input}
+    keyboardType="numeric"
+    onChangeText={(text) => {
+      // Regular expression to match only digits
+      const regex = /^[0-9]*$/;
+      
+      // Check if the input matches the regular expression or is an empty string
+      const isValidInput = regex.test(text) || text === '';
+
+      // If the input is valid, update the state
+      if (isValidInput) {
+        setPostMaxCost(text);
+      }
+    }}
+  />
+</View>
+
       
               <View style={styles.labelinputwrapper}>
               <View style={styles.container1}>
