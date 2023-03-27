@@ -7,6 +7,7 @@ import { Pressable, StyleSheet, Text } from 'react-native';
 import { View, TextInput, Button,Image,TouchableOpacity } from 'react-native';
 import React, {  useContext } from 'react';
 import { UserAuth } from "../context/AuthContext";
+import { API_BASE_URL } from "../../services/api_config";
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -36,7 +37,7 @@ export const Login = ({navigation}) => {
 
     if(userType != '') {
       const user_Google_Login = async () => {
-        await fetch('http://10.0.0.99:5001/api/v1/google-user-login',{
+        await fetch(`${API_BASE_URL}/google-user-login`,{
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'authorization': `Bearer ${token}` },
           body: JSON.stringify({
@@ -44,7 +45,6 @@ export const Login = ({navigation}) => {
           })
         }).then((resp) => resp.json())
         .then(async (userData) => {
-          console.log(userData)
           if(userData.data.role_type == "client") {
             setUser(userData.data)
             //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
@@ -70,7 +70,7 @@ export const Login = ({navigation}) => {
 
     if(googleAuthentication){
       const googleLogin = async () => {
-        await fetch('http://10.0.0.99:5001/api/v1/google-login', {
+        await fetch(`${API_BASE_URL}/google-login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -81,7 +81,6 @@ export const Login = ({navigation}) => {
         })
           .then((resp) => resp.json())
           .then(async (userData) => {
-              console.log(userData.data.user)
             if(userData.message == "usernotindb") {
               setModalVisible(true)
             }
@@ -112,13 +111,12 @@ export const Login = ({navigation}) => {
     e.preventDefault();
     await signIn(email,password).then(async (userCredentails) => {
       await userCredentails.user.getIdToken().then(async token=>{
-          await fetch('http://10.0.0.99:5001/api/v1/login',{
+          await fetch(`${API_BASE_URL}/login`,{
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'authorization': `Bearer ${token}` },
             body: JSON.stringify({})
           }).then((resp) => resp.json())
           .then(async (userData) => {
-            console.log(userData)
             if(userData.data.user.role_type == "client") {
               setToken(token)
               setUser(userData.data.user)
@@ -139,13 +137,11 @@ export const Login = ({navigation}) => {
 
   return (
     <>
-      <Center flex={1}>
+      <Center flex={1} style={styles.container}>
         <Center w="100%">
-          <Heading size="lg" fontWeight="600" color="coolGray.800" _dark={{ color: "warmGray.50"}}>
-            Tekk
-          </Heading>
+            <Image source={require('../../assets/loginLogog.png')} style={styles.imagee}/>
           <Box safeArea p="2" py="8" w="90%" maxW="290">
-            <VStack space={3} mt="5">
+            <VStack space={3} mt="1">
               <FormControl>
                 <FormControl.Label>Email ID</FormControl.Label>
                   <Input value={email} onChangeText={text => setEmail(text)} variant="underlined" placeholder="Enter you Email" />
@@ -161,25 +157,36 @@ export const Login = ({navigation}) => {
                   Forget Password?
                 </Link>
               </FormControl>
-              <Button onPress={handleSignIn} mt="2" colorScheme="indigo" title="Sign in">
-              </Button>
-    
-              <Button onPress={() => { promptAsync() }} mt="2" colorScheme="indigo" title="Sign in using Google"> 
-              </Button>
-              <HStack mt="6" justifyContent="center">
-              <Text fontSize="sm" color="coolGray.600" _dark={{
-              color: "warmGray.200"
-            }}>
-                I'm a new user.{" "}
-              </Text>
+              <TouchableOpacity style={styles.botton} onPress={handleSignIn}>
+                <Text style={styles.btntxt}>Sign In</Text>
+              </TouchableOpacity>
+              <HStack space={3} justifyContent="center" flexWrap={'wrap'}>
+                <Center>
+                  <Text fontSize="sm" color="coolGray.600" _dark={{
+                color: "warmGray.200"
+              }}>
+                  Don't have an account?.{"\n "}
+                </Text>
+                </Center>
+              <Center>
               <Link _text={{
-              color: "indigo.500",
+              color: "black",
               fontWeight: "medium",
               fontSize: "sm"
-            }} onPress={() => navigation.navigate('Registration')}>
-                Sign Up
+            }} style={{flex:1}} onPress={() => navigation.navigate('Registration')}>
+                Register here
               </Link>
+              </Center>
+
             </HStack>
+            <Center>
+             <Text style={{fontSize: 20}}> --- OR --- </Text>
+            </Center>
+            
+              <TouchableOpacity style={styles.botton} onPress={() => { promptAsync() }}>
+                <Text style={styles.btntxt}> Gmail </Text>
+              </TouchableOpacity>
+
             </VStack>
           </Box>
         </Center>
@@ -230,7 +237,7 @@ const styles = StyleSheet.create({
   },
   imagee:{
     marginTop:60,
-    marginBottom:40,
+    marginBottom:20,
     width: 120,
     height: 120,
     
