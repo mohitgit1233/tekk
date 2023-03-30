@@ -28,6 +28,7 @@ export const Registration = () => {
             email: email,
             name: name,
             phone: phone,
+            password: password,
             firebase_uid: user.uid,
             role_type: userType
           })

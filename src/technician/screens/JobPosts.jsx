@@ -15,6 +15,7 @@ export const JobPosts = () => {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [tech,setTech] = useState([]);
+  //const [filteredData,setFilteredData] = useState([]);
 
   // const url = 'http://localhost:5001/api/v1/jobs';
 
@@ -34,18 +35,37 @@ export const JobPosts = () => {
     });
     console.log('here')
     const see =  async () => {
+
       const json = await getJobs()
+      console.log(json)
       setData(json)
     }
     see()
     return unsubscribe;
   }, [navigation]);
 
-  const filteredData = data.filter(
+
+  /*useEffect(()=>{
+    if(data) {
+      console.log(data)
+
+      const jobData = 
+      data.filter(
+        (post) =>
+          (post.status === 'new job') &&
+          post.title.toLowerCase().includes(searchTerm.toLowerCase())
+      ).sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date));
+
+      setFilteredData(jobData)
+
+    }
+  },[data]) */
+
+ const filteredData = data.filter(
     (post) =>
       (post.status === 'new job') &&
       post.title.toLowerCase().includes(searchTerm.toLowerCase())
-  ).sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date));
+  ).sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date)); 
 
   const navigation = useNavigation();
 
@@ -64,7 +84,7 @@ export const JobPosts = () => {
           </View>
         </View>
         <ScrollView contentContainerStyle={styles.container}>
-          {filteredData.map((post) => {
+          { filteredData.length > 0 && filteredData.map((post) => {
             Moment.locale('en');
             return (
               <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id, tech_id: user._id })}>
@@ -74,7 +94,6 @@ export const JobPosts = () => {
                     <View style={styles.postContent}>
                       <View style={styles.postHeader}>
                         <Text style={styles.postTitleText}>{post.title}</Text>
-                        {/* <Text style={styles.postSubtitleText}>{post.location}</Text> */}
                         <Text style={{ marginRight: 5 }}>
     <Text style={{ fontWeight: 'bold' }}>Posted Date:</Text>{' '}
     {Moment(post.posted_date).format('M/DD/YYYY')}
@@ -91,7 +110,7 @@ export const JobPosts = () => {
             );
           })}
         </ScrollView>
-      </Box>
+      </Box> 
     </>
   );
   
