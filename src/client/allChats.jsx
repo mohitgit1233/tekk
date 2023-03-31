@@ -61,7 +61,7 @@ export const AllChats = ({navigation}) => {
       <View style={styles.container}>
         <Text style={styles.head}>Select Technician To Chat</Text>
         {/* AI button */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.postContainer}
         >
           <Image
@@ -71,7 +71,7 @@ export const AllChats = ({navigation}) => {
           <Text style={styles.postDescription}>
             Ask AI
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <FlatList
           style={styles.list}
           data={filteredData}

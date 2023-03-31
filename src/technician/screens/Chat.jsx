@@ -66,13 +66,13 @@ export const Chat = ({ navigation }) => {
       <View style={styles.container}>
         <Text style={styles.head}>Select Employer To Chat</Text>
         {/* AI button */}
-        <TouchableOpacity style={styles.postContainer}>
+        {/* <TouchableOpacity style={styles.postContainer}>
           <Image
             source={{ uri: 'https://fastly.picsum.photos/id/1/200/300.jpg?hmac=jH5bDkLr6Tgy3oAg5khKCHeunZMHq0ehBZr6vGifPLY' }}
             style={styles.image}
           />
           <Text style={styles.postDescription}>Ask AI</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <FlatList
           style={styles.list}
           data={filteredData}
