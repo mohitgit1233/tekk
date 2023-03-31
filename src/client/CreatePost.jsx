@@ -306,7 +306,7 @@ const CreatePost = () => {
               <Text style={styles.btntxt}>Submit Post</Text>
             </TouchableOpacity>
 
-          <Toast ref={(ref) => Toast.setRef(ref)} />
+          <Toast />
 
           </View>
         )}
