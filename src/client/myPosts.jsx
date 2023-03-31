@@ -62,12 +62,12 @@ const MyPosts = ({ route }) => {
 
   console.log(data.length)
   if (data.length > 0){
-    if (postStatus == 'all'){
-        filteredData = data.filter(post => post.status !== 'offered' ).sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date));
-    } else{
-        filteredData = data.filter(post => post && post.status === postStatus && post.title.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date));
+    if (postStatus === 'all'){
+      filteredData = data.filter(post => post.status !== 'offered' && post.title.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date));
+    } else {
+      filteredData = data.filter(post => post && post.status === postStatus && post.title.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date));
     }
-}
+  }
   
   console.log(data)
 
