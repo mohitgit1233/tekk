@@ -46,7 +46,7 @@ const SendOffer = ({ route }) => {
       const job1 = await getJobById(jobId)
 
 
-      //push notification to all the technicianssssssssssss
+      //push notification to the employer
       const obj1 = {
         "heading": `New quote recieved on your job post`,
         "text": `Technician ${loggedInUser.name} added a quote on ${job1.title}`

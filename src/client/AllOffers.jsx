@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import { getOffersByJobId,getJobById,acceptOffer, createRoom } from '../../services/api';
+import { getOffersByJobId,getJobById,acceptOffer, createRoom, pushToTechnicianById } from '../../services/api';
 
 import AppContext from '../../AppContext';
 
@@ -79,6 +79,14 @@ const AllOffers = (props) => {
             // .catch(error => console.error(error));
 
             const data1 = await acceptOffer(id,offer);
+
+            //push notification to  some technicianssssssssssss
+            const obj1 = {
+              "heading": `Your offer accepted by client`,
+              "text": `Client ${loggedInUser.name} accepted your offer on job`
+            }
+            const json3 = await pushToTechnicianById(teid,obj1)
+
 
             navigation.goBack();
     }

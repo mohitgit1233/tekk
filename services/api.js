@@ -253,6 +253,19 @@ export const pushToEmployerById = async (id=null,body=null) => {
       const data = await response.json();
       return data
 }
+//new
+export const pushToTechnicianById = async (id=null,body=null) => {
+    const response = await fetch(`${API_BASE_URL}/technicians/${id}/notifications`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      const data = await response.json();
+      return data
+}
 
 export const getCompletionsOpenAI = async (id = null, body = null) => {
 
