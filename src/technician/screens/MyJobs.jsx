@@ -65,7 +65,9 @@ export const MyJob = ({ navigation }) => {
 
   const filteredData = Offers.filter((post) => post.offerStatus === jobStatus  ).sort((a, b) => new Date(b.prefer_start_date) - new Date(a.prefer_start_date));
 
-  console.log('ddddd',filteredData.length)
+  const searchFilteredData = filteredData.filter((post) => post.jobID.title.toLowerCase().includes(searchTerm.toLowerCase()))
+
+  console.log('ddddd',searchFilteredData.length)
   
   return (
     <Box bg="#F9F9F9" height="100%">
@@ -99,9 +101,9 @@ export const MyJob = ({ navigation }) => {
         </Text></Button>
       </View>
       <ScrollView contentContainerStyle={styles.container}>
-       {filteredData.length > 0 ?  
+       {searchFilteredData.length > 0 ?  
         <>
-        {filteredData.map((post) => {
+        {searchFilteredData.map((post) => {
           Moment.locale('en');
           return (
             post.jobID === null ? (

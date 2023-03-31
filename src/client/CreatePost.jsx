@@ -183,10 +183,10 @@ const CreatePost = () => {
       
               <View style={styles.labelinputwrapper}>
   <TextInput
+    keyboardType="numeric"
     placeholder="Maximum Cost"
     value={postMaxCost}
     style={styles.input}
-    keyboardType="numeric"
     onChangeText={(text) => {
       // Regular expression to match only digits
       const regex = /^[0-9]*$/;
@@ -195,7 +195,7 @@ const CreatePost = () => {
       const isValidInput = regex.test(text) || text === '';
 
       // If the input is valid, update the state
-      if (isValidInput) {
+      if (isValidInput) {5
         setPostMaxCost(text);
       }
     }}
