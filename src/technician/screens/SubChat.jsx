@@ -7,6 +7,8 @@ import { SOCKET_API, OPENAI_API_KEY } from '../../../services/api_config';
 // import React, { useState, useEffect, } from 'react';
 import AppContext from '../../../AppContext';
 import Moment from 'moment';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 export const SubChat = ({ navigation, route }) => {
     const { loggedInUser, setLoggedInUser } = useContext(AppContext);
@@ -194,19 +196,27 @@ export const SubChat = ({ navigation, route }) => {
                 />
 
 
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.input}
-                        value={tomessage}
-                        onChangeText={(text) => set_tomessage(text)}
-                        placeholder="Type a message..."
-                        multiline={true}
-                    />
-                    {/* <Button title="Send" onPress={handleSend} /> */}
-                    <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
-              <Text style={styles.sendButtonText}>Send</Text>
-            </TouchableOpacity>
-                </View>
+<View style={styles.inputContainer}>
+    <View style={styles.inputIconContainer}>
+        <TouchableOpacity style={styles.inputIcon}>
+            <Icon name="camera" size={20} color="#666" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.inputIcon}>
+            <Icon name="photo" size={20} color="#666" />
+        </TouchableOpacity>
+    </View>
+    <TextInput
+        style={styles.input}
+        value={tomessage}
+        onChangeText={(text) => set_tomessage(text)}
+        placeholder="Type a message..."
+        multiline={true}
+    />
+    <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+        <Text style={styles.sendButtonText}>Send</Text>
+    </TouchableOpacity>
+</View>
+
                 {suggestedReplies.length > 0 && (
                     <View style={styles.suggestionList}>
 
@@ -359,5 +369,14 @@ const styles = StyleSheet.create({
         color: "#FFFFFF",
         fontWeight: "bold",
       },
+      inputIconContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 60,
+    },
+    inputIcon: {
+        marginHorizontal: 5,
+    },
 });
 
