@@ -10,6 +10,7 @@ import { Registration } from './src/screens/Registration';
 import Splash from './src/Splash';
 import { AppStack } from './src/technician/stacks/AppStack';
 import { AppStackClient } from './src/client/stacks/AppStackClient';
+import 'expo-dev-client';
 
 const Stack = createNativeStackNavigator();
 

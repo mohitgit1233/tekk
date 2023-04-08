@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import Moment from 'moment';
-import { Box, Center, FlatList, NativeBaseProvider, ScrollView } from 'native-base';
+import { Box,Button, Center, FlatList, NativeBaseProvider, ScrollView } from 'native-base';
 import AppContext from '../../../AppContext';
 import { getOffersByTechId, getIncomeHours } from '../../../services/api';
 import { UserAuth } from '../../context/AuthContext';
@@ -12,6 +12,7 @@ export const Activities = ({ navigation }) => {
   const [income, setIncome] = useState(0);
   const [hours, setHours] = useState(0);
   const [showChart, setShowChart] = useState(false);
+  const [jobStatus, setJobStatus] = useState('Year');
   const [chartData, setChartData] = useState([]);
   const [chartTitle, setChartTitle] = useState('Income History');
 
@@ -33,6 +34,7 @@ export const Activities = ({ navigation }) => {
     };
     fetchData();
 
+ 
   //   const fetchChartData = async () => {
   //     const data = await getOffersByTechId(user._id);
   //     const chartData = data.map((item) => ({
@@ -57,6 +59,24 @@ export const Activities = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+         <View style={styles.filterContainer}>
+         <Button width={110} variant={jobStatus === 'Week' ? 'solid' : 'outline'} onPress={() => setJobStatus('Week')} mr={2} mb={2}
+        style={jobStatus === 'Week' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>
+          <Text style={jobStatus === 'Week' ?{ color: '#F9F8F5', }: { color: '#0D937D', }}>
+          This Week
+        </Text></Button>
+        <Button width={110} variant={jobStatus === 'Month' ? 'solid' : 'outline'} onPress={() => setJobStatus('Month')} mr={2} mb={2}
+        style={jobStatus === 'Month' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>
+          <Text style={jobStatus === 'Month' ?{ color: '#F9F8F5', }: { color: '#0D937D', }}>
+          This Month
+        </Text></Button>
+        <Button width={110}  variant={jobStatus === 'Year' ? 'solid' : 'outline'} onPress={() => setJobStatus('Year')} mr={2} mb={2}
+        style={jobStatus === 'Year' ?{ backgroundColor: '#0D937D'}:{ backgroundColor: '#F9F8F5' }}>
+          <Text style={jobStatus === 'Year' ?{ color: '#F9F8F5', }: { color: '#0D937D', }}>
+          This Year
+            </Text>
+          </Button>
+      </View>
       <TouchableOpacity onPress={handleIncomePress}>
         <View style={styles.infoContainer}>
           <Text style={styles.incomeText}>{income.toFixed(2)} $</Text>
@@ -105,45 +125,54 @@ export const Activities = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: 'white'
-  },
-  infoContainer: {
-    backgroundColor: '#F2F2F2',
-    padding: 20,
-    borderRadius: 10,
-    marginBottom: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  labelText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'gray',
-    marginTop: 10,
-  },
-  incomeText: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: 'green',
-    lineHeight: 50,
-    marginBottom: 5,
-  },
-  hoursText: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: 'blue',
-    lineHeight: 50,
-  },
-  chartStyle: {
-    marginVertical: 8,
-    borderRadius: 10,
-  },
-  chartTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
+container: {
+flex: 1,
+backgroundColor: '#F9F8F5',
+paddingHorizontal: 20,
+paddingVertical: 10,
+},
+filterContainer: {
+flexDirection: 'row',
+justifyContent: 'space-between',
+marginBottom: 20,
+},
+infoContainer: {
+backgroundColor: '#FFFFFF',
+borderRadius: 10,
+padding: 20,
+marginBottom: 20,
+alignItems: 'center',
+},
+incomeText: {
+color: '#0D937D',
+fontSize: 30,
+fontWeight: 'bold',
+marginBottom: 10,
+},
+hoursText: {
+color: '#0D937D',
+fontSize: 30,
+fontWeight: 'bold',
+marginBottom: 10,
+},
+labelText: {
+color: '#0D937D',
+fontSize: 16,
+fontWeight: 'bold',
+},
+chartContainer: {
+backgroundColor: '#F9F8F5',
+borderRadius: 10,
+padding: 20,
+alignItems: 'center',
+},
+chartTitle: {
+fontSize: 18,
+fontWeight: 'bold',
+marginBottom: 10,
+},
+chartStyle: {
+marginVertical: 8,
+borderRadius: 16,
+},
 });

@@ -4,20 +4,15 @@
     "slug": "tekk",
     "scheme": "com.anonymous.tekk",
     "version": "1.0.0",
-    "sourceExts": [
-      "js",
-      "json",
-      "ts",
-      "tsx",
-      "jsx",
-      "vue"
-    ],
     "plugins": [
       [
         "expo-image-picker",
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
+      ],
+      [
+        "@react-native-google-signin/google-signin"
       ]
     ],
     "orientation": "portrait",
@@ -35,9 +30,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.tekk"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -52,7 +49,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "086c70a6-9cde-4dbb-9196-6990b07afdaa"
+        "projectId": "058f9075-56bf-425f-ab53-c062dbe3180a"
       }
     }
   }

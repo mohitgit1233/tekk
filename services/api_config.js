@@ -1,5 +1,5 @@
 //SOCKET
-export const SOCKET_API = 'http://localhost:5001';
+export const SOCKET_API = 'http://10.0.0.99:5001';
 //export const SOCKET_API = 'http://tekk-env.eba-udyk2w25.us-west-2.elasticbeanstalk.com'
 export const API_BASE_URL = `${SOCKET_API}/api/v1`;
 

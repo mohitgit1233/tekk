@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1005924771215",
+    "project_id": "tekknewauthentication",
+    "storage_bucket": "tekknewauthentication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005924771215:android:0c6450792fbd051892d7fa",
+        "android_client_info": {
+          "package_name": "com.anonymous.tekk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1005924771215-7lvra9csd8p0djj0euf91vtlr84r91jk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anonymous.tekk",
+            "certificate_hash": "8cbaf6b0e9a79ba5587411bebc214bf3d8785a5d"
+          }
+        },
+        {
+          "client_id": "1005924771215-c16g34c2e38hurs30glp5onnjpmgvjok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anonymous.tekk",
+            "certificate_hash": "d0a42cada7a2cb750b8b3e28f0988fc166aead93"
+          }
+        },
+        {
+          "client_id": "1005924771215-17t1qcdengnfqikq7gaspbf72d88d9aq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD11xUr54Q-J4X2inBAEgT2geyLgLIr6WM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1005924771215-17t1qcdengnfqikq7gaspbf72d88d9aq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

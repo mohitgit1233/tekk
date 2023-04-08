@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 // import { ScrollView } from 'native-base';
 import { ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
 // import { useState, useEffect } from 'react';
-import { getNotificationsByTechId } from '../../services/api';
+import { getNotificationsByTechId,deleteNotificationById } from '../../services/api';
 import React, { useState, useEffect,useContext } from 'react';
 import AppContext from '../../AppContext';
 import { UserAuth } from '../context/AuthContext';
@@ -32,7 +32,10 @@ const NotificationPage = () => {
   }, []);
 
   async function onDismiss(id) {
-    // const json = await deleteNotificationById(id)
+    console.log("dismssss");
+    const json = await deleteNotificationById(id,null)
+    setData(prevData => prevData.filter(notification => notification._id !== id));
+
     // setData(json)
   }
 

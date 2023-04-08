@@ -1,11 +1,21 @@
-
-import React, { useState, useEffect,useContext } from 'react';
-import { StyleSheet, View, TextInput, Button, FlatList, Text, KeyboardAvoidingView,TouchableOpacity, ScrollView,Image } from 'react-native';
-import { SubChat }  from './SubChat'
+import React, { useState, useEffect, useContext } from 'react';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Button,
+  FlatList,
+  Text,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+} from 'react-native';
+import { SubChat } from './SubChat';
 import { useNavigation } from '@react-navigation/native';
 import { getRooms } from '../../../services/api';
 import AppContext from '../../../AppContext';
-import { Box, Center, NativeBaseProvider } from "native-base";
+import { Box, Center, NativeBaseProvider } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 import { UserAuth } from "../../context/AuthContext";
 
@@ -16,9 +26,8 @@ export const Chat = ({navigation}) => {
   const { user } = UserAuth();
 
 
-  const [data1, setData1] = useState([]);
+  const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-
 
   useEffect(() => {
     const getJobs = async()=>{
@@ -43,69 +52,60 @@ export const Chat = ({navigation}) => {
        getJobs()
   }, []);
 
-  const navigateToNotification = (kindof_prop1, p2, roomid , job_id) => {
+  const navigateToNotification = (kindof_prop1, p2, roomid, job_id) => {
     console.log(kindof_prop1);
-    navigation.navigate('SubChat', { propValue: kindof_prop1, p2 , roomid, job_id  });
+    navigation.navigate('SubChat', { propValue: kindof_prop1, p2, roomid, job_id });
   };
+
+  const filteredData = data.filter((item) => {
+    return (
+      item.employer_id.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.job_id.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
 
   return (
     <Box bg="white" height="100%">
-    <View style={styles.searchContainer}>
-      <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search Chat"
-        onChangeText={(text) => setSearchTerm(text)}
-        value={searchTerm}
-      />
-    </View>
+      <View style={styles.searchContainer}>
+        <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search Chat"
+          onChangeText={(text) => setSearchTerm(text)}
+          value={searchTerm}
+        />
+      </View>
 
-    <View style={styles.container}>
-      <Text style={styles.head}>Select Employer To Chat</Text>
-      {/* AI button */}
-      <TouchableOpacity
-            style={styles.postContainer}
-          >
-            <Image
-              source={{ uri: "https://fastly.picsum.photos/id/1/200/300.jpg?hmac=jH5bDkLr6Tgy3oAg5khKCHeunZMHq0ehBZr6vGifPLY" }}
-              style={styles.image}
-            />
-            <Text style={styles.postDescription}>
-              Ask AI
-            </Text>
-          </TouchableOpacity>
-      <FlatList
-        style={styles.list}
-        data={data1}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-
-
-
-          <TouchableOpacity
-            style={styles.postContainer}
-            onPress={() =>
-              navigateToNotification(item._id, item.employer_id._id, item._id, item.job_id._id)
-            }
-          >
-            <Image
-              source={{ uri: item.job_id.images[0] }}
-              style={styles.image}
-            />
-            <View>
-              <Text style={styles.postDescription}>{item.job_id.title}</Text>
-              <Text style={styles.employerName}>Employer: {item.employer_id.name}</Text>
-            </View>
-          </TouchableOpacity>
-
-        )}
-      />
-    </View>
-  </Box>
-
+      <View style={styles.container}>
+        <Text style={styles.head}>Select Employer To Chat</Text>
+        {/* AI button */}
+        {/* <TouchableOpacity style={styles.postContainer}>
+          <Image
+            source={{ uri: 'https://fastly.picsum.photos/id/1/200/300.jpg?hmac=jH5bDkLr6Tgy3oAg5khKCHeunZMHq0ehBZr6vGifPLY' }}
+            style={styles.image}
+          />
+          <Text style={styles.postDescription}>Ask AI</Text>
+        </TouchableOpacity> */}
+        <FlatList
+          style={styles.list}
+          data={filteredData}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.postContainer}
+              onPress={() => navigateToNotification(item._id, item.employer_id._id, item._id, item.job_id._id)}>
+              <Image source={{ uri: item.job_id.images[0] }} style={styles.image} />
+              <View>
+                <Text style={styles.postDescription}>{item.job_id.title}</Text>
+                <Text style={styles.employerName}>Employer: {item.employer_id.name}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
+    </Box>
   );
-};
-
+}
 const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',

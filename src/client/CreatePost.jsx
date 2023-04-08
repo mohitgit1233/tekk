@@ -12,6 +12,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { updateTechnicianImage, patchJobImages } from '../../services/api';
 import { UserAuth } from '../context/AuthContext';
 // import Toast from 'react-native-toast-message';
+import Toast from 'react-native-toast-message';
 import { getMessages,getUserById, getCompletionsOpenAI, getJobById } from '../../services/api';
 
 // import { Picker } from '@react-native-picker/picker';
@@ -98,6 +99,28 @@ const CreatePost = () => {
       }
     }
     const handleSendOffer = async () => {
+      //validation
+      if (clientId === null || clientId === "" ||
+      postTitle === null || postTitle === "" ||
+      jobDescription === null || jobDescription === "" ||
+      requirement === null || requirement === "" ||
+      postMaxCost === null || postMaxCost === "" ||
+      startDate === null || startDate === "" ||
+      postAddress === null || postAddress === "" 
+      )
+      {
+        console.log("can't post job");
+        //toast
+        Toast.show({
+          type: 'success',
+          text1: "can't post job, field empty!",
+          visibilityTime: 1000,
+          position:'bottom',
+          autoHide: true,
+        });
+        //return
+        return;
+      }
       const offer = {
         client_id: clientId,
         title:postTitle,
@@ -143,6 +166,16 @@ const CreatePost = () => {
 }
       const json3 = await pushToTechnicians(null,obj1)
 
+
+              //toast
+              Toast.show({
+                type: 'success',
+                text1: "Posted Successfully!",
+                visibilityTime: 1000,
+                position:'bottom',
+                autoHide: true,
+              });
+
       navigation.goBack();
     };
     return (
@@ -183,10 +216,10 @@ const CreatePost = () => {
       
               <View style={styles.labelinputwrapper}>
   <TextInput
+    keyboardType="numeric"
     placeholder="Maximum Cost"
     value={postMaxCost}
     style={styles.input}
-    keyboardType="numeric"
     onChangeText={(text) => {
       // Regular expression to match only digits
       const regex = /^[0-9]*$/;
@@ -195,7 +228,7 @@ const CreatePost = () => {
       const isValidInput = regex.test(text) || text === '';
 
       // If the input is valid, update the state
-      if (isValidInput) {
+      if (isValidInput) {5
         setPostMaxCost(text);
       }
     }}
@@ -203,21 +236,7 @@ const CreatePost = () => {
 </View>
 
       
-              <View style={styles.labelinputwrapper}>
-              <View style={styles.container1}>
-            <TextInput
-              placeholder="Description"
-              value={jobDescription}
-              style={styles.description}
-              onChangeText={setJobDescription}
-              multiline={true}
-              numberOfLines={4}
-            />
-            <TouchableOpacity style={styles.fillButton} onPress={() => getGeneratedAd(`Create a 500-word ad description to help me hire a technician based on this: title: ${postTitle}, job: ${requirement}, address: ${postAddress}, payment: ${postMaxCost}, start-date: ${startDate}`)}>
-              {loading ? <ActivityIndicator size="small" color="#FFFFFF" /> : <Text style={{ color: 'white' }}>Auto Generate</Text>}
-            </TouchableOpacity>
-          </View>
-              </View>
+
       
               <TouchableOpacity
                 style={styles.input}
@@ -250,6 +269,26 @@ const CreatePost = () => {
                   dropDownContainerStyle={styles.dropDownContainer}
                 />
               </View>
+
+
+              <View style={styles.labelinputwrapper}>
+              <View style={styles.container1}>
+            <TextInput
+              placeholder="Description"
+              value={jobDescription}
+              style={styles.description}
+              onChangeText={setJobDescription}
+              multiline={true}
+              numberOfLines={4}
+            />
+            <TouchableOpacity style={styles.fillButton} onPress={() => getGeneratedAd(`Create a 500-word ad description to help me hire a technician based on this: title: ${postTitle}, job: ${requirement}, address: ${postAddress}, payment: ${postMaxCost}, start-date: ${startDate}`)}>
+              {loading ? <ActivityIndicator size="small" color="#FFFFFF" /> : <Text style={{ color: 'white' }}>Auto Generate</Text>}
+            </TouchableOpacity>
+          </View>
+              </View>
+
+
+
             </View>
       
             <TouchableOpacity style={styles.addImagesButton} onPress={pickImages}>
@@ -267,6 +306,9 @@ const CreatePost = () => {
             <TouchableOpacity style={styles.botton} onPress={handleSendOffer}>
               <Text style={styles.btntxt}>Submit Post</Text>
             </TouchableOpacity>
+
+          <Toast />
+
           </View>
         )}
       />

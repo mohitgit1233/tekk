@@ -8,7 +8,7 @@ import { View, TextInput, Button,Image,TouchableOpacity } from 'react-native';
 import React, {  useContext } from 'react';
 import { UserAuth } from "../context/AuthContext";
 import { API_BASE_URL } from "../../services/api_config";
-
+import auth from '@react-native-firebase/auth';
 import { StatusBar } from 'expo-status-bar';
 
 export const Login = ({navigation}) => {
@@ -19,7 +19,8 @@ export const Login = ({navigation}) => {
   const [userType, setUserType] = useState('');
   const initialRef = useRef(null);
   const finalRef = useRef(null);
-  const { signIn,setUser, user,setToken, token, googleAuthentication,promptAsync } = UserAuth();
+  const { signIn, onGoogleButtonPress, setToken,token, setUser, googleAuthentication, setgoogleAuthentication } = UserAuth();
+  //const { signIn,setUser, user,setToken, token, /*googleAuthentication, promptAsync*/ } = UserAuth();
 
 
   const handlePress = () => {
@@ -31,6 +32,15 @@ export const Login = ({navigation}) => {
       position: 'bottom'
     });
   };
+
+  const googleLogin = async () => {
+    await onGoogleButtonPress().then(async resp =>{
+      const {token} = await auth().currentUser.getIdTokenResult();
+      setToken(token)
+      //console.log(resp)
+      setgoogleAuthentication(true)
+    })
+  }
 
 
   useEffect(() =>{
@@ -48,10 +58,12 @@ export const Login = ({navigation}) => {
           if(userData.data.role_type == "client") {
             setUser(userData.data)
             //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
+            setModalVisible(false)
             navigation.navigate("clientHome");
           } else if(userData.data.role_type == "technician"){
             setToken(token)
             setUser(userData.data)
+            setModalVisible(false)
             //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
             navigation.navigate("technicianHome");
           }
@@ -67,7 +79,6 @@ export const Login = ({navigation}) => {
 
   
   useEffect(() => {
-
     if(googleAuthentication){
       const googleLogin = async () => {
         await fetch(`${API_BASE_URL}/google-login`, {
@@ -105,34 +116,34 @@ export const Login = ({navigation}) => {
       googleLogin();
     }
     
-  },[googleAuthentication]);
+  },[googleAuthentication]); 
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    await signIn(email,password).then(async (userCredentails) => {
-      await userCredentails.user.getIdToken().then(async token=>{
-          await fetch(`${API_BASE_URL}/login`,{
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'authorization': `Bearer ${token}` },
-            body: JSON.stringify({})
-          }).then((resp) => resp.json())
-          .then(async (userData) => {
-            if(userData.data.user.role_type == "client") {
-              setToken(token)
-              setUser(userData.data.user)
-              //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
-              navigation.navigate("clientHome");
-            } else if(userData.data.user.role_type == "technician"){
-              setToken(token)
-              setUser(userData.data.user)
-              //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
-              navigation.navigate("technicianHome");
-            }
-          })
-          .catch((error) => alert(error));
-      }) 
-    })
-    .catch((error) => alert(error.message));
+    await signIn(email,password).then(async (userCredentials) => {
+      await userCredentials.user.getIdToken().then(async token=>{
+        await fetch(`${API_BASE_URL}/login`,{
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'authorization': `Bearer ${token}` },
+          body: JSON.stringify({})
+        }).then((resp) => resp.json())
+        .then(async (userData) => {
+          if(userData.data.user.role_type == "client") {
+            setToken(token)
+            setUser(userData.data.user)
+            //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
+            navigation.navigate("clientHome");
+          } else if(userData.data.user.role_type == "technician"){
+            setToken(token)
+            setUser(userData.data.user)
+            //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
+            navigation.navigate("technicianHome");
+          }
+        })
+        .catch((error) => alert(error));
+    }) 
+
+    }).catch((error) => alert(error.message)); 
   }
 
   return (
@@ -182,10 +193,10 @@ export const Login = ({navigation}) => {
             <Center>
              <Text style={{fontSize: 20}}> --- OR --- </Text>
             </Center>
-            
-              <TouchableOpacity style={styles.botton} onPress={() => { promptAsync() }}>
+
+            <TouchableOpacity style={styles.botton} onPress={googleLogin}>
                 <Text style={styles.btntxt}> Gmail </Text>
-              </TouchableOpacity>
+            </TouchableOpacity>
 
             </VStack>
           </Box>
