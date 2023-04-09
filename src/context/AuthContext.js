@@ -25,6 +25,8 @@ export const AuthContextProvider = ({ children }) => {
     scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
     webClientId:
       '1005924771215-17t1qcdengnfqikq7gaspbf72d88d9aq.apps.googleusercontent.com',
+    iosClientId:
+      '1005924771215-5jhg42c0tndnuvi15bod4h84jkh0p7cq.apps.googleusercontent.com',
     offlineAccess: true,
   });
 
