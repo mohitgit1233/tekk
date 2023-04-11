@@ -19,6 +19,7 @@ import {
 } from './api_config';
 
 import { UserAuth } from '../src/context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // export const getOffersByJobId = (id) => {
 //     const url = OFFERS_BY_JOBID(id);
@@ -28,9 +29,22 @@ import { UserAuth } from '../src/context/AuthContext';
 //       .catch((error) => console.error(error));
 //   };
 
+const storedToken = async () => {
+  const token = await AsyncStorage.getItem('@token');
+  if (token) {
+    return JSON.parse(token);
+  }
+  return null;
+};
+
 const { token } = UserAuth;
 
+let tokenData = '';
+
 export const generic = async (url, id = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
   try {
     let response = null;
     if (id) {
@@ -39,7 +53,7 @@ export const generic = async (url, id = null) => {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${tokenData}`,
         },
       });
     } else {
@@ -48,7 +62,7 @@ export const generic = async (url, id = null) => {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${tokenData}`,
         },
       });
     }
@@ -70,12 +84,16 @@ export const getRooms = async (id = null) => {
   return await generic(ROOMS);
 };
 export const acceptOffer = async (id = null, body = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
+
   try {
     const response = await fetch(ACCEPT_OFFER(id), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${tokenData}`,
       },
       body: JSON.stringify(body),
     });
@@ -88,12 +106,15 @@ export const acceptOffer = async (id = null, body = null) => {
 };
 
 export const createRoom = async (id = null, body = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
   try {
     const response = await fetch(ROOMS, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${tokenData}`,
       },
       body: JSON.stringify(body),
     });
@@ -106,12 +127,16 @@ export const createRoom = async (id = null, body = null) => {
 };
 
 export const rejectOffer = async (id = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
+
   try {
     const response = await fetch(REJECT_OFFER(id), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${tokenData}`,
       },
       body: JSON.stringify(body),
     });
@@ -126,12 +151,15 @@ export const getJobs = async (id = null) => {
   return await generic(JOBS, id);
 };
 export const postJobs = async (id = null, body = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
   try {
     const response = await fetch(JOBS, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${tokenData}`,
       },
       body: JSON.stringify(body),
     });
@@ -161,12 +189,15 @@ export const getOffers = async (id = null) => {
   return await generic(ALL_OFFERS, id);
 };
 export const postOffer = async (id = null, body = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
   try {
     const response = await fetch(ALL_OFFERS, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${tokenData}`,
       },
       body: JSON.stringify(body),
     });
@@ -178,12 +209,15 @@ export const postOffer = async (id = null, body = null) => {
   }
 };
 export const clockIn = async (id = null, body = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
   try {
     const response = await fetch(CLOCKIN(id), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${tokenData}`,
       },
       body: JSON.stringify(body),
     });
@@ -195,12 +229,15 @@ export const clockIn = async (id = null, body = null) => {
   }
 };
 export const clockOut = async (id = null, body = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
   try {
     const response = await fetch(CLOCKOUT(id), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${tokenData}`,
       },
       body: JSON.stringify(body),
     });
@@ -227,12 +264,15 @@ export const getIncomeHours = async (id = null) => {
 };
 
 export const updateTechnicianImage = async (id = null, body = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
   const response = await fetch(`${API_BASE_URL}/technicians/${id}`, {
     method: 'PATCH',
     body: body,
     headers: {
       'Content-Type': 'multipart/form-data',
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${tokenData}`,
     },
   });
 
@@ -240,12 +280,15 @@ export const updateTechnicianImage = async (id = null, body = null) => {
   return data;
 };
 export const patchJobImages = async (id = null, body = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
   const response = await fetch(`${API_BASE_URL}/jobs/${id}/images`, {
     method: 'PATCH',
     body: body,
     headers: {
       'Content-Type': 'multipart/form-data',
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${tokenData}`,
     },
   });
 
@@ -259,7 +302,7 @@ export const login = async (id = null, body = null) => {
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${storedToken()}`,
     },
   });
 
@@ -267,12 +310,15 @@ export const login = async (id = null, body = null) => {
   return data;
 };
 export const pushToTechnicians = async (id = null, body = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
   const response = await fetch(`${API_BASE_URL}/technicians/notifications`, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${tokenData}`,
     },
   });
 
@@ -280,6 +326,9 @@ export const pushToTechnicians = async (id = null, body = null) => {
   return data;
 };
 export const pushToEmployerById = async (id = null, body = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
   const response = await fetch(
     `${API_BASE_URL}/employers/${id}/notifications`,
     {
@@ -287,7 +336,7 @@ export const pushToEmployerById = async (id = null, body = null) => {
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${tokenData}`,
       },
     }
   );
@@ -297,6 +346,9 @@ export const pushToEmployerById = async (id = null, body = null) => {
 };
 //new
 export const pushToTechnicianById = async (id = null, body = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
   const response = await fetch(
     `${API_BASE_URL}/technicians/${id}/notifications`,
     {
@@ -304,7 +356,7 @@ export const pushToTechnicianById = async (id = null, body = null) => {
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${tokenData}`,
       },
     }
   );
@@ -326,12 +378,15 @@ export const deleteNotificationById = async (id = null, body = null) => {
 };
 
 export const getCompletionsOpenAI = async (id = null, body = null) => {
+  await storedToken().then((res) => {
+    tokenData = res;
+  });
   // const response = await fetch('https://api.openai.com/v1/completions', {
   const response = await fetch(`${API_BASE_URL}/openai/completions`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${tokenData}`,
     },
     body: JSON.stringify(body),
   });

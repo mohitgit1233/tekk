@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Box, Radio, Heading, VStack, FormControl, Input, Link, HStack, NativeBaseProvider, Modal, Center } from "native-base";
-//import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Fontisto } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 import { Pressable, StyleSheet, Text } from 'react-native';
@@ -20,8 +20,6 @@ export const Login = ({navigation}) => {
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const { signIn, onGoogleButtonPress, setToken,token, setUser, googleAuthentication, setgoogleAuthentication } = UserAuth();
-  //const { signIn,setUser, user,setToken, token, /*googleAuthentication, promptAsync*/ } = UserAuth();
-
 
   const handlePress = () => {
     Toast.show({
@@ -37,7 +35,7 @@ export const Login = ({navigation}) => {
     await onGoogleButtonPress().then(async resp =>{
       const {token} = await auth().currentUser.getIdTokenResult();
       setToken(token)
-      //console.log(resp)
+      await AsyncStorage.setItem('@token', token);
       setgoogleAuthentication(true)
     })
   }
@@ -57,14 +55,15 @@ export const Login = ({navigation}) => {
         .then(async (userData) => {
           if(userData.data.role_type == "client") {
             setUser(userData.data)
-            //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
+            await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
             setModalVisible(false)
             navigation.navigate("clientHome");
           } else if(userData.data.role_type == "technician"){
             setToken(token)
+            await AsyncStorage.setItem('@token', token);
             setUser(userData.data)
+            await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
             setModalVisible(false)
-            //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
             navigation.navigate("technicianHome");
           }
         })
@@ -97,17 +96,17 @@ export const Login = ({navigation}) => {
             }
             else if (userData.data.user.role_type == 'client') {
               setUser(userData.data.user);
-              /*await AsyncStorage.setItem(
+              await AsyncStorage.setItem(
                 '@userData',
                 JSON.stringify(userData.data.user)
-              );*/
+              );
               navigation.navigate('clientHome');
             } else if (userData.data.user.role_type == 'technician') {
               setUser(userData.data.user);
-             /* await AsyncStorage.setItem(
+              await AsyncStorage.setItem(
                 '@userData',
                 JSON.stringify(userData.data.user)
-              );*/
+              );
               navigation.navigate('technicianHome');
             }
           })
@@ -131,13 +130,15 @@ export const Login = ({navigation}) => {
           console.log(userData)
           if(userData.data.user.role_type == "client") {
             setToken(token)
+            await AsyncStorage.setItem('@token', JSON.stringify(token));
             setUser(userData.data.user)
-            //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
+            await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
             navigation.navigate("clientHome");
           } else if(userData.data.user.role_type == "technician"){
             setToken(token)
+            await AsyncStorage.setItem('@token', JSON.stringify(token));
             setUser(userData.data.user)
-            //await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
+            await AsyncStorage.setItem('@userData', JSON.stringify(userData.data));
             navigation.navigate("technicianHome");
           }
         })

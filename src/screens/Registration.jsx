@@ -1,11 +1,13 @@
 import { useState } from "react";
 import {  Box, Radio, Text, Heading, VStack, FormControl, Input, Link, Button, HStack, Center, NativeBaseProvider } from "native-base";
-import { auth } from "../firebase";
+//import { auth } from "../firebase";
 import {  StyleSheet, TouchableOpacity } from 'react-native';
 
-import {createUserWithEmailAndPassword , updateProfile } from 'firebase/auth'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { API_BASE_URL } from "../../services/api_config";
+import { UserAuth } from "../context/AuthContext";
+import auth from '@react-native-firebase/auth';
+
 
 export const Registration = () => {
   const [email,setEmail] = useState('');
@@ -14,11 +16,12 @@ export const Registration = () => {
   const [password,setPassword] = useState('');
   const [userType,setUserType] = useState([]);
   const navigation = useNavigation();
+  const {createUser} =UserAuth();
 
   const handleSignUp = async () => {
-    await createUserWithEmailAndPassword(auth,email,password).then(async (userCredentails) => {
+    await createUser(email,password).then(async (userCredentails) => {
       const user = userCredentails.user; 
-      await updateProfile(user, {
+      await auth().currentUser.updateProfile({
         displayName: name,
       })
          await fetch(`${API_BASE_URL}/register`,{

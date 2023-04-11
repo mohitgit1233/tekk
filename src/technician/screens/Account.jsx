@@ -5,6 +5,7 @@ import { TouchableOpacity } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { UserAuth } from '../../context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const Account = ({ navigation }) => {
   const { logout,setgoogleAuthentication, setToken } = UserAuth();
@@ -21,11 +22,12 @@ export const Account = ({ navigation }) => {
     navigation.navigate('Notifications');
   };
 
-  const handleLogoutPress = () => {
+  const handleLogoutPress = async () => {
     // Handle logout logic here
     // navigation.navigate('Logout');
     // Reload.reload();
     setToken('')
+    await AsyncStorage.setItem('@token','');
     setgoogleAuthentication(false)
     logout().then(()=>{
       navigation.replace("Login");
