@@ -16,34 +16,62 @@ import { OFFERS_BY_JOBID,
     API_BASE_URL,
     // OPENAI_API_KEY
 } from './api_config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
-// export const getOffersByJobId = (id) => {
-//     const url = OFFERS_BY_JOBID(id);
-  
-//     return fetch(url)
-//       .then((resp) => resp.json())
-//       .catch((error) => console.error(error));
-//   };
-
-export const generic = async (url, id=null ) => {
-try {
-    let response = null
-    if (id)
-    {
-        response = await fetch(url(id));
+const addJwtToHeaders = async (headers) => {
+    const key = 'jwtoken';
+    try {
+        const jwt = await retrieveData(key); // Call retrieveData to get the JWT value
+        if (jwt) {
+            headers.Authorization = `Bearer ${jwt}`; // Add JWT to headers
+            console.log('JWT added to headers:', headers);
+        }
+        return headers;
+    } catch (error) {
+        console.error('Error adding JWT to headers:', error);
+        return headers;
     }
-    else
-    {
-        response = await fetch(url);
+};
+
+const retrieveData = async (key) => {
+    try {
+        const value = await AsyncStorage.getItem(key);
+        if (value !== null) {
+            // Data found
+            console.log('Data retrieved successfully:', value);
+            return value;
+        } else {
+            // Data not found
+            console.log('No data found for key:', key);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error retrieving data:', error);
+        return null;
     }
-    const data = await response.json();
-    return data;
-} catch (error) {
-    console.error(error);
-    throw error;
-}
+};
+
+export const generic = async (url, id = null) => {
+    try {
+        let response = null;
+        const headers = await addJwtToHeaders({
+            'Content-Type': 'application/json'
+        }); 
+        if (id) {
+            response = await fetch(url(id), {
+                headers
+            });
+        } else {
+            response = await fetch(url, {
+                headers
+            });
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 };
 
 export const getOffersByJobId = async (id=null) => {

@@ -19,7 +19,7 @@ import { CommonActions } from '@react-navigation/native';
 import {login} from '../../services/api'
 
 import Toast from 'react-native-toast-message';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // const Tab = createMaterialTopTabNavigator();
 
@@ -55,6 +55,21 @@ export const Login = () => {
     }
     const json1 = await login(null, body1);
     console.log(json1);
+    console.log(json1.token)
+    
+    //store in async storage
+    const storeData = async (key, value) => {
+      try {
+        await AsyncStorage.setItem(key, value);
+        console.log('Data stored successfully!');
+      } catch (error) {
+        console.error('Error storing data:', error);
+      }
+    };
+
+    storeData("jwtoken",json1.token)
+
+
     if ( json1.error === false){
       console.log("4444444444444444");
       console.log(json1.data.name);
