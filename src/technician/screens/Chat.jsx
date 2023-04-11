@@ -26,7 +26,7 @@ export const Chat = ({navigation}) => {
   const { user } = UserAuth();
 
 
-  const [data, setData] = useState([]);
+  const [data, setData1] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
