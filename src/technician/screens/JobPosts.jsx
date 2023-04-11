@@ -61,7 +61,7 @@ export const JobPosts = () => {
     }
   },[data]) */
 
- const filteredData = data.filter(
+ const filteredData = data.length>0 && data.filter(
     (post) =>
       (post.status === 'new job') &&
       post.title.toLowerCase().includes(searchTerm.toLowerCase())

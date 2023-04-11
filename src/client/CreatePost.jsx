@@ -91,12 +91,13 @@ const CreatePost = () => {
   const [requirement,setRequirement] = useState(skills[0].value)
   const navigation = useNavigation();
     const [chosenDate, setChosenDate] = useState(new Date());
-    const [showPicker, setShowPicker] = useState(true);
+    const [showPicker, setShowPicker] = useState(false);
     const onDateChange = (event, newDate) => {
     //   setShowPicker(false);
-      if (newDate !== undefined) {
+      if (event.type == 'set' && newDate !== undefined) {
         setStartDate(newDate);
       }
+      setShowPicker(false)
     }
     const handleSendOffer = async () => {
       //validation
@@ -242,7 +243,7 @@ const CreatePost = () => {
                 style={styles.input}
                 onPress={() => setShowPicker(true)}
               >
-                <Text style={styles.inputLabel}>Preferred Start Date</Text>
+                <Text> {String(startDate)}</Text>
                 {showPicker && (
                   <View style={{ display: 'flex', justifyContent: 'center' }}>
                     <DateTimePicker

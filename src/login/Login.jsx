@@ -128,6 +128,7 @@ export const Login = ({navigation}) => {
           body: JSON.stringify({})
         }).then((resp) => resp.json())
         .then(async (userData) => {
+          console.log(userData)
           if(userData.data.user.role_type == "client") {
             setToken(token)
             setUser(userData.data.user)
