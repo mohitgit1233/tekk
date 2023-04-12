@@ -85,9 +85,12 @@ export const getRooms = async (id=null) => {
 }
 export const acceptOffer = async (id=null,body=null) => {
     try {
+        const headers = await addJwtToHeaders({
+            'Content-Type': 'application/json'
+        }); 
         const response = await fetch(ACCEPT_OFFER(id),{
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             body: JSON.stringify(body)
           });
         const data = await response.json();
@@ -100,9 +103,12 @@ export const acceptOffer = async (id=null,body=null) => {
 
 export const createRoom = async (id=null,body=null) => {
     try {
+        const headers = await addJwtToHeaders({
+            'Content-Type': 'application/json'
+        }); 
         const response = await fetch(ROOMS,{
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             body: JSON.stringify(body)
           });
         const data = await response.json();
@@ -115,9 +121,12 @@ export const createRoom = async (id=null,body=null) => {
 
 export const rejectOffer = async (id=null) => {
     try {
+        const headers = await addJwtToHeaders({
+            'Content-Type': 'application/json'
+        }); 
         const response = await fetch(REJECT_OFFER(id),{
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             body: JSON.stringify(body)
           });
         const data = await response.json();
@@ -132,9 +141,12 @@ export const getJobs = async (id=null) => {
 }
 export const postJobs = async (id=null,body=null) => {
     try {
+        const headers = await addJwtToHeaders({
+            'Content-Type': 'application/json'
+        }); 
         const response = await fetch(JOBS,{
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             body: JSON.stringify(body)
           });
         const data = await response.json();
@@ -164,9 +176,12 @@ export const getOffers = async (id=null) => {
 }
 export const postOffer = async (id=null,body=null) => {
     try {
+        const headers = await addJwtToHeaders({
+            'Content-Type': 'application/json'
+        }); 
         const response = await fetch(ALL_OFFERS,{
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             body: JSON.stringify(body)
           });
         const data = await response.json();
@@ -178,9 +193,12 @@ export const postOffer = async (id=null,body=null) => {
 }
 export const clockIn = async (id=null,body=null) => {
     try {
+        const headers = await addJwtToHeaders({
+            'Content-Type': 'application/json'
+        }); 
         const response = await fetch(CLOCKIN(id),{
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             body: JSON.stringify(body)
           });
         const data = await response.json();
@@ -192,9 +210,12 @@ export const clockIn = async (id=null,body=null) => {
 }
 export const clockOut = async (id=null,body=null) => {
     try {
+        const headers = await addJwtToHeaders({
+            'Content-Type': 'application/json'
+        }); 
         const response = await fetch(CLOCKOUT(id),{
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             body: JSON.stringify(body)
           });
         const data = await response.json();
@@ -220,24 +241,26 @@ export const getIncomeHours = async (id=null) => {
 }
 
 export const updateTechnicianImage = async (id=null,body=null) => {
+    const headers = await addJwtToHeaders({
+        'Content-Type': 'application/json'
+    }); 
     const response = await fetch(`${API_BASE_URL}/technicians/${id}`, {
         method: 'PATCH',
         body: body,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        headers: headers,
       });
   
       const data = await response.json();
       return data
 }
 export const patchJobImages = async (id=null,body=null) => {
+    const headers = await addJwtToHeaders({
+        'Content-Type': 'application/json'
+    }); 
     const response = await fetch(`${API_BASE_URL}/jobs/${id}/images`, {
         method: 'PATCH',
         body: body,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        headers: headers,
       });
   
       const data = await response.json();
@@ -246,36 +269,39 @@ export const patchJobImages = async (id=null,body=null) => {
 
 
 export const login = async (id=null,body=null) => {
+    const headers = await addJwtToHeaders({
+        'Content-Type': 'application/json'
+    }); 
     const response = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: headers,
       });
   
       const data = await response.json();
       return data
 }
 export const pushToTechnicians = async (id=null,body=null) => {
+    const headers = await addJwtToHeaders({
+        'Content-Type': 'application/json'
+    }); 
     const response = await fetch(`${API_BASE_URL}/technicians/notifications`, {
         method: 'POST',
         body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: headers,
       });
   
       const data = await response.json();
       return data
 }
 export const pushToEmployerById = async (id=null,body=null) => {
+    const headers = await addJwtToHeaders({
+        'Content-Type': 'application/json'
+    }); 
     const response = await fetch(`${API_BASE_URL}/employers/${id}/notifications`, {
         method: 'POST',
         body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: headers,
       });
   
       const data = await response.json();
@@ -283,22 +309,26 @@ export const pushToEmployerById = async (id=null,body=null) => {
 }
 //new
 export const pushToTechnicianById = async (id=null,body=null) => {
+    const headers = await addJwtToHeaders({
+        'Content-Type': 'application/json'
+    }); 
     const response = await fetch(`${API_BASE_URL}/technicians/${id}/notifications`, {
         method: 'POST',
         body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: headers,
       });
   
       const data = await response.json();
       return data
 }
 export const deleteNotificationById = async (id=null,body=null) => {
+    const headers = await addJwtToHeaders({
+        'Content-Type': 'application/json'
+    }); 
     const response = await fetch(`${API_BASE_URL}/notifications/${id}`, {
         method: 'DELETE',
         // body: JSON.stringify(body),
-        // headers: {
+        headers: headers
         //   'Content-Type': 'application/json',
         // },
       });
@@ -308,13 +338,13 @@ export const deleteNotificationById = async (id=null,body=null) => {
 }
 
 export const getCompletionsOpenAI = async (id = null, body = null) => {
-
+    const headers = await addJwtToHeaders({
+        'Content-Type': 'application/json'
+    }); 
     // const response = await fetch('https://api.openai.com/v1/completions', {
     const response = await fetch(`${API_BASE_URL}/openai/completions`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: headers,
         body: JSON.stringify(body),
     });
     const data = await response.json();
