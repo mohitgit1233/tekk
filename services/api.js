@@ -144,12 +144,14 @@ export const postJobs = async (id=null,body=null) => {
         const headers = await addJwtToHeaders({
             'Content-Type': 'application/json'
         }); 
+        
         const response = await fetch(JOBS,{
             method: 'POST',
             headers: headers,
             body: JSON.stringify(body)
           });
         const data = await response.json();
+        console.log("fass gya",data)
         return data;
     } catch (error) {
         console.error(error);

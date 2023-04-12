@@ -65,7 +65,7 @@ export const MyJob = ({ navigation }) => {
 
   const filteredData = Offers.filter((post) => post.offerStatus === jobStatus  ).sort((a, b) => new Date(b.prefer_start_date) - new Date(a.prefer_start_date));
 
-  const searchFilteredData = filteredData.filter((post) => post.jobID.title.toLowerCase().includes(searchTerm.toLowerCase()))
+  const searchFilteredData = filteredData
 
   console.log('ddddd',searchFilteredData.length)
   
