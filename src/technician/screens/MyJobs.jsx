@@ -21,32 +21,22 @@ export const MyJob = ({ navigation }) => {
   // const urlOffer = `http://localhost:5001/api/v1/technician/${tech_id}/offers`
 
   useEffect(() => {
-    // const fetchData = async() =>{
-    //   try {
-    //     const response = await fetch(url);
-    //     const json = await response.json();
-    //     setData(json);
-      
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
-    // fetchData()
+    
+    const unsubscribe = navigation.addListener('focus', () => { 
+      const fetchOfferData = async() =>{
+        const json = await getOffersByTechId(loggedInUser.id)
+        setOffers(json);
+      }
+      fetchOfferData()
+    })
 
     const fetchOfferData = async() =>{
-      // try {
-      //   const response = await fetch(urlOffer);
-      //   const json = await response.json();
-      //   setOffers(json);
-      
-      // } catch (error) {
-      //   console.error(error);
-      // }
       const json = await getOffersByTechId(loggedInUser.id)
       setOffers(json);
     }
     fetchOfferData()
-  }, []);
+    return unsubscribe;
+  }, [navigation]);
 
   if(Offers.length > 0){
     // Offers.map((jobID) =>{
