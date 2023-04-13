@@ -10,20 +10,14 @@ import Toast from 'react-native-toast-message';
 const ClockInOut = (props) => {
     const [data, setData] = useState([]);
     const navigation = useNavigation();
-    const[clockStatus,setClockStatus] = useState('')
+    const[clockStatus,setClockStatus] = useState('start')
   const [searchTerm, setSearchTerm] = useState('');
-  const [postStatus, setpostStatus] = useState('all')
+  const [postStatus, setPostStatus] = useState('')
+  
  
   let filteredData = []
  
-  
-  // const url = `http://localhost:5001/api/v1/jobs/${props.emp_id}/clockin`;
-   
-  // const url2 = `http://localhost:5001/api/v1/jobs/${props.emp_id}/clockout`;
-//   useEffect(() => {
 
-   
-//   }, []);
 
 const handleClick = async () =>{
    
@@ -33,17 +27,8 @@ const handleClick = async () =>{
           offer_id: props.offer_id 
 
         };
-
-        // fetch(url, {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify(offer)
-        // })
-        // .then((response) => {response.json()
-        // console.log(response)
-        // setClockStatus('Clocked in')
-        // })
-        // .catch(error => console.error(error));
+        
+       
         const json = await clockIn(props.emp_id, offer)
         setClockStatus('Clocked in')
         Toast.show({
@@ -61,16 +46,6 @@ const handleClick2 = async () =>{
       id:props.emp_id      
     };
 
-    // fetch(url2, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(offer)
-    // })
-    // .then((response) => {response.json()
-    // console.log(response)
-    // setClockStatus('Clocked out')
-    // })
-    // .catch(error => console.error(error));
     const json = await clockOut(props.emp_id, offer)
     setClockStatus('Clocked out')
     Toast.show({
@@ -84,16 +59,25 @@ const handleClick2 = async () =>{
 }
 
   return (
+
     <Box  >
-  <Button mb={'5'} bgColor={'#0D937D'} width='300'
+
+
+      {clockStatus == 'start' || clockStatus == 'Clocked out'? 
+      <Button mb={'5'} bgColor={'#0D937D'} width='300'
   onPress={() => {handleClick()}}
-  >Clock in</Button>
+  >Clock in</Button> :<></>
+      }
 
-  <Button mb={'5'} bgColor={'#0D937D'}
-  onPress={() => {handleClick2()}}>Clock out</Button>
+      {clockStatus == 'Clocked in' ? 
+  <Button mb={'5'} bgColor={'#0D937D'} width='300'
+  onPress={() => {handleClick2()}}>Clock out</Button>: <></> }
 
-  <Text>{clockStatus}</Text>
-  <Toast ref={(ref) => Toast.setRef(ref)} />
+
+  
+
+  {/* <Text>{clockStatus}</Text> */}
+   <Toast ref={(ref) => Toast.setRef(ref)} /> 
     </Box>
   )
 }

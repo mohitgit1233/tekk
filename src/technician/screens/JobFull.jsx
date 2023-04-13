@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity,TextInput,Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ClockInOut from './ClockInOut';
-import { getEmploymentByOfferId, getOffersById } from '../../../services/api';
+import { getEmploymentByOfferId, getOffersById,startJob } from '../../../services/api';
 
 const JobFull = () => {
     const [data, setData] = useState([]);
@@ -41,7 +41,16 @@ const JobFull = () => {
 console.log('see',status)
 
 console.log('submit',data)
-        
+
+const handleStart = async () => { 
+  const offer = {
+    job_id=data[0] && data[0].job._id,
+    offer_id=data[0] && data[0].offer_id._id    
+  };
+
+  const json = await startJob( offer)
+
+}
 //   console.log("data",data[0].employment_status)
 
   return (
@@ -111,7 +120,10 @@ console.log('submit',data)
               </Box>
 
               {status === 'upcoming' ? (
-                <ClockInOut job_id={data[0] && data[0].job._id} offer_id={data[0] && data[0].offer_id._id} emp_id={data[0] && data[0]._id} />
+                <TouchableOpacity style={styles.botton} onPress={handleStart}>
+                <Text style={styles.btntxt}>Start Job</Text>
+              </TouchableOpacity>
+                // <ClockInOut job_id={data[0] && data[0].job._id} offer_id={data[0] && data[0].offer_id._id} emp_id={data[0] && data[0]._id} statusend={"upcoming"} />
               ) : null}
 
               {status === 'pending' ? (
@@ -121,7 +133,7 @@ console.log('submit',data)
               ) : null}
 
               {status === 'ongoing' ? (
-                <ClockInOut job_id={data[0] && data[0].job._id} offer_id={data[0] && data[0].offer_id._id} emp_id={data[0] && data[0]._id} />
+                <ClockInOut job_id={data[0] && data[0].job._id} offer_id={data[0] && data[0].offer_id._id} emp_id={data[0] && data[0]._id } statusend = "ongoing"/>
               ) : null}
             </VStack>
           </>
