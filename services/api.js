@@ -193,6 +193,26 @@ export const postOffer = async (id=null,body=null) => {
         throw error;
     }
 }
+export const startJob = async (id=null,body=null) => {
+    try {
+        const headers = await addJwtToHeaders({
+            'Content-Type': 'application/json'
+        }); 
+        const response = await fetch(CLOCKIN(),{
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(body)
+          });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+
+
 export const clockIn = async (id=null,body=null) => {
     try {
         const headers = await addJwtToHeaders({

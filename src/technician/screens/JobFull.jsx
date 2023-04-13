@@ -44,8 +44,8 @@ console.log('submit',data)
 
 const handleStart = async () => { 
   const offer = {
-    job_id=data[0] && data[0].job._id,
-    offer_id=data[0] && data[0].offer_id._id    
+    job_id:data[0] && data[0].job._id,
+    offer_id:data[0] && data[0].offer_id._id    
   };
 
   const json = await startJob( offer)
