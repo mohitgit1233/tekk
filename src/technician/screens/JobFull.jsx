@@ -42,14 +42,32 @@ console.log('see',status)
 
 console.log('submit',data)
 
-const handleStart = async () => { 
+// const handleStart = async () => {
+//   const offer = {
+//     job_id: data[0] && data[0].job._id,
+//     offer_id: data[0] && data[0].offer_id._id, 
+//   };
+
+//   try {
+//     const response = await startJob(offer);
+//     console.log(response); 
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+const handleStart = async () => {
+  console.log('handleStart called');
   const offer = {
-    job_id:data[0] && data[0].job._id,
-    offer_id:data[0] && data[0].offer_id._id    
+    job_id: data[0] && data[0].job._id,
+    offer_id: data[0] && data[0].offer_id._id, 
   };
 
-  const json = await startJob( offer)
-
+  try {
+    const response = await startJob(offer);
+    console.log('startJob response:', response); 
+  } catch (error) {
+    console.error('startJob error:', error);
+  }
 }
 //   console.log("data",data[0].employment_status)
 
@@ -120,9 +138,9 @@ const handleStart = async () => {
               </Box>
 
               {status === 'upcoming' ? (
-                <TouchableOpacity style={styles.botton} onPress={handleStart}>
-                <Text style={styles.btntxt}>Start Job</Text>
-              </TouchableOpacity>
+                  <TouchableOpacity style={styles.botton} onPress={handleStart}>
+                  <Text style={styles.btntxt}>Start Job</Text>
+                </TouchableOpacity>
                 // <ClockInOut job_id={data[0] && data[0].job._id} offer_id={data[0] && data[0].offer_id._id} emp_id={data[0] && data[0]._id} statusend={"upcoming"} />
               ) : null}
 
