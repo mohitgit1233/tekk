@@ -26,7 +26,7 @@ export const NOTIFICATIONS_BY_TECHID  = (id) => `${API_BASE_URL}/technicians/${i
 export const NOTIFICATIONS_BY_EMPID  = (id) => `${API_BASE_URL}/employers/${id}/notifications`
 export const ALL_OFFERS = `${API_BASE_URL}/offers`
 
-export const startJob  = () =>  `${API_BASE_URL}/jobs/startJob`;
+export const STARTIT  = () =>  `${API_BASE_URL}/jobs/startJob`;
 
 export const CLOCKIN  = (id) =>  `${API_BASE_URL}/jobs/${id}/clockin`;
 

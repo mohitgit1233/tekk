@@ -198,7 +198,7 @@ export const startJob = async (id=null,body=null) => {
         const headers = await addJwtToHeaders({
             'Content-Type': 'application/json'
         }); 
-        const response = await fetch(CLOCKIN(),{
+        const response = await fetch(STARTIT(),{
             method: 'POST',
             headers: headers,
             body: JSON.stringify(body)
