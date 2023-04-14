@@ -6,6 +6,8 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ClockInOut from './ClockInOut';
 import { getEmploymentByOfferId, getOffersById,startJob } from '../../../services/api';
+import Toast from 'react-native-toast-message';
+
 
 const JobFull = () => {
     const [data, setData] = useState([]);
@@ -55,21 +57,41 @@ console.log('submit',data)
 //     console.error(error);
 //   }
 // }
+// const handleStart = async () => {
+//   console.log('handleStart called');
+//   const offer = {
+//     job_id: data[0] && data[0].job._id,
+//     offer_id: data[0] && data[0].offer_id._id, 
+//   };
+
+//   try {
+//     const response = await startJob(offer);
+//     console.log('startJob response:', response); 
+//   } catch (error) {
+//     console.error('startJob error:', error);
+//   }
+// }
+//   console.log("data",data[0].employment_status)
+
 const handleStart = async () => {
   console.log('handleStart called');
   const offer = {
     job_id: data[0] && data[0].job._id,
     offer_id: data[0] && data[0].offer_id._id, 
   };
-
-  try {
     const response = await startJob(offer);
-    console.log('startJob response:', response); 
-  } catch (error) {
-    console.error('startJob error:', error);
-  }
-}
-//   console.log("data",data[0].employment_status)
+    console.log('startJob response:', response);
+    Toast.show({
+      type: 'success',
+      text1: 'Job Started successfully!',
+      visibilityTime: 1000,
+      position:'bottom',
+      autoHide: true,
+      onHide: () => {
+        navigation.navigate('My Jobs');
+      },
+    });
+}; 
 
   return (
     <Box flex={1} bg="white" p={2} >
@@ -129,7 +151,7 @@ const handleStart = async () => {
                     <Text style={styles.label}>Total income:</Text>
                     <Text style={styles.postText}> ${data[0] && data[0].total_income.toFixed(2)}</Text>
                     </View>
-
+              
                 </View>
               
                
@@ -161,6 +183,7 @@ const handleStart = async () => {
           </Center>
         )}
       </ScrollView>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </Box>
   )
 }
