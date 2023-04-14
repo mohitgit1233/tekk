@@ -10,6 +10,7 @@ import { OFFERS_BY_JOBID,
     ALL_OFFERS,
     CLOCKIN,
     CLOCKOUT,
+    STARTIT,
     EMPLOYMENT_BY_OFFERID,
     OFFERS_BY_TECHID,
     NOTIFICATIONS_BY_EMPID,
@@ -193,7 +194,24 @@ export const postOffer = async (id=null,body=null) => {
         throw error;
     }
 }
-export const startJob = async (id=null,body=null) => {
+// export const startJob = async (id=null,body=null) => {
+//     try {
+//         const headers = await addJwtToHeaders({
+//             'Content-Type': 'application/json'
+//         }); 
+//         const response = await fetch(STARTIT(),{
+//             method: 'POST',
+//             headers: headers,
+//             body: JSON.stringify(body)
+//           });
+//         const data = await response.json();
+//         return data;
+//     } catch (error) {
+//         console.error(error);
+//         throw error;
+//     }
+// }
+export const startJob = async (offer) => {
     try {
         const headers = await addJwtToHeaders({
             'Content-Type': 'application/json'
@@ -201,9 +219,10 @@ export const startJob = async (id=null,body=null) => {
         const response = await fetch(STARTIT(),{
             method: 'POST',
             headers: headers,
-            body: JSON.stringify(body)
+            body: JSON.stringify(offer)
           });
         const data = await response.json();
+        console.log('response body:', data); // log response body
         return data;
     } catch (error) {
         console.error(error);
