@@ -40,11 +40,11 @@ export const AppStack = () => {
        
       />
      <Stack.Screen name='Search' component={SearchInput}></Stack.Screen>
-     <Stack.Screen name='JobContainer' component={JobContainer}></Stack.Screen>
+     <Stack.Screen name='Job Details' component={JobContainer}></Stack.Screen>
      <Stack.Screen name='SendOffer' component={SendOfferButton}></Stack.Screen>
      <Stack.Screen name='ViewOffer' component={ViewOffer}></Stack.Screen>
      <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
-     <Stack.Screen name='JobFull' component={JobFull}></Stack.Screen>
+     <Stack.Screen name='My Job Details' component={JobFull}></Stack.Screen>
      <Stack.Screen name='Notifications' component={NotificationPage}></Stack.Screen>
      {/* <Stack.Screen name='imageUpload' component={ImagePickerExample}></Stack.Screen> */}
      <Stack.Screen name='SubChat' component={SubChat}  ></Stack.Screen>

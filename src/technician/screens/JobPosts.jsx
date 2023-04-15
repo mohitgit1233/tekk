@@ -65,7 +65,7 @@ export const JobPosts = () => {
           {filteredData.map((post) => {
             Moment.locale('en');
             return (
-              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobContainer', { id: post._id, tech_id: loggedInUser.id })}>
+              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('Job Details', { id: post._id, tech_id: loggedInUser.id })}>
                 <View style={styles.postContainer}>
                   <View style={styles.postTitleContainer}>
                     <Image style={styles.postImage} source={{ uri: post.images[0] }} />

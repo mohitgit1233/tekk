@@ -97,13 +97,13 @@ export const MyJob = ({ navigation }) => {
           Moment.locale('en');
           return (
             post.jobID === null ? (
-              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
+              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('My Job Details', {id: post._id,status:post.offerStatus})}>
                 <View style={styles.postContainer}>
                   <Text>job id null. check backend</Text>
                 </View>
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('JobFull', {id: post._id,status:post.offerStatus})}>
+              <TouchableOpacity key={post._id} onPress={() => navigation.navigate('My Job Details', {id: post._id,status:post.offerStatus})}>
               <View style={styles.postContainer}>
   <View style={styles.postTitleContainer}>
     <Image style={styles.postImage} source={{ uri: post.jobID.images[0] }} />

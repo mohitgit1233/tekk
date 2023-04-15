@@ -79,7 +79,7 @@ const MyPosts = ({ route }) => {
         style={styles.postContainer}
         key={item._id}
         onPress={() =>
-          navigation.navigate('PostDetails', { id: item._id, status: item.status })
+          navigation.navigate('Post Details', { id: item._id, status: item.status })
         }>
           
         <Image style={styles.postImage} source={{ uri: item.images[0] }} />
