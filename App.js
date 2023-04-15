@@ -34,8 +34,8 @@ export default function App() {
 
   useEffect(() => {
     // For React Native 0.62+
-// LogBox.ignoreAllLogs(true);
-LogBox.ignoreLogs([/Warning: .*/]);
+LogBox.ignoreAllLogs(true);
+// LogBox.ignoreLogs([/Warning: .*/]);
 
 
     setTimeout(() => {
