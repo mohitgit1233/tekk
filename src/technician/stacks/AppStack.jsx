@@ -47,7 +47,7 @@ export const AppStack = () => {
      <Stack.Screen name='My Job Details' component={JobFull}></Stack.Screen>
      <Stack.Screen name='Notifications' component={NotificationPage}></Stack.Screen>
      {/* <Stack.Screen name='imageUpload' component={ImagePickerExample}></Stack.Screen> */}
-     <Stack.Screen name='SubChat' component={SubChat}  ></Stack.Screen>
+     <Stack.Screen name='Chat' component={SubChat}  ></Stack.Screen>
 
      {/* <Stack.Screen name='imageUpload' component={ImagePickerExample}></Stack.Screen> */}
      

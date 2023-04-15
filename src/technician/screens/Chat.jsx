@@ -41,7 +41,7 @@ export const Chat = ({ navigation }) => {
 
   const navigateToNotification = (kindof_prop1, p2, roomid, job_id) => {
     console.log(kindof_prop1);
-    navigation.navigate('SubChat', { propValue: kindof_prop1, p2, roomid, job_id });
+    navigation.navigate('Chat', { propValue: kindof_prop1, p2, roomid, job_id });
   };
 
   const filteredData = data.filter((item) => {

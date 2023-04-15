@@ -47,7 +47,7 @@ export const AppStackClient = () => {
      <Stack.Screen name='Post Details' component={PostDetails}></Stack.Screen>
      <Stack.Screen name='Profile' component={TechnicianProfile}></Stack.Screen>
      <Stack.Screen name='Notifications' component={NotificationPage}></Stack.Screen>
-     <Stack.Screen name='SubChatClient' component={SubChatClient}  ></Stack.Screen>
+     <Stack.Screen name='Chat' component={SubChatClient}  ></Stack.Screen>
 
 
      {/* <Stack.Screen name='Logout' component={Login}></Stack.Screen> */}

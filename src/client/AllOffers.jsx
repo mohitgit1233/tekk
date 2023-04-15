@@ -103,7 +103,7 @@ const AllOffers = (props) => {
 
           console.log("asskjdkjldaskdsajlkdasjkldasjklsadjkldas created room");
 
-          navigation.navigate('SubChatClient',   { propValue: json._id, p2: tid , roomid: json._id , job_id: jid });
+          navigation.navigate('Chat',   { propValue: json._id, p2: tid , roomid: json._id , job_id: jid });
 
   }
   return (
