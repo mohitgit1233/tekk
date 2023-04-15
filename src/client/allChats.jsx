@@ -59,7 +59,7 @@ export const AllChats = ({navigation}) => {
       </View>
 
       <View style={styles.container}>
-        <Text style={styles.head}>Select Technician To Chat</Text>
+        {/* <Text style={styles.head}>Select Technician To Chat</Text> */}
         {/* AI button */}
         {/* <TouchableOpacity
           style={styles.postContainer}

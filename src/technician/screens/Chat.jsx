@@ -64,7 +64,7 @@ export const Chat = ({ navigation }) => {
       </View>
 
       <View style={styles.container}>
-        <Text style={styles.head}>Select Employer To Chat</Text>
+        {/* <Text style={styles.head}>Select Employer To Chat</Text> */}
         {/* AI button */}
         {/* <TouchableOpacity style={styles.postContainer}>
           <Image
