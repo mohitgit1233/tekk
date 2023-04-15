@@ -131,19 +131,31 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   postContainer: {
-    marginVertical: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    backgroundColor: "#F2F2F2",
-    borderRadius: 10,
-    flexDirection: "row",
+    // marginVertical: 5,
+    // paddingHorizontal: 10,
+    // paddingVertical: 10,
+    // backgroundColor: "#F2F2F2",
+    // borderRadius: 10,
+    // flexDirection: "row",
     alignItems: "center",
+
+    flexDirection: 'row',
+    paddingBottom:15,
+    paddingTop:15,
+    paddingLeft:5,
+    paddingRight:5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    backgroundColor:'#F9F8F5',
+   
   },
   image: {
     width: 60,
     height: 60,
     borderRadius: 30,
     marginRight: 10,
+    borderColor: '#0D937D',
+    borderWidth: '3'
   },
   postDescription: {
     fontSize: 18,
