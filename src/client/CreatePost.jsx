@@ -418,6 +418,12 @@ const CreatePost = () => {
           zIndex: 999,
           width: '100%',
           marginBottom: 10,
+          backgroundColor: '#EAEAEA', // Change the background color here
+
+          // borderColor: 'black', // Change the border color here
+          borderWidth: 1,
+
+          // color: 'white'
         },
         dropDownContainer: {
           height: 150,
@@ -425,6 +431,9 @@ const CreatePost = () => {
           position: 'absolute',
           top: -150,
           zIndex: 999,
+          backgroundColor: '#EAEAEA', // Change the dropdown container background color here
+          // borderColor: 'black', // Change the dropdown container border color here
+          borderWidth: 1,
         },
         container1: {
           position: 'relative',
