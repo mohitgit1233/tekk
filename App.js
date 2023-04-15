@@ -15,6 +15,7 @@ import React, { useState, useEffect } from 'react';
 import AppContext from './AppContext';
 import Splash from './src/Splash';
 import { Login } from './src/login/Login';
+import { LogBox } from 'react-native'; // for newer versions (0.62+)
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -32,6 +33,11 @@ export default function App() {
   })
 
   useEffect(() => {
+    // For React Native 0.62+
+// LogBox.ignoreAllLogs(true);
+LogBox.ignoreLogs([/Warning: .*/]);
+
+
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
