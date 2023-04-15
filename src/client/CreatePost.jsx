@@ -420,8 +420,9 @@ const CreatePost = () => {
           marginBottom: 10,
           backgroundColor: '#EAEAEA', // Change the background color here
 
-          // borderColor: 'black', // Change the border color here
+          borderColor: '#404040', // Change the border color here
           borderWidth: 1,
+          borderRadius: '0'
 
           // color: 'white'
         },
@@ -432,8 +433,10 @@ const CreatePost = () => {
           top: -150,
           zIndex: 999,
           backgroundColor: '#EAEAEA', // Change the dropdown container background color here
-          // borderColor: 'black', // Change the dropdown container border color here
+          borderColor: '#404040', // Change the dropdown container border color here
           borderWidth: 1,
+          // borderRadius: '0'
+
         },
         container1: {
           position: 'relative',
