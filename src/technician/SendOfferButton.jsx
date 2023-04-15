@@ -2,7 +2,7 @@
 import { Button, StyleSheet, Text, TextInput, View,TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 //FIXME
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+// import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { postOffer,pushToEmployerById, getJobById } from '../../services/api';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useState, useEffect,useContext } from 'react';
