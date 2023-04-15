@@ -84,7 +84,7 @@ export const Chat = ({ navigation }) => {
               <Image source={{ uri: item.job_id.images[0] }} style={styles.image} />
               <View>
                 <Text style={styles.postDescription}>{item.job_id.title}</Text>
-                <Text style={styles.employerName}>Employer: {item.employer_id.name}</Text>
+                <Text style={styles.employerName}>Client: {item.employer_id.name}</Text>
               </View>
             </TouchableOpacity>
           )}

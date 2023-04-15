@@ -184,7 +184,7 @@ export const SubChat = ({ navigation, route }) => {
             />
             <View style={styles.headerText}>
               <Text style={styles.roomId}>{jobn.title}</Text>
-              <Text style={styles.employer}>Employer: {emp_name.name}</Text>
+              <Text style={styles.employer}>Client: {emp_name.name}</Text>
             </View>
           </View>
 
