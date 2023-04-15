@@ -41,7 +41,7 @@ export const AppStackClient = () => {
       />
      <Stack.Screen name='Search' component={SearchInput}></Stack.Screen>
      <Stack.Screen name='Job Details' component={JobContainer}></Stack.Screen>
-     <Stack.Screen name='AllOffers' component={AllOffers}></Stack.Screen>
+     <Stack.Screen name='Offers Detail' component={AllOffers}></Stack.Screen>
      <Stack.Screen name='Create Post' component={CreatePost}></Stack.Screen>
      <Stack.Screen name='MyPosts' component={MyPosts}></Stack.Screen>
      <Stack.Screen name='Post Details' component={PostDetails}></Stack.Screen>
