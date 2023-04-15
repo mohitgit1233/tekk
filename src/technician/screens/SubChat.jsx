@@ -153,14 +153,14 @@ export const SubChat = ({ navigation, route }) => {
 
             item.docModel==="technician" ?            ( <View style={styles.message2}>
             {/* <Text style={styles.sender} >{item.sender_id}</Text> */}
-            <Text style={styles.sender}>{Moment(item.date).format('MMMM Do, YYYY,HH:mm A')}</Text>
+            <Text style={styles.sender2}>{Moment(item.date).format('MMMM Do, YYYY,HH:mm A')}</Text>
            {/* <Text style={styles.sender} >{tech_name.name}</Text>  */}
-            <Text>{item.message}</Text>
+            <Text style={styles.text2} >{item.message}</Text>
         </View>) :          (   <View style={styles.message1}>
         {/* <Text style={styles.sender} >{item.sender_id}</Text> */}
-        <Text style={styles.sender}>{Moment(item.date).format('MMMM Do, YYYY,HH:mm A')}</Text>
+        <Text style={styles.sender1}>{Moment(item.date).format('MMMM Do, YYYY,HH:mm A')}</Text>
        {/* <Text style={styles.sender} >{emp_name.name}</Text>  */}
-        <Text>{item.message}</Text>
+        <Text style={styles.text1} >{item.message}</Text>
     </View>)  
 
 
@@ -260,6 +260,18 @@ const styles = StyleSheet.create({
       backgroundColor: "#FFFFFF",
       padding: 10,
       borderRadius: 10,
+
+
+      flexDirection: 'row',
+      paddingBottom:15,
+      paddingTop:15,
+      paddingLeft:5,
+      paddingRight:5,
+      borderBottomWidth: 1,
+      borderBottomColor: '#ccc',
+      backgroundColor:'#F9F8F5',
+
+      
     },
     headerText: {
       flex: 1,
@@ -271,6 +283,8 @@ const styles = StyleSheet.create({
       height: 60,
       borderRadius: 30,
       marginRight: 10,
+      borderColor: '#0D937D',
+      borderWidth: '3'
     },
     roomId: {
       fontSize: 18,
@@ -291,27 +305,50 @@ const styles = StyleSheet.create({
         padding: 10,
         maxWidth: "70%",
         alignSelf: "flex-start",
-        borderWidth: 1,
-        borderColor: "#ccc",
         borderRadius: 10,
         marginBottom: 5,
         borderTopLeftRadius: 2,
-        backgroundColor: "#EBEBEB",
-    },
-    message2: {
-          backgroundColor: "#DCF8C5",
+        backgroundColor: "#F0F0F0", // Update the receiver bubble background color to a light gray
+        // Add box shadow properties for receiver bubble
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+      },
+      message2: {
+        // backgroundColor: "#0B84FE", // Update the sender bubble background color to iOS blue
+        backgroundColor: "4CD964",
         padding: 10,
         maxWidth: "70%",
         alignSelf: "flex-end",
-        borderWidth: 1,
-        borderColor: "#ccc",
         borderRadius: 10,
         marginBottom: 5,
         borderTopRightRadius: 2,
+        // Add box shadow properties for sender bubble
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
       },
-      sender: {
+      text2: {
+        color: "#FFFFFF", // Set the text color to white
+
+      },
+      
+      sender1: {
         fontSize: 12,
         color: "grey",
+        marginTop: 5,
+      },
+      sender2: {
+        fontSize: 12,
+        color: "#E5E4E2",
         marginTop: 5,
       },
     inputContainer: {
