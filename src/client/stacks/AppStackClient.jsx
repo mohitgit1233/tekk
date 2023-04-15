@@ -72,7 +72,7 @@ export const TabStack = () => {
             />
           );
         }
-        else if (route.name === 'Chats') {
+        else if (route.name === 'Messages') {
           return (
          
             <Ionicons
@@ -114,7 +114,7 @@ export const TabStack = () => {
           headerRight: () => <NotificationBell />, 
         }} />
       
-      <Tab.Screen name="Chats" component={AllChats} options={{
+      <Tab.Screen name='Messages' component={AllChats} options={{
           headerRight: () => <NotificationBell />, 
         }} />
       

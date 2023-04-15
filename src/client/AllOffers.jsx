@@ -151,7 +151,7 @@ const AllOffers = (props) => {
                   <Text style={styles.postSubtitleText}>Estimated Price:{post.offerPrice}</Text>
                   <Text style={styles.postSubtitleText}>Start date:{Moment(post.prefer_start_date).format('D MMMM YYYY')}</Text>
                   <TouchableOpacity style={{marginTop:10}}
-                title="Chat"
+                title='Messages'
                 onPress={() => {goToChatRoom(id,post.technician_who_offered._id, loggedInUser.id)}}
                 //   jobId={jobId}
                 ><Text style={{textDecorationLine:'underline',textAlign:'left',color:'#0D937D'}}>Start Negotiation</Text></TouchableOpacity>
