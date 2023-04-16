@@ -154,7 +154,7 @@ const AllOffers = (props) => {
                 title='Messages'
                 onPress={() => {goToChatRoom(id,post.technician_who_offered._id, loggedInUser.id)}}
                 //   jobId={jobId}
-                ><Text style={{textDecorationLine:'underline',textAlign:'left',color:'#0D937D'}}>Start Negotiation</Text></TouchableOpacity>
+                ><Text style={{textDecorationLine:'underline',textAlign:'left',color:'#0D937D'}}>Start Messaging</Text></TouchableOpacity>
                 </View>
                 </View>
             <View style={{display:'flex',flexDirection:'row', justifyContent:'center'}}>
