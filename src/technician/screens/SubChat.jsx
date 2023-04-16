@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
       },
       message2: {
         // backgroundColor: "#0B84FE", // Update the sender bubble background color to iOS blue
-        backgroundColor: "#4CD964",
+        backgroundColor: "#48D05F",
         padding: 10,
         maxWidth: "70%",
         alignSelf: "flex-end",
