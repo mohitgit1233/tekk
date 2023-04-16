@@ -47,7 +47,7 @@ const Offers = () => {
         <AntDesign name="search1" size={24} color="black" style={styles.searchIcon} />
         <TextInput
           style={styles.searchInput}
-          placeholder="Search Jobs"
+          placeholder="Search Offers"
           onChangeText={(text) => setSearchTerm(text)}
           value={searchTerm}
         />
