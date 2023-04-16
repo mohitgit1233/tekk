@@ -77,6 +77,7 @@ export const Login = () => {
         setLoggedInUser({
           id: json1.data._id,
           name: json1.data.name,
+          email: json1.data.email,
           isTechnician: json1.data.isTechnician
         })
       // Reset the navigation stack and navigate to the technician portal

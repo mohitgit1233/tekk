@@ -47,7 +47,7 @@
 // };
 
 // import React, { useState } from 'react';
-import { Button, Image, View } from 'react-native';
+import { Button, Image, View,Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { updateTechnicianImage } from '../../../services/api';
 import { SOCKET_API } from '../../../services/api_config';
@@ -91,6 +91,8 @@ export const Profile = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>{loggedInUser.name}</Text>
+      <Text>{loggedInUser.email}</Text>
       <Button title="Pick an image from camera roll" onPress={pickImage} />
       {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
       {image && <Button title="Submit" onPress={() => updateProfileImage(loggedInUser.id, image)} />}
