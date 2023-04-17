@@ -81,10 +81,10 @@ export const Chat = ({ navigation }) => {
             <TouchableOpacity
               style={styles.postContainer}
               onPress={() => navigateToNotification(item._id, item.employer_id._id, item._id, item.job_id._id)}>
-              <Image source={{ uri: item.job_id.images[0] }} style={styles.image} />
+              <Image source={{ uri: item && item.job_id && item.job_id.images[0] }} style={styles.image} />
               <View>
-                <Text style={styles.postDescription}>{item.job_id.title}</Text>
-                <Text style={styles.employerName}>Client: {item.employer_id.name}</Text>
+                <Text style={styles.postDescription}>{item && item.job_id && item.job_id.title}</Text>
+                <Text style={styles.employerName}>Client: {item && item.employer_id && item.employer_id.name}</Text>
               </View>
             </TouchableOpacity>
           )}
