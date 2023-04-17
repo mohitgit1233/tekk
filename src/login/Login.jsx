@@ -78,9 +78,15 @@ export const Login = () => {
           id: json1.data._id,
           name: json1.data.name,
           email: json1.data.email,
+          address: json1.data.address,
+          skills: json1.data.skills,
+          picture:json1.data.picture,
           isTechnician: json1.data.isTechnician
         })
+
+        console.log(json1)
       // Reset the navigation stack and navigate to the technician portal
+      
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
@@ -89,14 +95,17 @@ export const Login = () => {
            
           }, }],
         })
-      );
+      ); 
       }else{
         setLoggedInUser({
           id: json1.data._id,
           name: json1.data.name,
+          email: json1.data.email,
+          address: json1.data.address,
+          picture:json1.data.picture,
           isTechnician: json1.data.isTechnician
         })
-
+        console.log(json1)
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
