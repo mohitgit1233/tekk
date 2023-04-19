@@ -79,6 +79,7 @@ const CreatePost = () => {
 
     const [images,setImages] = useState([])
     const [open, setOpen] = useState(false);
+    const [isButtonEnabled,setisButtonEnabled] = useState(true);
 
   const [value, setValue] = useState(null);
   const skills = [
@@ -98,6 +99,7 @@ const CreatePost = () => {
       }
     }
     const handleSendOffer = async () => {
+      setisButtonEnabled(false)
       //validation
       if (clientId === null || clientId === "" ||
       postTitle === null || postTitle === "" ||
@@ -301,10 +303,18 @@ const CreatePost = () => {
               )}
               keyExtractor={(item) => item}
             />
+
+{isButtonEnabled ? (
+  <TouchableOpacity style={styles.botton} onPress={handleSendOffer}>
+    <Text style={styles.btntxt}>Submit Post</Text>
+  </TouchableOpacity>
+) : (
+  <TouchableOpacity style={[styles.botton, styles.disabledButton]} disabled={true}>
+    <Text style={[styles.btntxt, styles.disabledButtonText]}>Submit Post</Text>
+  </TouchableOpacity>
+)}
       
-            <TouchableOpacity style={styles.botton} onPress={handleSendOffer}>
-              <Text style={styles.btntxt}>Submit Post</Text>
-            </TouchableOpacity>
+
 
           <Toast />
 
