@@ -84,12 +84,12 @@ export const AllChats = ({navigation}) => {
               }
             >
               <Image
-                source={{ uri: item.job_id.images[0] }}
+                source={{ uri: item && item.job_id && item.job_id.images[0] }}
                 style={styles.image}
               />
               <View>
-                <Text style={styles.postDescription}>{item.job_id.title}</Text>
-                <Text style={styles.employerName}>Technician: {item.technician_id.name}</Text>
+                <Text style={styles.postDescription}>{item && item.job_id && item.job_id.title}</Text>
+                <Text style={styles.employerName}>Technician: {item && item.job_id && item.technician_id.name}</Text>
               </View>
             </TouchableOpacity>
           )}
